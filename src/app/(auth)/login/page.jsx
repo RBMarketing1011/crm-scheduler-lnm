@@ -54,9 +54,7 @@ export default function Login ()
           autoComplete="current-password"
           required
         />
-        <div>
-          <Button type="submit" text='Sign In' />
-        </div>
+
       </form>
     </SlimLayout>
   )
