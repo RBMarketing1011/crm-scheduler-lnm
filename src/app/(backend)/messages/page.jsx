@@ -259,7 +259,7 @@ const Page = () =>
         </nav>
 
         <div className='w-full min-h-[85vh] px-20 flex flex-col justify-between gap-5'>
-          <ul role="list" className="max-h-[70vh] overflow-y-auto p-3 flex flex-col-reverse gap-5">
+          <ul role="list" className="max-h-[65vh] overflow-y-auto p-3 flex flex-col-reverse gap-5">
             { activity.map((activityItem, activityItemIdx) => (
 
               activityItem.person.name.includes('Anthony') ?
@@ -313,7 +313,7 @@ const Page = () =>
           </ul>
 
           {/* New comment form */ }
-          <div className="flex gap-x-3 max-h-[15vh]">
+          <div className="flex gap-x-3">
             <Image
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
               alt="Alt"
