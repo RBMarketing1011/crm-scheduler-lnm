@@ -16,14 +16,14 @@ function Label ({ id, children })
   )
 }
 
-export function TextField ({ label, type = 'text', className, ...props })
+export function TextField ({ label, type = 'text', className, value, onChange, ...props })
 {
   let id = useId()
 
   return (
     <div className={ className }>
       { label && <Label id={ id }>{ label }</Label> }
-      <input id={ id } type={ type } { ...props } className={ formClasses } />
+      <input id={ id } type={ type } { ...props } className={ formClasses } value={ value } onChange={ onChange } />
     </div>
   )
 }

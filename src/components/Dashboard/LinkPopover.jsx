@@ -1,10 +1,10 @@
 'use client'
 
 import { Fragment, useState, useRef, useEffect } from 'react'
-import { Menu, MenuButton, MenuItems, MenuItem, Transition } from '@headlessui/react'
-import Avatar from '@images/avatars/avatar.png'
-import Image from 'next/image'
+import { Transition } from '@headlessui/react'
 import Link from 'next/link'
+import { signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 function classNames (...classes)
 {
@@ -15,6 +15,7 @@ const LinkPopover = ({ button, x, y }) =>
 {
   const [ openMenu, setOpenMenu ] = useState(false)
   const container = useRef(null)
+  const router = useRouter()
 
   useEffect(() =>
   {
@@ -73,14 +74,17 @@ const LinkPopover = ({ button, x, y }) =>
             >
               License
             </Link>
-            <form method="POST" action="#">
-              <button
-                type="submit"
-                className='text-gray-700 hover:bg-primary-100 hover:text-primary-300 block w-full px-4 py-2 text-left text-sm'
-              >
-                Sign out
-              </button>
-            </form>
+            <button
+              type="submit"
+              className='text-gray-700 hover:bg-primary-100 hover:text-primary-300 block w-full px-4 py-2 text-left text-sm'
+              onClick={ () =>
+              {
+                signOut
+                router.push('/')
+              } }
+            >
+              Sign out
+            </button>
           </div>
         </div>
       </Transition>
