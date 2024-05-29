@@ -1,4 +1,6 @@
-import { Schema, model, models } from 'mongoose'
+import mongoose from 'mongoose'
+
+const { Schema, model, models } = mongoose
 
 const userSchema = new Schema({
   firstname: {
@@ -63,11 +65,6 @@ const userSchema = new Schema({
       type: String,
       default: null
     }
-  },
-  accountId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Account',
-    default: null
   },
   okForMarketing: {
     type: Boolean,

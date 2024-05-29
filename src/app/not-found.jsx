@@ -1,7 +1,7 @@
 import Link from 'next/link'
-
+import Image from 'next/image'
 import { Button } from '@components/HomePage/Button'
-import { Logo } from '@components/HomePage/Logo'
+import Logo from '@images/logos/lnm-logo-black.png'
 import { SlimLayout } from '@components/HomePage/SlimLayout'
 
 export default function NotFound ()
@@ -10,7 +10,15 @@ export default function NotFound ()
     <SlimLayout>
       <div className="flex">
         <Link href="/" aria-label="Home">
-          <Logo className="h-10 w-auto" />
+          <Image
+            className="h-10 w-auto"
+            src={ Logo }
+            alt='LeadsNearMe® Logo'
+            priority
+            height={ 0 }
+            width={ 0 }
+            sizes='100vw'
+          />
         </Link>
       </div>
       <p className="mt-20 text-sm font-medium text-gray-700">404</p>
@@ -20,9 +28,11 @@ export default function NotFound ()
       <p className="mt-3 text-sm text-gray-700">
         Sorry, we couldn’t find the page you’re looking for.
       </p>
-      <Button href="/" className="mt-10">
-        Go back home
-      </Button>
+      <Link href='/'>
+        <Button className="mt-10">
+          Go back home
+        </Button>
+      </Link>
     </SlimLayout>
   )
 }

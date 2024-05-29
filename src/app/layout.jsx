@@ -1,7 +1,6 @@
+import '@styles/tailwind.css'
 import { Inter, Lexend } from 'next/font/google'
 import clsx from 'clsx'
-
-import '@styles/tailwind.css'
 
 export const metadata = {
   title: {
@@ -24,13 +23,13 @@ const lexend = Lexend({
   variable: '--font-lexend',
 })
 
-export default function RootLayout ({ children })
+const Layout = ({ children }) =>
 {
   return (
     <html
       lang="en"
       className={ clsx(
-        'h-full scroll-smooth bg-white antialiased',
+        'h-full scroll-smooth bg-white antialiased --font-lexend --font-inter',
         inter.variable,
         lexend.variable,
       ) }
@@ -41,3 +40,5 @@ export default function RootLayout ({ children })
     </html>
   )
 }
+
+export default Layout

@@ -61,7 +61,6 @@ const sections = [
       { name: 'Automated Notifications', tiers: { Starter: true, Scale: true, Growth: true } },
       { name: '24/7 customer support', tiers: { Starter: true, Scale: true, Growth: true } },
       { name: 'Free advisor', tiers: { Starter: false, Scale: '6 months', Growth: '3 months' } },
-      { name: 'Customizable Reporting', tiers: { Starter: false, Scale: true, Growth: true } },
     ],
   },
   {

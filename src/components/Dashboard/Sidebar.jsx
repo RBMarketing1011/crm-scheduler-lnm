@@ -25,17 +25,17 @@ import LinkPopover from './LinkPopover'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: RectangleGroupIcon, },
-  { name: 'Account', href: '/account', icon: HomeIcon, },
-  { name: 'Appointments', href: '/appointments', icon: CalendarDaysIcon, count: '12' },
+  { name: 'Account', href: '/dashboard/account', icon: HomeIcon, },
+  { name: 'Appointments', href: '/dashboard/appointments', icon: CalendarDaysIcon, count: '12' },
 ]
 const shops = [
-  { id: 1, name: 'Blairsville', href: '/shops/b', },
-  { id: 2, name: 'Thomaston', href: '/shops/t', },
-  { id: 3, name: 'Cornerstone', href: '/shops/c', },
+  { id: 1, name: 'Blairsville', href: '/dashboard/shops/b', },
+  { id: 2, name: 'Thomaston', href: '/dashboard/shops/t', },
+  { id: 3, name: 'Cornerstone', href: '/dashboard/shops/c', },
 ]
 const account = [
-  { name: 'Messages', href: '/messages', icon: ChatBubbleLeftEllipsisIcon, count: '3' },
-  { name: 'Settings', href: '/settings', icon: Cog8ToothIcon, },
+  { name: 'Messages', href: '/dashboard/messages', icon: ChatBubbleLeftEllipsisIcon, count: '3' },
+  { name: 'Settings', href: '/dashboard/settings', icon: Cog8ToothIcon, },
 ]
 
 function classNames (...classes)

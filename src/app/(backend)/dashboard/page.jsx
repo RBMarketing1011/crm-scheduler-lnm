@@ -13,7 +13,7 @@ import { useSession } from 'next-auth/react'
 const Dashboard = () =>
 {
   const { data: session } = useSession()
-  console.log(session?.user)
+  // console.log(session?.user)
   return (
     <Container>
       <TitleHeading title='Dashboard' />
