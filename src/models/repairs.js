@@ -1,6 +1,4 @@
-import mongoose from 'mongoose'
-
-const { Schema, model, models } = mongoose
+import { Schema, models, model } from 'mongoose'
 
 const repairSchema = new Schema({
   "shopId": {

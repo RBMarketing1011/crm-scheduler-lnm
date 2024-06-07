@@ -1,6 +1,6 @@
 import Customer from '@models/Customers'
 import Shop from '@models/shops'
-import connectDB from '@db/connectDB'
+import connectDB from '@config/connectDB'
 import genShortToken from '@utils/genShortToken'
 import verifyEmail from '@utils/verifyEmail'
 

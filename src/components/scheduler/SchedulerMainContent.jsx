@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 //components
 import ChooseServicesContent from './screens/ChooseServicesContent'
 import Loader from '../Loader'
+import { Notifi, notifi } from '@components/Notifications/Notify'
 
 //images
 
@@ -22,6 +23,13 @@ import ScheduleAppt from './screens/ScheduleAppt'
 
 const SchedulerMainContent = () =>
 {
+  // =========================Notifi State 
+  const [ notify, setNotify ] = useState({
+    type: '',
+    text: '',
+    show: false
+  })
+
   // ======================== Get Account & Shop info from search params and set State
   const searchParams = useSearchParams()
 
@@ -36,7 +44,7 @@ const SchedulerMainContent = () =>
     {
       try
       {
-        const res = await fetch(`${ process.env.NEXT_PUBLIC_API_URL }/scheduler`, {
+        const res = await fetch(`${ process.env.NEXT_PUBLIC_API_DOMAIN }/scheduler`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -52,11 +60,13 @@ const SchedulerMainContent = () =>
 
     getAccount()
 
+    console.log(data)
+
   }, [])
   // ======================== Get Account & Shop info from search params and set State
 
   // ======================= State To determine what screen is in the Content Area
-  const [ contentScreen, setContentScreen ] = useState('Choose Services')
+  const [ contentScreen, setContentScreen ] = useState('Vehicle Info')
   // ======================= State To determine what screen is in the Content Area
 
   // ======================== Handle All actions on click to setState with services
@@ -78,7 +88,7 @@ const SchedulerMainContent = () =>
   // ======================== Handle All actions on click to setState with services
 
   // ======================== Handle All actions on click to setState with Qs and As
-  const [ answersSelected, setAnswersSelected ] = useState('')
+  const [ answersSelected, setAnswersSelected ] = useState([])
 
   const questionsHandleClick = (service) =>
   {
@@ -105,6 +115,9 @@ const SchedulerMainContent = () =>
 
   return (
     <main className='w-full h-[100%] p-2 bg-gray-100 rounded-md flex flex-col justify-between gap-3 overflow-y-auto'>
+      <Notifi data={ { state: notify, setState: setNotify } } />
+
+
 
       {
         data ?
@@ -113,10 +126,11 @@ const SchedulerMainContent = () =>
             <ChooseServicesContent
               data={ data }
               handleClick={ handleClick }
+              selected={ servicesSelected }
               nextScreen={ () =>
               {
                 servicesSelected.length === 0 ?
-                  toast.error('Please Select A Service')
+                  notifi.error('Please Select A Service', setNotify)
                   :
                   setContentScreen('Service Questions')
               } }
@@ -131,10 +145,11 @@ const SchedulerMainContent = () =>
                 key={ v4() }
                 data={ servicesSelected[ showQuestion ].moreInfo }
                 handleClick={ questionsHandleClick }
+                selected={ answersSelected }
                 nextScreen={ () =>
                 {
                   answersSelected.length === 0 ?
-                    toast.error('Please Select An Answer')
+                    notifi.error('Please Select An Answer', setNotify)
                     :
                     showQuestion < servicesSelected.length - 1 ?
                       setShowQuestion(prev => prev + 1)
@@ -182,7 +197,13 @@ const SchedulerMainContent = () =>
                         year={ { value: year, onChange: (e) => setYear(e.target.value) } }
                         make={ { value: make, onChange: (e) => setMake(e.target.value) } }
                         model={ { value: model, onChange: (e) => setModel(e.target.value) } }
-                        nextScreen={ () => setContentScreen('Schedule Appt') }
+                        nextScreen={ () =>
+                        {
+                          !year || !make || !model ?
+                            notifi.error('Please Select A Service', setNotify)
+                            :
+                            setContentScreen('Service Questions')
+                        } }
                         prevScreen={ () => setContentScreen('Verify Email Token') }
                       />
 

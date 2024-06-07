@@ -1,8 +1,8 @@
 import GoogleProvider from 'next-auth/providers/google'
-import GithubProvider from 'next-auth/providers/github'
 import EmailProvider from 'next-auth/providers/email'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcrypt'
+import encrypt from './encrypt'
 import connectDB from '@config/connectDB'
 import User from '@models/users'
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
@@ -14,29 +14,11 @@ const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorization: {
-        params: {
-          prompt: 'consent',
-          access_type: 'offline',
-          response_type: 'code'
-        }
-      }
-    }),
-    GithubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      authorization: {
-        params: {
-          prompt: 'consent',
-          access_type: 'offline',
-          response_type: 'code'
-        }
-      }
     }),
     EmailProvider({
       server: {
         host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
+        port: 465,
         auth: {
           user: process.env.EMAIL_SERVER_USER,
           pass: process.env.EMAIL_SERVER_PASSWORD
@@ -89,11 +71,8 @@ const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     //Invoked on successful signin 
-    async signIn ({ profile, user })
+    async signIn ({ account, profile, user })
     {
-      // connect to DB
-      // console.log(profile)
-      // console.log(user)
 
       if (user?.error)
       {
@@ -101,16 +80,36 @@ const authOptions = {
       }
 
       // profile === user signed in with oAuth provider
-      if (profile && !user)
+      if (account.provider === 'google')
       {
         // connect database
         await connectDB()
         // create user
-        const username = profile.name
-        const email = profile.email.toLowercase()
-        const profileImage = profile.picture || profile.avatar_url
+        const firstname = profile.given_name
+        const lastname = profile.family_name
+        const email = profile.email
+        const password = await encrypt(profile.sub)
+        const image = profile.picture
+        const phone = null
+        const address1 = null
+        const address2 = null
+        const city = null
+        const state = null
+        const zip = null
+        const fullAddress = null
+        const okForMarketing = true
+        const emailVerified = true
+        const deletedDate = null
 
-        await User.create({ email, username, profileImage })
+        const userExists = await User.findOne({ email })
+        // if user exists login
+        if (userExists)
+        {
+          return true
+        } else // if user dont exist create user
+        {
+          await User.create({ firstname, lastname, email, password, image, phone, address: { address1, address2, city, state, zip, fullAddress }, okForMarketing, emailVerified, deletedDate })
+        }
       }
       //return true to allow signIn 
       return true

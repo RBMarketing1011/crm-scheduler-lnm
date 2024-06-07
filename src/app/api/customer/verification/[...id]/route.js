@@ -1,6 +1,6 @@
-import connectDB from '@db/connectDB'
-import Customer from '@models/Customers'
-import EmailToken from '@models/emailToken'
+import connectDB from '@config/connectDB'
+import Customer from '@models/customers'
+import CustomerEmailToken from '@models/customerEmailToken'
 
 const verifyCustomerToken = async (req, { params }) =>
 {
@@ -10,7 +10,7 @@ const verifyCustomerToken = async (req, { params }) =>
 
   try
   {
-    const verifyToken = await EmailToken.findOne({ token }).populate('customer')
+    const verifyToken = await CustomerEmailToken.findOne({ token }).populate('customer')
     const customer = await Customer.findById(id)
     const allTokens = await EmailToken.find({})
 
@@ -21,7 +21,7 @@ const verifyCustomerToken = async (req, { params }) =>
       const time = Date.now()
       if (expire < time)
       {
-        await EmailToken.findByIdAndDelete(token._id)
+        await CustomerEmailToken.findByIdAndDelete(token._id)
       }
     })
 
@@ -39,7 +39,7 @@ const verifyCustomerToken = async (req, { params }) =>
           emailVerified: true
         })
 
-        await EmailToken.findByIdAndDelete(verifyToken._id)
+        await CustomerEmailToken.findByIdAndDelete(verifyToken._id)
 
         return Response.json('Token Verified')
       } else
@@ -49,9 +49,7 @@ const verifyCustomerToken = async (req, { params }) =>
       }
     } else if (tokenExpire < now)
     {
-      await EmailToken.findByIdAndDelete(verifyToken._id)
-    } else
-    {
+      await CustomerEmailToken.findByIdAndDelete(verifyToken._id)
       console.log('Token Expired')
       throw new Error('Your Token Has Expired. Please Try Again.')
     }

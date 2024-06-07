@@ -1,7 +1,7 @@
 import { v4 } from 'uuid'
 import Customer from '@models/Customers'
-import EmailToken from '@models/emailToken'
-import connectDB from '@db/connectDB'
+import CustomerEmailToken from '@models/customerEmailToken'
+import connectDB from '@config/connectDB'
 
 const genShortToken = async (customerId) =>
 {
@@ -11,7 +11,7 @@ const genShortToken = async (customerId) =>
 
   try
   {
-    const emailToken = await EmailToken.create({ token, customer })
+    const emailToken = await CustomerEmailToken.create({ token, customer })
     return emailToken.token
   } catch (error)
   {

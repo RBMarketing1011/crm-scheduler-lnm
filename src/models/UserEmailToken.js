@@ -1,14 +1,14 @@
 import { Schema, models, model } from 'mongoose'
 
-const emailTokenSchema = new Schema({
+const userEmailTokenSchema = new Schema({
   token: {
     type: String,
     required: true,
     unique: true
   },
-  customer: {
+  user: {
     type: Schema.Types.ObjectId,
-    ref: 'Customer',
+    ref: 'User',
     required: true
   },
   expiration: {
@@ -16,7 +16,7 @@ const emailTokenSchema = new Schema({
     default: () =>
     {
       let now = new Date()
-      now.setMinutes(now.getMinutes() + 15) // timestamp
+      now.setMinutes(now.getMinutes() + 30) // timestamp
       now = new Date(now) // Date object
       return now
     },
@@ -24,5 +24,5 @@ const emailTokenSchema = new Schema({
   }
 }, { timestamps: true })
 
-const EmailToken = models.EmailToken || model('EmailToken', emailTokenSchema)
-export default EmailToken
+const UserEmailToken = models.UserEmailToken || model('UserEmailToken', userEmailTokenSchema)
+export default UserEmailToken

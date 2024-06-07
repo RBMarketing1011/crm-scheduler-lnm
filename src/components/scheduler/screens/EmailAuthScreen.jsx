@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 import SchedulerNextScreenBtn from '../btns/SchedulerNextScreenBtn'
 import SchedulerBackScreenBtn from '../btns/SchedulerBackScreenBtn'
+import { Notifi, notifi } from '@components/Notifications/Notify'
 
 const EmailAuthScreen = ({ shop, customerChange, nextScreen, prevScreen }) =>
 {
@@ -12,19 +13,25 @@ const EmailAuthScreen = ({ shop, customerChange, nextScreen, prevScreen }) =>
   const [ email, setEmail ] = useState('anthony@leadsnearme.com')
   const [ consent, setConsent ] = useState(true)
 
+  const [ notify, setNotify ] = useState({
+    type: '',
+    text: '',
+    show: false
+  })
+
   const handleClick = async () =>
   {
     if (!firstname || !lastname || !email)
     {
-      toast.error('Please Fill Out All Fields')
+      notifi.error('Please Fill Out All Fields', setNotify)
     } else if (!consent)
     {
-      toast.error('Please give us consent')
+      notifi.error('Please give us consent', setNotify)
     } else
     {
       try
       {
-        const res = await fetch(`${ process.env.NEXT_PUBLIC_URL }${ process.env.NEXT_PUBLIC_API_URL }/scheduler/customerInfo`, {
+        const res = await fetch(`${ process.env.NEXT_PUBLIC_API_DOMAIN }/scheduler/customerInfo`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -41,13 +48,14 @@ const EmailAuthScreen = ({ shop, customerChange, nextScreen, prevScreen }) =>
         }
       } catch (error)
       {
-        toast.error(error)
+        notifi.error(error, setNotify)
       }
     }
   }
 
   return (
     <main className='w-full h-[100%] flex flex-col justify-between'>
+      <Notifi data={ { state: notify, setState: setNotify } } />
       <div className='w-full flex flex-col gap-10'>
         <div className='w-full'>
           <h1 className='text-xl font-bold text-primary-300'>To schedule your appointment at { shop.name }, please enter your details below!</h1>
@@ -83,7 +91,7 @@ const EmailAuthScreen = ({ shop, customerChange, nextScreen, prevScreen }) =>
         </div>
 
         <div className='w-full flex justify-start items-center gap-5'>
-          <input id='consent' type="checkbox" checked onClick={ () => setConsent(!consent) } />
+          <input id='consent' type="checkbox" defaultChecked={ true } onClick={ () => setConsent(!consent) } />
           <label htmlFor="consent">I agree to receive email messages about my appointment with { shop.name }. You can unsubscribe at any time.</label>
         </div>
       </div>

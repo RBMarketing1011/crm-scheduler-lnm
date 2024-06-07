@@ -12,9 +12,7 @@ import logo from '@assets/schedulerAssets/lnm-logo-black.png'
 //icons
 import { IoClose } from "react-icons/io5"
 
-
-import Services from '@models/services'
-import connectDB from '@db/connectDB'
+import connectDB from '@config/connectDB'
 
 const Scheduler = async () =>
 {

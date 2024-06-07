@@ -11,10 +11,11 @@ import { signIn } from 'next-auth/react'
 import Button from '@components/Dashboard/Button'
 import { TextField } from '@components/HomePage/Fields'
 import { SlimLayout } from '@components/HomePage/SlimLayout'
-import { Notifi, notifi } from '@components/Dashboard/Notifications/Notify'
+import { Notifi, notifi } from '@components/Notifications/Notify'
 
 //icons
 import { FaGoogle, FaGithub } from 'react-icons/fa'
+import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6'
 
 //images
 import Logo from '@images/logos/lnm-logo-black.png'
@@ -40,48 +41,56 @@ export default function Register ()
   {
     e.preventDefault()
 
-    try
+    let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,16}$/
+
+    if (!regex.test(user.password))
     {
-      const res = await fetch(`${ process.env.NEXT_PUBLIC_API_DOMAIN }/users`, {
-        method: 'POST',
-        header: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(user)
-      })
-
-      const data = await res.json()
-
-      if (data.success)
+      notifi.error("Password doesn't follow guidelines.", setNotify)
+    } else
+    {
+      try
       {
-        setUser({
-          name: '',
-          email: '',
-          password: ''
+
+        const res = await fetch(`${ process.env.NEXT_PUBLIC_API_DOMAIN }/users`, {
+          method: 'POST',
+          header: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(user)
         })
 
-        notifi.success(data.success, setNotify)
+        const data = await res.json()
 
-        signIn('credentials', {
-          email: user.email,
-          password: user.password,
-          redirect: false
-        })
+        if (data.success)
+        {
+          setUser({
+            name: '',
+            email: '',
+            password: ''
+          })
 
-        router.push('/')
+          notifi.success(data.success, setNotify)
 
-      } else if (data.error)
+          signIn('credentials', {
+            email: user.email,
+            password: user.password,
+            redirect: false
+          })
+
+          router.push('/dashboard')
+
+        } else if (data.error)
+        {
+          notifi.error(data.error, setNotify)
+        }
+
+      } catch (error)
       {
-        notifi.error(data.error, setNotify)
+        notifi.error(error, setNotify)
       }
-
-
-
-    } catch (error)
-    {
-      console.log(error)
-      notifi.error(error, setNotify)
     }
+
+
   }
 
   return (
@@ -182,6 +191,56 @@ export default function Register ()
               autoComplete="new-password"
               required
             />
+            <div className='col-span-full flex flex-col gap-5'>
+              <p className='text-xs'>Password guidelines:</p>
+              <div className='flex flex-wrap gap-2'>
+                <p className="text-xs flex gap-1 items-center">
+                  {
+                    user.password.length > 7 && user.password.length < 17 ?
+                      <FaCircleCheck className='text-green-500' />
+                      :
+                      <FaCircleXmark className='text-red-500' />
+                  }
+                  8-16 characters
+                </p>
+                <p className="text-xs flex gap-1 items-center">
+                  {
+                    user.password.search(/[A-Z]/) < 0 ?
+                      <FaCircleXmark className='text-red-500' />
+                      :
+                      <FaCircleCheck className='text-green-500' />
+                  }
+                  1 uppercase letter
+                </p>
+                <p className="text-xs flex gap-1 items-center">
+                  {
+                    user.password.search(/[a-z]/) < 0 ?
+                      <FaCircleXmark className='text-red-500' />
+                      :
+                      <FaCircleCheck className='text-green-500' />
+                  }
+                  1 lowercase letter
+                </p>
+                <p className="text-xs flex gap-1 items-center">
+                  {
+                    user.password.search(/[0-9]/) < 0 ?
+                      <FaCircleXmark className='text-red-500' />
+                      :
+                      <FaCircleCheck className='text-green-500' />
+                  }
+                  1 number
+                </p>
+                <p className="text-xs flex gap-1 items-center">
+                  {
+                    user.password.search(/[[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]/) < 0 ?
+                      <FaCircleXmark className='text-red-500' />
+                      :
+                      <FaCircleCheck className='text-green-500' />
+                  }
+                  1 special character
+                </p>
+              </div>
+            </div>
             <div className="col-span-full">
               <Button type="submit" text='Sign Up' />
             </div>
@@ -191,8 +250,7 @@ export default function Register ()
         <div className='flex flex-col items-center gap-10'>
           <h3>- OR -</h3>
           <div className='flex flex-col gap-3'>
-            <Button icon={ <FaGoogle /> } text='Sign In With Google' onClick={ () => alert('hey') } />
-            <Button icon={ <FaGithub /> } text='Sign In With GitHub' onClick={ () => alert('hey') } />
+            <Button icon={ <FaGoogle /> } text='Sign In With Google' onClick={ () => signIn('google') } />
           </div>
         </div>
       </div>

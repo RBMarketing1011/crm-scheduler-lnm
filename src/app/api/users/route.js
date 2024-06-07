@@ -2,6 +2,8 @@ import User from '@models/users'
 import Account from '@models/accounts'
 import connectDB from '@config/connectDB'
 import encrypt from '@utils/encrypt'
+import genUserVerifyEmailToken from '@utils/genUserVerifyEmailToken'
+import verifyEmailUser from '@utils/verifyEmailUser'
 
 const createUserFromCredentials = async (req) =>
 {
@@ -43,6 +45,12 @@ const createUserFromCredentials = async (req) =>
     await User.findByIdAndUpdate(newUser._id, {
       accountId: account._id
     })
+
+    // generate token to verify email 
+    const token = await genUserVerifyEmailToken(newUser._id)
+
+    // send verification email 
+    verifyEmailUser(newUser.firstname, newUser.email, token)
 
     // Send success and redirect 
     return Response.json({ success: 'Account Created Successfully' }, { status: 200 })

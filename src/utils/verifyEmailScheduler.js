@@ -1,15 +1,15 @@
 import nodemailer from 'nodemailer'
 
-const verifyEmail = (email, token) =>
+const verifyEmailScheduler = (email, token) =>
 {
   const transporter = nodemailer.createTransport({
-    service: "Gmail",
-    host: "smtp.gmail.com",
+    service: process.env.EMAIL_SERVER_SERVICE,
+    host: process.env.EMAIL_SERVER_HOST,
     port: 465,
     secure: true,
     auth: {
-      user: process.env.NODEMAILER_USER,
-      pass: process.env.NODEMAILER_PASS,
+      user: process.env.EMAIL_SERVER_USER,
+      pass: process.env.EMAIL_SERVER_PASSWORD,
     },
   })
 
@@ -18,7 +18,7 @@ const verifyEmail = (email, token) =>
   {
     // send mail with defined transport object
     const info = await transporter.sendMail({
-      from: `"LeadsNearMe® Support " <${ process.env.NODEMAILER_USER }>`, // sender address
+      from: process.env.EMAIL_FROM, // sender address
       to: email, // list of receivers
       subject: "Please Verify Your Email", // Subject line
       text: "Verification Code Enclosed!", // plain text body
@@ -42,4 +42,4 @@ const verifyEmail = (email, token) =>
   main().catch(console.error)
 }
 
-export default verifyEmail
+export default verifyEmailScheduler

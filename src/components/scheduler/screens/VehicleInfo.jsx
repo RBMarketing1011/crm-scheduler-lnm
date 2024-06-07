@@ -43,18 +43,6 @@ import
 
 const VehicleInfo = ({ nextScreen, prevScreen, year, make, model }) =>
 {
-  console.log(year.value, make.value, model.value)
-
-  const handleNext = () =>
-  {
-    if (!year.value || !make.value || !model.value)
-    {
-      toast.error('Please fill out all fields')
-    } else
-    {
-      nextScreen()
-    }
-  }
 
   return (
     <main className='w-full h-[100%] flex flex-col justify-between'>
@@ -357,7 +345,7 @@ const VehicleInfo = ({ nextScreen, prevScreen, year, make, model }) =>
         />
 
         <SchedulerNextScreenBtn
-          nextScreen={ handleNext }
+          nextScreen={ nextScreen }
         />
 
       </div>

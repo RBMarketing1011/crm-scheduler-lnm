@@ -1,6 +1,4 @@
-import mongoose from 'mongoose'
-
-const { Schema, model, models } = mongoose
+import { Schema, models, model } from 'mongoose'
 
 const customerSchema = new Schema({
   "firstName": {
@@ -14,6 +12,10 @@ const customerSchema = new Schema({
   "email": {
     type: String,
     required: [ true, 'Email is required.' ]
+  },
+  emailVerified: {
+    type: Boolean,
+    default: false
   },
   "phone": [
     {

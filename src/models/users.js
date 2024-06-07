@@ -1,6 +1,4 @@
-import mongoose from 'mongoose'
-
-const { Schema, model, models } = mongoose
+import { Schema, models, model } from 'mongoose'
 
 const userSchema = new Schema({
   firstname: {
@@ -20,22 +18,14 @@ const userSchema = new Schema({
     type: String,
     required: [ true, 'Please provide your password' ],
   },
-  phone: [
-    {
-      number: {
-        type: String,
-        default: null
-      },
-      type: {
-        type: String,
-        default: null
-      },
-      primary: {
-        type: Boolean,
-        default: null
-      }
-    }
-  ],
+  image: {
+    type: String,
+    default: null
+  },
+  phone: {
+    type: String,
+    default: null
+  },
   address: {
     address1: {
       type: String,
@@ -57,10 +47,6 @@ const userSchema = new Schema({
       type: String,
       default: null
     },
-    streetAddress: {
-      type: String,
-      default: null
-    },
     fullAddress: {
       type: String,
       default: null
@@ -69,6 +55,10 @@ const userSchema = new Schema({
   okForMarketing: {
     type: Boolean,
     default: true
+  },
+  emailVerified: {
+    type: Boolean,
+    default: false
   },
   deletedDate: {
     type: Date,

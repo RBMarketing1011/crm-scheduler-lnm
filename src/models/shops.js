@@ -1,6 +1,4 @@
-import mongoose from 'mongoose'
-
-const { Schema, model, models } = mongoose
+import { Schema, models, model } from 'mongoose'
 
 const shopSchema = new Schema({
   name: {
@@ -48,7 +46,13 @@ const shopSchema = new Schema({
       type: String,
       required: [ true, 'Full address is required.' ]
     }
-  }
+  },
+  customers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Customer'
+    }
+  ]
 }, { timestamps: true })
 
 const Shop = models.Shop || model('Shop', shopSchema)

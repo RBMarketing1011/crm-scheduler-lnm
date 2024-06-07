@@ -9,17 +9,22 @@ import { useState } from 'react'
 const VerifyEmailToken = ({ customerId, nextScreen, prevScreen }) =>
 {
   const [ token, setToken ] = useState('')
+  const [ notify, setNotify ] = useState({
+    type: '',
+    text: '',
+    show: false
+  })
 
   const handleClick = async () =>
   {
     if (!token)
     {
-      notifi('error', 'Please Enter Your Verification Code')
+      notifi.error('Please Enter Your Verification Code', setNotify)
     } else
     {
       try
       {
-        const res = await fetch(`${ process.env.NEXT_PUBLIC_URL }${ process.env.NEXT_PUBLIC_API_URL }/customer/verify/${ customerId }`, {
+        const res = await fetch(`${ process.env.NEXT_PUBLIC_API_DOMAIN }/customer/verification/${ customerId }`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -33,14 +38,14 @@ const VerifyEmailToken = ({ customerId, nextScreen, prevScreen }) =>
         }
       } catch (error)
       {
-        toast.error(error)
+        notifi.error(error, setNotify)
       }
     }
   }
 
   return (
     <main className='w-full h-[100%] flex flex-col justify-between'>
-      <Notifi />
+      <Notifi data={ { state: notify, setState: setNotify } } />
       <div className='w-full flex flex-col gap-10'>
         <div className='w-full'>
           <h1 className='text-xl font-bold text-primary-300'>Please enter your one time passcode below.</h1>

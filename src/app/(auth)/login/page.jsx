@@ -11,7 +11,7 @@ import { signIn } from 'next-auth/react'
 import Button from '@components/Dashboard/Button'
 import { TextField } from '@components/HomePage/Fields'
 import { SlimLayout } from '@components/HomePage/SlimLayout'
-import { Notifi, notifi } from '@components/Dashboard/Notifications/Notify'
+import { Notifi, notifi } from '@components/Notifications/Notify'
 
 //icons
 import { FaGoogle, FaGithub } from 'react-icons/fa'
@@ -46,8 +46,6 @@ export default function Login ()
         password: user.password,
         redirect: false
       })
-
-      console.log(res)
 
       if (res?.error)
       {
@@ -136,8 +134,11 @@ export default function Login ()
         <div className='flex flex-col items-center gap-10'>
           <h3>- OR -</h3>
           <div className='flex flex-col gap-3'>
-            <Button icon={ <FaGoogle /> } text='Sign In With Google' onClick={ () => alert('hey') } />
-            <Button icon={ <FaGithub /> } text='Sign In With GitHub' onClick={ () => alert('hey') } />
+            <Button icon={ <FaGoogle /> } text='Sign In With Google' onClick={ async () =>
+            {
+              await signIn('google')
+              router.push('/dashboard')
+            } } />
           </div>
         </div>
       </div>

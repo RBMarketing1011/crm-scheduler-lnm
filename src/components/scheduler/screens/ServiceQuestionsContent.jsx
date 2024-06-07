@@ -1,8 +1,9 @@
 import SchedulerServiceQuestions from './ScheduleServiceQuestions'
 import SchedulerBackScreenBtn from '../btns/SchedulerBackScreenBtn'
 import SchedulerNextScreenBtn from '../btns/SchedulerNextScreenBtn'
+import { v4 } from 'uuid'
 
-const ServiceQuestionsContent = ({ data, handleClick, nextScreen, prevScreen }) =>
+const ServiceQuestionsContent = ({ data, handleClick, nextScreen, prevScreen, selected }) =>
 {
   return (
     <main className='w-full h-[100%] flex flex-col justify-between'>
@@ -12,8 +13,10 @@ const ServiceQuestionsContent = ({ data, handleClick, nextScreen, prevScreen }) 
         {
           data.answers.map(answer => (
             <SchedulerServiceQuestions
+              key={ v4() }
               data={ answer }
               handleClick={ handleClick }
+              selected={ selected }
             />
           ))
         }

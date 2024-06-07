@@ -1,8 +1,8 @@
 //dependencies
-import connectDB from '@db/connectDB'
+import connectDB from '@config/connectDB'
 
 //models
-import Account from '@models/account'
+import Account from '@models/accounts'
 import Shop from '@models/shops'
 
 const buildScheduler = async (req) =>
@@ -13,7 +13,7 @@ const buildScheduler = async (req) =>
     await connectDB()
 
     const account = await Account.findById(accountId)
-    const shop = await Shop.findById(shopId).populate('services')
+    const shop = await Shop.findById(shopId)
 
     return Response.json({ account, shop })
   } catch (error)

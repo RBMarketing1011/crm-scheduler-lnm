@@ -15,7 +15,8 @@ const Acura = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="acuraModels">Model:</label>
-      <select id="acuraModels" onChange={ onChange }>
+      <select id="acuraModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="ILX">ILX</option>
         <option value="MDX">MDX</option>
         <option value="NSX">NSX</option>
@@ -36,7 +37,8 @@ const AlfaRomeo = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="alfaRomeoModels">Model:</label>
-      <select id="alfaRomeoModels" onChange={ onChange }>
+      <select id="alfaRomeoModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="4C">4C</option>
         <option value="Giulia">Giulia</option>
         <option value="Stelvio">Stelvio</option>
@@ -50,7 +52,8 @@ const Audi = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="audiModels">Model:</label>
-      <select id="audiModels" onChange={ onChange }>
+      <select id="audiModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="A3">A3</option>
         <option value="A4">A4</option>
         <option value="A5">A5</option>
@@ -85,7 +88,8 @@ const Bmw = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="bmwModels">Model:</label>
-      <select id="bmwModels" onChange={ onChange }>
+      <select id="bmwModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="1 Series">1 Series</option>
         <option value="2 Series">2 Series</option>
         <option value="3 Series">3 Series</option>
@@ -124,7 +128,8 @@ const Buick = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="buickModels">Model:</label>
-      <select id="buickModels" onChange={ onChange }>
+      <select id="buickModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Enclave">Enclave</option>
         <option value="Encore">Encore</option>
         <option value="Envision">Envision</option>
@@ -140,7 +145,8 @@ const Cadillac = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="cadillacModels">Model:</label>
-      <select id="cadillacModels" onChange={ onChange }>
+      <select id="cadillacModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="CT4">CT4</option>
         <option value="CT5">CT5</option>
         <option value="CT6">CT6</option>
@@ -158,7 +164,8 @@ const Chevy = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="chevroletModels">Model:</label>
-      <select id="chevroletModels" onChange={ onChange }>
+      <select id="chevroletModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Blazer">Blazer</option>
         <option value="Camaro">Camaro</option>
         <option value="Colorado">Colorado</option>
@@ -187,7 +194,8 @@ const Chrysler = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="chryslerModels">Model:</label>
-      <select id="chryslerModels" onChange={ onChange }>
+      <select id="chryslerModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="300">300</option>
         <option value="Pacifica">Pacifica</option>
         <option value="Voyager">Voyager</option>
@@ -201,7 +209,8 @@ const Dodge = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="dodgeModels">Model:</label>
-      <select id="dodgeModels" onChange={ onChange }>
+      <select id="dodgeModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Avenger">Avenger</option>
         <option value="Caliber">Caliber</option>
         <option value="Caravan">Caravan</option>
@@ -231,7 +240,8 @@ const Fiat = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="fiatModels">Model:</label>
-      <select id="fiatModels" onChange={ onChange }>
+      <select id="fiatModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="124 Spider">124 Spider</option>
         <option value="500">500</option>
         <option value="500L">500L</option>
@@ -260,7 +270,8 @@ const Ford = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="fordModels">Model:</label>
-      <select id="fordModels" onChange={ onChange }>
+      <select id="fordModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Bronco">Bronco</option>
         <option value="C-Max">C-Max</option>
         <option value="EcoSport">EcoSport</option>
@@ -291,7 +302,8 @@ const Gmc = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="gmcModels">Model:</label>
-      <select id="gmcModels" onChange={ onChange }>
+      <select id="gmcModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Acadia">Acadia</option>
         <option value="Canyon">Canyon</option>
         <option value="Envoy">Envoy</option>
@@ -321,7 +333,8 @@ const Honda = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="hondaModels">Model:</label>
-      <select id="hondaModels" onChange={ onChange }>
+      <select id="hondaModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Accord">Accord</option>
         <option value="Accord Crosstour">Accord Crosstour</option>
         <option value="CR-V">CR-V</option>
@@ -348,7 +361,8 @@ const Hyundai = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="hyundaiModels">Model:</label>
-      <select id="hyundaiModels" onChange={ onChange }>
+      <select id="hyundaiModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Accent">Accent</option>
         <option value="Azera">Azera</option>
         <option value="Elantra">Elantra</option>
@@ -378,7 +392,8 @@ const Infiniti = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="infinitiModels">Model:</label>
-      <select id="infinitiModels" onChange={ onChange }>
+      <select id="infinitiModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Q50">Q50</option>
         <option value="Q60">Q60</option>
         <option value="Q70">Q70</option>
@@ -397,7 +412,8 @@ const Jaguar = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="jaguarModels">Model:</label>
-      <select id="jaguarModels" onChange={ onChange }>
+      <select id="jaguarModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="E-PACE">E-PACE</option>
         <option value="F-PACE">F-PACE</option>
         <option value="F-TYPE">F-TYPE</option>
@@ -416,7 +432,8 @@ const Jeep = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="jeepModels">Model:</label>
-      <select id="jeepModels" onChange={ onChange }>
+      <select id="jeepModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Cherokee">Cherokee</option>
         <option value="Comanche">Comanche</option>
         <option value="Commander">Commander</option>
@@ -442,7 +459,8 @@ const Kia = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="kiaModels">Model:</label>
-      <select id="kiaModels" onChange={ onChange }>
+      <select id="kiaModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Cadenza">Cadenza</option>
         <option value="Forte">Forte</option>
         <option value="K5">K5</option>
@@ -465,7 +483,8 @@ const LandRover = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="landRoverModels">Model:</label>
-      <select id="landRoverModels" onChange={ onChange }>
+      <select id="landRoverModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Defender">Defender</option>
         <option value="Discovery">Discovery</option>
         <option value="Discovery Sport">Discovery Sport</option>
@@ -483,7 +502,8 @@ const Lexus = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="lexusModels">Model:</label>
-      <select id="lexusModels" onChange={ onChange }>
+      <select id="lexusModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="ES">ES</option>
         <option value="GS">GS</option>
         <option value="GX">GX</option>
@@ -506,7 +526,8 @@ const Lincoln = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="lincolnModels">Model:</label>
-      <select id="lincolnModels" onChange={ onChange }>
+      <select id="lincolnModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Aviator">Aviator</option>
         <option value="Continental">Continental</option>
         <option value="Corsair">Corsair</option>
@@ -529,7 +550,8 @@ const Mazda = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="mazdaModels">Model:</label>
-      <select id="mazdaModels" onChange={ onChange }>
+      <select id="mazdaModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="CX-3">CX-3</option>
         <option value="CX-30">CX-30</option>
         <option value="CX-5">CX-5</option>
@@ -550,7 +572,8 @@ const Mercedes = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="mercedesModels">Model:</label>
-      <select id="mercedesModels" onChange={ onChange }>
+      <select id="mercedesModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="A-Class">A-Class</option>
         <option value="C-Class">C-Class</option>
         <option value="CLA">CLA</option>
@@ -578,7 +601,8 @@ const Mini = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="miniModels">Model:</label>
-      <select id="miniModels" onChange={ onChange }>
+      <select id="miniModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Clubman">Clubman</option>
         <option value="Convertible">Convertible</option>
         <option value="Countryman">Countryman</option>
@@ -596,7 +620,8 @@ const Mitsubishi = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="mitsubishiModels">Model:</label>
-      <select id="mitsubishiModels" onChange={ onChange }>
+      <select id="mitsubishiModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="3000GT">3000GT</option>
         <option value="Diamante">Diamante</option>
         <option value="Eclipse">Eclipse</option>
@@ -627,7 +652,8 @@ const Nissan = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="nissanModels">Choose a model:</label>
-      <select id="nissanModels" name="nissanModels" onChange={ onChange }>
+      <select id="nissanModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="350Z">350Z</option>
         <option value="370Z">370Z</option>
         <option value="Altima">Altima</option>
@@ -658,7 +684,8 @@ const Porsche = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="porscheModels">Choose a model:</label>
-      <select id="porscheModels" name="porscheModels" onChange={ onChange }>
+      <select id="porscheModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="718 Cayman">718 Cayman</option>
         <option value="718 Boxster">718 Boxster</option>
         <option value="911">911</option>
@@ -684,7 +711,8 @@ const Subaru = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="subaruModels">Choose a model:</label>
-      <select id="subaruModels" name="subaruModels" onChange={ onChange }>
+      <select id="subaruModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Ascent">Ascent</option>
         <option value="B9 Tribeca">B9 Tribeca</option>
         <option value="Baja">Baja</option>
@@ -709,7 +737,8 @@ const Tesla = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="teslaModels">Choose a model:</label>
-      <select id="teslaModels" name="teslaModels" onChange={ onChange }>
+      <select id="teslaModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Model S">Model S</option>
         <option value="Model 3">Model 3</option>
         <option value="Model X">Model X</option>
@@ -725,7 +754,8 @@ const Toyota = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="toyotaModels">Choose a model:</label>
-      <select id="toyotaModels" name="toyotaModels" onChange={ onChange }>
+      <select id="toyotaModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="4Runner">4Runner</option>
         <option value="86">86</option>
         <option value="Avalon">Avalon</option>
@@ -754,7 +784,8 @@ const Volkswagen = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="volkswagenModels">Choose a model:</label>
-      <select id="volkswagenModels" name="volkswagenModels" onChange={ onChange }>
+      <select id="volkswagenModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="Arteon">Arteon</option>
         <option value="Atlas">Atlas</option>
         <option value="Beetle">Beetle</option>
@@ -775,7 +806,8 @@ const Volvo = ({ onChange }) =>
   return (
     <div className='w-full flex flex-col gap-2'>
       <label htmlFor="volvoModels">Choose a model:</label>
-      <select id="volvoModels" name="volvoModels" onChange={ onChange }>
+      <select id="volvoModels" defaultValue='blank' onChange={ onChange }>
+        <option value="blank" disabled></option>
         <option value="C30">C30</option>
         <option value="C70">C70</option>
         <option value="S60">S60</option>
