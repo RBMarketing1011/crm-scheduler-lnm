@@ -14,6 +14,7 @@ const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true
     }),
     EmailProvider({
       server: {
@@ -29,8 +30,8 @@ const authOptions = {
     CredentialsProvider({
       name: 'credentials',
       credentials: {
-        email: { label: 'Email', type: 'text', placeholder: 'username@example.com' },
-        password: { label: 'Password', type: 'password', placeholder: '******' }
+        email: { label: 'Email', type: 'text' },
+        password: { label: 'Password', type: 'password' }
       },
       async authorize (credentials)
       {
@@ -66,13 +67,20 @@ const authOptions = {
     }),
   ],
   session: {
-    strategy: 'jwt'
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60,
+    updateAge: 24 * 60 * 60
   },
   secret: process.env.NEXTAUTH_SECRET,
+  // debug: true,
   callbacks: {
     //Invoked on successful signin 
     async signIn ({ account, profile, user })
     {
+
+      console.log('ACCOUNT   :' + account)
+      console.log('PROFILE   :' + profile)
+      console.log('USER   :' + user)
 
       if (user?.error)
       {
@@ -112,7 +120,7 @@ const authOptions = {
         }
       }
       //return true to allow signIn 
-      return true
+      return '/dashboard'
     },
     async jwt ({ token, account, profile })
     {
@@ -127,6 +135,8 @@ const authOptions = {
     //Modify session object 
     async session ({ session, token, user })
     {
+      console.log(token)
+      console.log(session)
       // connect database 
       await connectDB()
 
@@ -139,11 +149,18 @@ const authOptions = {
 
       //return session 
       return session
+    },
+    async redirect ({ url, baseUrl })
+    {
+      return url
     }
   },
   pages: {
     signIn: '/login',
-    error: null
+    signOut: '/logout',
+    error: null, // Error code passed in query string as ?error=
+    verifyRequest: null, // (used for check email message)
+    newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
   }
 }
 

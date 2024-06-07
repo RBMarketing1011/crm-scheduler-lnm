@@ -250,7 +250,11 @@ export default function Register ()
         <div className='flex flex-col items-center gap-10'>
           <h3>- OR -</h3>
           <div className='flex flex-col gap-3'>
-            <Button icon={ <FaGoogle /> } text='Sign In With Google' onClick={ () => signIn('google') } />
+            <Button icon={ <FaGoogle /> } text='Register With Google' onClick={ () =>
+            {
+              signIn('google')
+              // router.push('/dashboard')
+            } } />
           </div>
         </div>
       </div>

@@ -137,7 +137,7 @@ export default function Login ()
             <Button icon={ <FaGoogle /> } text='Sign In With Google' onClick={ async () =>
             {
               await signIn('google')
-              router.push('/dashboard')
+              // router.push('/dashboard')
             } } />
           </div>
         </div>
