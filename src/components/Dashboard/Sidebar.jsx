@@ -2,6 +2,7 @@
 
 import { Fragment, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 import
 {
@@ -48,6 +49,15 @@ const Sidebar = () =>
 {
   const [ sidebarOpen, setSidebarOpen ] = useState(false)
   const path = usePathname()
+  const { data: session } = useSession()
+
+  const userInfo = session?.user
+  const accountInfo = session?.account
+  const shopsInfo = session?.shops
+
+  // console.log(userInfo)
+  // console.log(accountInfo)
+  console.log(shopsInfo)
 
   return (
     <>
@@ -151,7 +161,9 @@ const Sidebar = () =>
                         <div className="text-xs font-semibold leading-6 text-primary-300">Shops</div>
                         <ul role="list" className="-mx-2 mt-2 space-y-1">
                           {
-                            shops.map(shop => (
+                            shopsInfo &&
+                            Object.keys(shopsInfo).length > 0 &&
+                            shopsInfo.map(shop => (
 
                               <li key={ shop.name }>
                                 <Link
@@ -287,10 +299,19 @@ const Sidebar = () =>
                 </ul>
               </li>
               <li>
-                <div className="text-xs font-semibold leading-6 text-primary-300">Shops</div>
+                <div className="flex justify-between items-center">
+                  <div className="text-xs font-semibold leading-6 text-primary-300">
+                    Shops
+                  </div>
+                  <div className="text-xs font-semibold leading-6 text-primary-300">
+                    Add Shop
+                  </div>
+                </div>
                 <ul role="list" className="-mx-2 mt-2 space-y-1">
                   {
-                    shops.map(team => (
+                    shopsInfo &&
+                    Object.keys(shopsInfo).length > 0 &&
+                    shopsInfo.map(team => (
 
                       <li key={ team.name }>
                         <Link

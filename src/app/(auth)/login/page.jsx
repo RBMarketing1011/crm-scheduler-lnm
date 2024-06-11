@@ -38,7 +38,6 @@ export default function Login ()
   {
     e.preventDefault()
 
-    console.log(user)
     try
     {
       const res = await signIn('credentials', {
@@ -130,7 +129,9 @@ export default function Login ()
             </div>
           </form>
         </div>
-        <div className='hidden sm:block border-r border-primary-300/30 h-[50vh] w-2'></div>
+
+        {/* Add Provider SignIns Here */ }
+        {/* <div className='hidden sm:block border-r border-primary-300/30 h-[50vh] w-2'></div>
         <div className='flex flex-col items-center gap-10'>
           <h3>- OR -</h3>
           <div className='flex flex-col gap-3'>
@@ -140,7 +141,9 @@ export default function Login ()
               // router.push('/dashboard')
             } } />
           </div>
-        </div>
+        </div> */}
+
+
       </div>
     </SlimLayout>
   )

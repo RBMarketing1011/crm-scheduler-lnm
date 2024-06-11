@@ -14,7 +14,6 @@ import { SlimLayout } from '@components/HomePage/SlimLayout'
 import { Notifi, notifi } from '@components/Notifications/Notify'
 
 //icons
-import { FaGoogle, FaGithub } from 'react-icons/fa'
 import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6'
 
 //images
@@ -63,12 +62,6 @@ export default function Register ()
 
         if (data.success)
         {
-          setUser({
-            name: '',
-            email: '',
-            password: ''
-          })
-
           notifi.success(data.success, setNotify)
 
           signIn('credentials', {
@@ -78,6 +71,13 @@ export default function Register ()
           })
 
           router.push('/dashboard')
+
+          setUser({
+            firstname: '',
+            lastname: '',
+            email: '',
+            password: ''
+          })
 
         } else if (data.error)
         {
@@ -246,7 +246,9 @@ export default function Register ()
             </div>
           </form>
         </div>
-        <div className='hidden sm:block border-r border-primary-300/30 h-[50vh] w-2'></div>
+
+        {/* Add Provider Sign Ins Here */ }
+        {/* <div className='hidden sm:block border-r border-primary-300/30 h-[50vh] w-2'></div>
         <div className='flex flex-col items-center gap-10'>
           <h3>- OR -</h3>
           <div className='flex flex-col gap-3'>
@@ -256,7 +258,9 @@ export default function Register ()
               // router.push('/dashboard')
             } } />
           </div>
-        </div>
+        </div> */}
+
+
       </div>
     </SlimLayout>
   )

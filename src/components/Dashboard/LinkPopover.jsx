@@ -79,7 +79,7 @@ const LinkPopover = ({ button, x, y }) =>
               className='text-gray-700 hover:bg-primary-100 hover:text-primary-300 block w-full px-4 py-2 text-left text-sm'
               onClick={ () =>
               {
-                signOut
+                signOut()
                 router.push('/')
               } }
             >

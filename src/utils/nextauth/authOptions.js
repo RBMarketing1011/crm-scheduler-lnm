@@ -2,20 +2,21 @@ import GoogleProvider from 'next-auth/providers/google'
 import EmailProvider from 'next-auth/providers/email'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcrypt'
-import encrypt from './encrypt'
+import encrypt from '../encrypt'
 import connectDB from '@config/connectDB'
 import User from '@models/users'
+import Account from '@models/accounts'
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
-import clientPromise from "@utils/adapter"
+import clientPromise from "@utils/nextauth/adapter"
 
 const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      allowDangerousEmailAccountLinking: true
-    }),
+    // GoogleProvider({
+    //   clientId: process.env.GOOGLE_CLIENT_ID,
+    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    //   allowDangerousEmailAccountLinking: true
+    // }),
     EmailProvider({
       server: {
         host: process.env.EMAIL_SERVER_HOST,
@@ -35,6 +36,7 @@ const authOptions = {
       },
       async authorize (credentials)
       {
+        // console.log(credentials)
         // check for credentials
         if (!credentials.email || !credentials.password)
         {
@@ -68,8 +70,8 @@ const authOptions = {
   ],
   session: {
     strategy: 'jwt',
-    maxAge: 30 * 24 * 60 * 60,
-    updateAge: 24 * 60 * 60
+    // maxAge: 30 * 24 * 60 * 60,
+    // updateAge: 24 * 60 * 60
   },
   secret: process.env.NEXTAUTH_SECRET,
   // debug: true,
@@ -78,49 +80,18 @@ const authOptions = {
     async signIn ({ account, profile, user })
     {
 
-      console.log('ACCOUNT   :' + account)
-      console.log('PROFILE   :' + profile)
-      console.log('USER   :' + user)
+      // console.log('ACCOUNT:   ' + account)
+      // console.log('PROFILE:   ' + profile)
+      // console.log('USER:   ' + user)
 
+      // if no user found return false
       if (user?.error)
       {
-        throw new Error(user.error)
+        return false
       }
 
-      // profile === user signed in with oAuth provider
-      if (account.provider === 'google')
-      {
-        // connect database
-        await connectDB()
-        // create user
-        const firstname = profile.given_name
-        const lastname = profile.family_name
-        const email = profile.email
-        const password = await encrypt(profile.sub)
-        const image = profile.picture
-        const phone = null
-        const address1 = null
-        const address2 = null
-        const city = null
-        const state = null
-        const zip = null
-        const fullAddress = null
-        const okForMarketing = true
-        const emailVerified = true
-        const deletedDate = null
-
-        const userExists = await User.findOne({ email })
-        // if user exists login
-        if (userExists)
-        {
-          return true
-        } else // if user dont exist create user
-        {
-          await User.create({ firstname, lastname, email, password, image, phone, address: { address1, address2, city, state, zip, fullAddress }, okForMarketing, emailVerified, deletedDate })
-        }
-      }
       //return true to allow signIn 
-      return '/dashboard'
+      return true
     },
     async jwt ({ token, account, profile })
     {
@@ -135,32 +106,33 @@ const authOptions = {
     //Modify session object 
     async session ({ session, token, user })
     {
-      console.log(token)
-      console.log(session)
+      // console.log(token)
+      // console.log(session)
+
       // connect database 
       await connectDB()
 
       // find user to add to session 
       const findUser = await User.findById(token.id).select('-password').select('-createdAt').select('-updatedAt')
 
+      const account = await Account.findById(findUser.accountId)
+
       //assign User to session 
       session.user = findUser
+      session.account = account
+      session.shops = account.populate('shops') || null
       session.accessToken = token.accessToken
 
       //return session 
       return session
     },
-    async redirect ({ url, baseUrl })
-    {
-      return url
-    }
   },
   pages: {
     signIn: '/login',
     signOut: '/logout',
     error: null, // Error code passed in query string as ?error=
-    verifyRequest: null, // (used for check email message)
-    newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
+    // verifyRequest: null, // (used for check email message)
+    // newUser: '/dashboard/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
   }
 }
 

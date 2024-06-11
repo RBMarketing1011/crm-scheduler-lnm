@@ -1,7 +1,6 @@
 import connectDB from '@config/connectDB'
 import User from '@models/users'
 import UserEmailToken from '@models/UserEmailToken'
-import { redirect } from 'next/navigation'
 
 const verifyUserWithToken = async (request, { params }) =>
 {
@@ -21,11 +20,12 @@ const verifyUserWithToken = async (request, { params }) =>
     }
   })
 
+  const loginUrl = new URL('/login', request.url)
+
   // redirect to login if no emailtoken found
   if (!emailToken)
   {
-    redirect('/login')
-    return Response('Token was not found')
+    return Response.redirect(loginUrl)
   }
 
   try
@@ -36,7 +36,7 @@ const verifyUserWithToken = async (request, { params }) =>
       // delete token 
       await UserEmailToken.findByIdAndDelete(emailToken._id)
       // return Response.error
-      return Response({ error: 'Token Expired' })
+      return Response.json({ error: 'Token Expired' }).redirect(loginUrl)
     } else
     {
       // update user.emailVerified
@@ -46,7 +46,7 @@ const verifyUserWithToken = async (request, { params }) =>
       // delete email token
       await UserEmailToken.findByIdAndDelete(emailToken._id)
       // return Response.success
-      return Response({ success: 'Email Verification Successfull' })
+      return Response.json({ success: 'Email Verification Successfull' }).redirect(loginUrl)
     }
   } catch (error)
   {

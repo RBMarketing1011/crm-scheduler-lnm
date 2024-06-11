@@ -2,8 +2,8 @@ import User from '@models/users'
 import Account from '@models/accounts'
 import connectDB from '@config/connectDB'
 import encrypt from '@utils/encrypt'
-import genUserVerifyEmailToken from '@utils/genUserVerifyEmailToken'
-import verifyEmailUser from '@utils/verifyEmailUser'
+import genUserVerifyEmailToken from '@utils/tokenGenerators/genUserVerifyEmailToken'
+import verifyEmailUser from '@utils/nodemailerEmails/verifyEmailUser'
 
 const createUserFromCredentials = async (req) =>
 {
@@ -17,14 +17,14 @@ const createUserFromCredentials = async (req) =>
     if (!firstname || !lastname || !email || !password)
     {
       // if we dont - throw error 
-      throw new Error('All fields are required')
+      return Response.json({ error: 'All fields are required' }, { status: 500 })
     }
     // check if user exists 
     const userExists = await User.findOne({ email })
     // if user exists tell them that
     if (userExists)
     {
-      throw new Error('Account already exists')
+      return Response.json({ error: 'Account already exists' }, { status: 500 })
     }
     // if no user exists encrpt password 
     const hashPw = await encrypt(password)

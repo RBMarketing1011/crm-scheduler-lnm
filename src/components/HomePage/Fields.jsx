@@ -16,7 +16,7 @@ function Label ({ id, children })
   )
 }
 
-export function TextField ({ label, type = 'text', className, value, onChange, ...props })
+export function TextField ({ label, type, className, value, onChange, ...props })
 {
   let id = useId()
 

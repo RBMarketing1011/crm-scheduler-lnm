@@ -60,8 +60,6 @@ const SchedulerMainContent = () =>
 
     getAccount()
 
-    console.log(data)
-
   }, [])
   // ======================== Get Account & Shop info from search params and set State
 
