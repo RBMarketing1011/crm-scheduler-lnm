@@ -4,7 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcrypt'
 import encrypt from '../encrypt'
 import connectDB from '@config/connectDB'
-import User from '@models/users'
+import Employee from '@models/employees'
 import Account from '@models/accounts'
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import clientPromise from "@utils/nextauth/adapter"
@@ -47,7 +47,7 @@ const authOptions = {
         await connectDB()
 
         // check for user
-        const user = await User.findOne({ email: credentials.email })
+        const user = await Employee.findOne({ email: credentials.email })
         // if no user return null
         if (!user)
         {
@@ -113,14 +113,15 @@ const authOptions = {
       await connectDB()
 
       // find user to add to session 
-      const findUser = await User.findById(token.id).select('-password').select('-createdAt').select('-updatedAt')
+      const findUser = await Employee.findById(token.id).select('-password').select('-createdAt').select('-updatedAt')
 
-      const account = await Account.findById(findUser.accountId)
+      const account = await Account.findById(findUser.accountId).populate('shops').populate('employees')
 
       //assign User to session 
       session.user = findUser
       session.account = account
-      session.shops = account.populate('shops') || null
+      session.shops = account.shops
+      session.employees = account.employees
       session.accessToken = token.accessToken
 
       //return session 

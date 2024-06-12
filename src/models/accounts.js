@@ -4,7 +4,7 @@ import { Schema, models, model } from 'mongoose'
 const accountSchema = new Schema({
   owner: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Employee',
     required: [ true, 'Owner is required' ]
   },
   shops: [
@@ -14,10 +14,10 @@ const accountSchema = new Schema({
       default: null
     }
   ],
-  users: [
+  employees: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'Employee',
       default: null
     }
   ],

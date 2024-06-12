@@ -1,4 +1,4 @@
-import User from '@models/users'
+import Employee from '@models/employees'
 import Account from '@models/accounts'
 import connectDB from '@config/connectDB'
 import encrypt from '@utils/encrypt'
@@ -20,7 +20,7 @@ const createUserFromCredentials = async (req) =>
       return Response.json({ error: 'All fields are required' }, { status: 500 })
     }
     // check if user exists 
-    const userExists = await User.findOne({ email })
+    const userExists = await Employee.findOne({ email })
     // if user exists tell them that
     if (userExists)
     {
@@ -30,11 +30,12 @@ const createUserFromCredentials = async (req) =>
     const hashPw = await encrypt(password)
 
     // create new user with credentials and encrypted password
-    const newUser = await User.create({
+    const newUser = await Employee.create({
       firstname,
       lastname,
       email,
       password: hashPw,
+      employeeRole: 'Owner'
     })
 
     // create Account for user (at /register only)
@@ -42,7 +43,7 @@ const createUserFromCredentials = async (req) =>
       owner: newUser._id
     })
 
-    await User.findByIdAndUpdate(newUser._id, {
+    await Employee.findByIdAndUpdate(newUser._id, {
       accountId: account._id
     })
 

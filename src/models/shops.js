@@ -50,7 +50,7 @@ const shopSchema = new Schema({
   customers: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Customer'
+      ref: 'Customer',
     }
   ]
 }, { timestamps: true })

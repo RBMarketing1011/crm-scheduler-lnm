@@ -1,17 +1,17 @@
 import { v4 } from 'uuid'
-import User from '@models/users'
-import UserEmailToken from '@models/UserEmailToken'
+import Employee from '@models/employees'
+import EmployeeEmailToken from '@models/UserEmailToken'
 import connectDB from '@config/connectDB'
 
 const genUserVerifyEmailToken = async (customerId) =>
 {
   await connectDB()
   const token = v4()
-  const user = await User.findById(customerId)
+  const user = await Employee.findById(customerId)
 
   try
   {
-    const emailToken = await UserEmailToken.create({ token, user: user })
+    const emailToken = await EmployeeEmailToken.create({ token, user: user })
     return emailToken.token
   } catch (error)
   {

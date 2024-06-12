@@ -13,6 +13,7 @@ import
   ChatBubbleLeftEllipsisIcon,
   Cog8ToothIcon,
   CalendarDaysIcon,
+  PlusIcon
 } from '@heroicons/react/24/outline'
 
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
@@ -23,6 +24,8 @@ import Image from 'next/image'
 import Logo from '@images/logos/lnm-logo-black.png'
 import Link from 'next/link'
 import LinkPopover from './LinkPopover'
+import PopupForm from './PopupForm'
+import { Notifi } from '@components/Notifications/Notify'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: RectangleGroupIcon, },
@@ -35,7 +38,6 @@ const shops = [
   { id: 3, name: 'Cornerstone', href: '/dashboard/shops/c', },
 ]
 const account = [
-  { name: 'Messages', href: '/dashboard/messages', icon: ChatBubbleLeftEllipsisIcon, count: '3' },
   { name: 'Settings', href: '/dashboard/settings', icon: Cog8ToothIcon, },
 ]
 
@@ -49,6 +51,8 @@ const Sidebar = () =>
 {
   const [ sidebarOpen, setSidebarOpen ] = useState(false)
   const path = usePathname()
+
+  // ================== Session Data
   const { data: session } = useSession()
 
   const userInfo = session?.user
@@ -57,10 +61,37 @@ const Sidebar = () =>
 
   // console.log(userInfo)
   // console.log(accountInfo)
-  console.log(shopsInfo)
+  // console.log(shopsInfo)
+  // ================= End Session Data
+
+  // ================= Add Shop Popup
+  const [ openAddShopPopup, setOpenAddShopPopup ] = useState(false)
+  const [ addShopFormData, setAddShopFormData ] = useState({
+    name: '',
+    nickname: '',
+    phone: '',
+    email: '',
+    website: '',
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    zip: '',
+  })
+  // ================= End Add Shop Popup
+
+  // =================== Notifi State 
+  const [ notify, setNotify ] = useState({
+    type: '',
+    text: '',
+    show: false
+  })
+  // =================== End Notifi State
 
   return (
     <>
+      <Notifi data={ { state: notify, setState: setNotify } } />
+      {/* Sidebar For Mobile */ }
       <Transition show={ sidebarOpen } as={ Fragment }>
         <Dialog className="relative z-50 lg:hidden" onClose={ setSidebarOpen }>
           <TransitionChild
@@ -131,6 +162,7 @@ const Sidebar = () =>
                                       : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                                     group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
                                   `}
+                                  onClick={ () => setSidebarOpen(false) }
                                 >
                                   <item.icon
                                     className={ `
@@ -158,7 +190,20 @@ const Sidebar = () =>
                         </ul>
                       </li>
                       <li>
-                        <div className="text-xs font-semibold leading-6 text-primary-300">Shops</div>
+                        <div className="flex justify-between items-center">
+                          <div className="text-xs font-semibold leading-6 text-primary-300">
+                            Shops
+                          </div>
+                          <div className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white flex items-center gap-2 hover:cursor-pointer"
+                            onClick={ () =>
+                            {
+                              setOpenAddShopPopup(true)
+                              setSidebarOpen(false)
+                            } }
+                          >
+                            <PlusIcon className='w-[20px] stroke-[2px]' /> Add
+                          </div>
+                        </div>
                         <ul role="list" className="-mx-2 mt-2 space-y-1">
                           {
                             shopsInfo &&
@@ -167,17 +212,18 @@ const Sidebar = () =>
 
                               <li key={ shop.name }>
                                 <Link
-                                  href={ shop.href }
+                                  href={ `/dashboard/shops/${ shop._id }` }
                                   className={ `
-                                    ${ path === shop.href
+                                    ${ path === `/dashboard/shops/${ shop._id }`
                                       ? 'bg-primary-100 text-primary-300'
                                       : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                                     group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
                                   `}
+                                  onClick={ () => setSidebarOpen(false) }
                                 >
                                   <span
                                     className={ `
-                                      ${ path === shop.href
+                                      ${ path === `/dashboard/shops/${ shop._id }`
                                         ? 'text-primary-300 border-primary-300'
                                         : 'text-gray-700 border-gray-200' } group-hover:border-primary-300 group-hover:text-primary-300 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
                                     `}
@@ -206,6 +252,7 @@ const Sidebar = () =>
                                       : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                                     group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
                                   `}
+                                  onClick={ () => setSidebarOpen(false) }
                                 >
                                   <item.icon
                                     className={ `
@@ -303,21 +350,23 @@ const Sidebar = () =>
                   <div className="text-xs font-semibold leading-6 text-primary-300">
                     Shops
                   </div>
-                  <div className="text-xs font-semibold leading-6 text-primary-300">
-                    Add Shop
+                  <div className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white flex items-center gap-2 hover:cursor-pointer"
+                    onClick={ () => setOpenAddShopPopup(true) }
+                  >
+                    <PlusIcon className='w-[20px] stroke-[2px]' /> Add
                   </div>
                 </div>
                 <ul role="list" className="-mx-2 mt-2 space-y-1">
                   {
                     shopsInfo &&
                     Object.keys(shopsInfo).length > 0 &&
-                    shopsInfo.map(team => (
+                    shopsInfo.map((shop, shopIdx) => (
 
-                      <li key={ team.name }>
+                      <li key={ shopIdx }>
                         <Link
-                          href={ team.href }
+                          href={ `/dashboard/shops/${ shop._id }` }
                           className={ `
-                            ${ path === team.href
+                            ${ path === `/dashboard/shops/${ shop._id }`
                               ? 'bg-primary-100 text-primary-300'
                               : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                             group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
@@ -325,15 +374,15 @@ const Sidebar = () =>
                         >
                           <span
                             className={ `
-                              ${ path === team.href
+                              ${ path === `/dashboard/shops/${ shop._id }`
                                 ? 'text-primary-300 border-primary-300'
                                 : 'text-gray-400 border-gray-200 group-hover:border-primary-300 group-hover:text-primary-300' }
                               flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
                             `}
                           >
-                            { team.name.slice(0, 1) }
+                            { shop.name.slice(0, 1) }
                           </span>
-                          <span className="truncate">{ team.name }</span>
+                          <span className="truncate">{ shop.name }</span>
                         </Link>
                       </li>
 
@@ -387,14 +436,14 @@ const Sidebar = () =>
                     <>
                       <Image
                         className="h-8 w-8 rounded-full bg-gray-50 border border-primary-300"
-                        src={ Avatar }
-                        alt=""
+                        src={ userInfo?.image || Avatar }
+                        alt="User Profile Image"
                         width={ 0 }
                         height={ 0 }
                         sizes='100vw'
                       />
                       <span className="sr-only">Your profile</span>
-                      <span aria-hidden="true">Tom Cook</span>
+                      <span aria-hidden="true">{ userInfo?.firstname }</span>
                       <ChevronRightIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
                     </>
                   }
@@ -419,7 +468,7 @@ const Sidebar = () =>
               <span className="sr-only">Your profile</span>
               <Image
                 className="h-8 w-8 rounded-full bg-gray-50 border border-primary-300"
-                src={ Avatar }
+                src={ userInfo?.image || Avatar }
                 alt=""
                 width={ 0 }
                 height={ 0 }
@@ -431,6 +480,160 @@ const Sidebar = () =>
           y='top-20'
         />
       </div>
+
+      {/* Modal for Add Shop Form */ }
+      <PopupForm
+        title='Add Shop'
+        openPopupState={ { state: openAddShopPopup, setState: setOpenAddShopPopup } }
+        httpRequest={ {
+          url: `${ process.env.NEXT_PUBLIC_API_DOMAIN }/shops`,
+          method: 'POST',
+          body: JSON.stringify({ shop: addShopFormData, accountId: userInfo?.accountId })
+        } }
+        notifiSetState={ setNotify }
+        textFields={ [
+          {
+            width: 'sm:w-[99.5%]',
+            type: 'text',
+            label: 'Name',
+            value: addShopFormData.name,
+            required: true,
+            onChange: (e) =>
+            {
+              setAddShopFormData(prev => ({
+                ...prev,
+                name: e.target.value
+              }))
+            }
+          },
+          {
+            width: 'sm:w-[48.5%]',
+            type: 'text',
+            label: 'Nickname',
+            value: addShopFormData.nickname,
+            required: false,
+            onChange: (e) =>
+            {
+              setAddShopFormData(prev => ({
+                ...prev,
+                nickname: e.target.value
+              }))
+            }
+          },
+          {
+            width: 'sm:w-[48.5%]',
+            type: 'text',
+            label: 'Shop Phone',
+            value: addShopFormData.phone,
+            required: true,
+            onChange: (e) =>
+            {
+              setAddShopFormData(prev => ({
+                ...prev,
+                phone: e.target.value
+              }))
+            }
+          },
+          {
+            width: 'sm:w-[48.5%]',
+            type: 'email',
+            label: 'Shop Email',
+            value: addShopFormData.email,
+            required: true,
+            onChange: (e) =>
+            {
+              setAddShopFormData(prev => ({
+                ...prev,
+                email: e.target.value
+              }))
+            }
+          },
+          {
+            width: 'sm:w-[48.5%]',
+            type: 'text',
+            label: 'Website',
+            value: addShopFormData.website,
+            required: false,
+            onChange: (e) =>
+            {
+              setAddShopFormData(prev => ({
+                ...prev,
+                website: e.target.value
+              }))
+            }
+          },
+          {
+            width: 'sm:w-[98.5%]',
+            type: 'text',
+            label: 'Street Address',
+            value: addShopFormData.address1,
+            required: true,
+            onChange: (e) =>
+            {
+              setAddShopFormData(prev => ({
+                ...prev,
+                address1: e.target.value
+              }))
+            }
+          },
+          {
+            width: 'sm:w-[48.5%]',
+            type: 'text',
+            label: 'Apt/Unit #',
+            value: addShopFormData.address2,
+            required: false,
+            onChange: (e) =>
+            {
+              setAddShopFormData(prev => ({
+                ...prev,
+                address2: e.target.value
+              }))
+            }
+          },
+          {
+            width: 'sm:w-[48.5%]',
+            type: 'text',
+            label: 'City',
+            value: addShopFormData.city,
+            required: true,
+            onChange: (e) =>
+            {
+              setAddShopFormData(prev => ({
+                ...prev,
+                city: e.target.value
+              }))
+            }
+          },
+          {
+            width: 'sm:w-[48.5%]',
+            type: 'text',
+            label: 'State',
+            value: addShopFormData.state,
+            required: true,
+            onChange: (e) =>
+            {
+              setAddShopFormData(prev => ({
+                ...prev,
+                state: e.target.value
+              }))
+            }
+          },
+          {
+            width: 'sm:w-[48.5%]',
+            type: 'text',
+            label: 'Zip',
+            value: addShopFormData.zip,
+            required: true,
+            onChange: (e) =>
+            {
+              setAddShopFormData(prev => ({
+                ...prev,
+                zip: e.target.value
+              }))
+            }
+          },
+        ] }
+      />
     </>
   )
 }

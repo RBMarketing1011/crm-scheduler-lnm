@@ -1,11 +1,11 @@
 'use client'
 
-import { Fragment, useState } from 'react'
-import { Combobox, ComboboxOptions, ComboboxInput, ComboboxOption, Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
+import { useState } from 'react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { UsersIcon } from '@heroicons/react/24/outline'
-import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import { UsersIcon, PlusIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
+import { useSession } from 'next-auth/react'
+import { IoIosPeople } from "react-icons/io"
 
 const people = [
   {
@@ -148,18 +148,24 @@ function classNames (...classes)
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example ()
+export default function EmployeeSearch ()
 {
+  // ================================ Get Employees
+  const { data: session } = useSession()
+  const employees = session?.employees
+  // ================================ End Get Employees
+  // ================================ Filter
   const [ query, setQuery ] = useState('')
   const [ activeOption, setActiveOption ] = useState('')
 
-  const filteredPeople =
+  const filteredEmployees =
     query === ''
       ? []
-      : people.filter((person) =>
+      : employees.filter((person) =>
       {
-        return person.name.toLowerCase().includes(query.toLowerCase())
+        return person.firstname.toLowerCase().includes(query.toLowerCase())
       })
+  // ================================ End Filter 
 
   return (
     <div className="w-full transform divide-y divide-gray-100 overflow-hidden transition-all">
@@ -178,7 +184,7 @@ export default function Example ()
           />
         </div>
 
-        { (query === '' || filteredPeople.length > 0) && (
+        { (query === '' || filteredEmployees.length > 0) && (
           <div className="flex flex-col xl:flex-row divide-x divide-gray-100">
             <div
               className={ classNames(
@@ -187,24 +193,36 @@ export default function Example ()
               ) }
             >
               <div className="-mx-2 text-sm text-gray-700">
-                { (query === '' ? people : filteredPeople).map((person) => (
-                  <div
-                    key={ person.id }
-                    value={ person }
-                    className='flex cursor-pointer select-none items-center rounded-md p-2 hover:bg-primary-100 hover:text-primary-300'
-                    onClick={ () => setActiveOption(person) }
-                  >
-                    <Image
-                      src={ person.imageUrl }
-                      alt=""
-                      className="h-6 w-6 flex-none rounded-full"
-                      width={ 0 }
-                      height={ 0 }
-                      sizes='100vw'
-                    />
-                    <span className="ml-3 flex-auto truncate">{ person.name }</span>
-                  </div>
-                )) }
+                {
+                  employees &&
+                    employees.length ?
+                    (query === '' ? employees : filteredEmployees).map((person) => (
+                      <div
+                        key={ person._id }
+                        value={ person }
+                        className='flex cursor-pointer select-none items-center rounded-md p-2 hover:bg-primary-100 hover:text-primary-300'
+                        onClick={ () => setActiveOption(person) }
+                      >
+                        <Image
+                          src={ person.imageUrl }
+                          alt=""
+                          className="h-6 w-6 flex-none rounded-full"
+                          width={ 0 }
+                          height={ 0 }
+                          sizes='100vw'
+                        />
+                        <span className="ml-3 flex-auto truncate">{ person.name }</span>
+                      </div>
+                    ))
+
+                    :
+
+                    <div className="w-full h-full flex flex-col justify-center items-center gap-1">
+                      <IoIosPeople className='text-6xl text-primary-300' />
+                      <h3 className="mt-2 text-sm font-semibold text-gray-900">No Employees</h3>
+                      <p className="mt-1 text-sm text-gray-500">Get started by adding some employees to your account.</p>
+                    </div>
+                }
               </div>
             </div>
 

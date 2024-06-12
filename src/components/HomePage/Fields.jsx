@@ -28,14 +28,27 @@ export function TextField ({ label, type, className, value, onChange, ...props }
   )
 }
 
-export function SelectField ({ label, className, ...props })
+export function SelectField ({ label, className, options, onChange, ...props })
 {
   let id = useId()
 
   return (
     <div className={ className }>
       { label && <Label id={ id }>{ label }</Label> }
-      <select id={ id } { ...props } className={ clsx(formClasses, 'pr-8') } />
+      <select
+        id={ id }
+        { ...props }
+        className={ clsx(formClasses, 'pr-8') }
+        defaultValue='blank'
+        onChange={ onChange }
+      >
+        <option value="blank"></option>
+        {
+          options.map((opt, optIdx) => (
+            <option key={ optIdx } value={ opt }>{ opt }</option>
+          ))
+        }
+      </select>
     </div>
   )
 }

@@ -64,7 +64,7 @@ export default function Page ()
               name="current-tab"
               className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-primary-300 focus:outline-none focus:ring-primary-300 sm:text-sm"
               defaultValue='All'
-              onChnage={ (e) => setTab(e.target.value) }
+              onChange={ (e) => setTab(e.target.value) }
             >
 
               <option value='All Shops'>All Shops</option>

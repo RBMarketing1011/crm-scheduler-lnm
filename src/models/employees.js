@@ -1,19 +1,42 @@
 import { Schema, models, model } from 'mongoose'
 
 const employeeSchema = new Schema({
-  "email": {
-    type: String,
-    required: [ true, 'Email is required.' ]
+  accountId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Account'
   },
-  "firstName": {
+  shops: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Shop'
+    }
+  ],
+  firstname: {
     type: String,
-    required: [ true, 'First name is required.' ]
+    required: [ true, 'Please provide your first name' ]
   },
-  "lastName": {
+  lastname: {
     type: String,
-    required: [ true, 'Last name is required.' ]
+    required: [ true, 'Please provide your last name' ]
   },
-  "address": {
+  email: {
+    type: String,
+    required: [ true, 'Please provide your email' ],
+    unique: [ true, 'Email already in use' ]
+  },
+  password: {
+    type: String,
+    required: [ true, 'Please provide your password' ],
+  },
+  image: {
+    type: String,
+    default: null
+  },
+  phone: {
+    type: String,
+    default: null
+  },
+  address: {
     address1: {
       type: String,
       default: null
@@ -39,18 +62,22 @@ const employeeSchema = new Schema({
       default: null
     }
   },
-  "employeeRole": {
-    "code": {
-      type: Number,
-      required: true,
-      default: 0
-    },
-    "name": {
-      type: String,
-    }
+  okForMarketing: {
+    type: Boolean,
+    default: true
   },
-  "certificationNumber": {
+  emailVerified: {
+    type: Boolean,
+    default: false
+  },
+  employeeRole: {
     type: String,
+    required: true,
+    default: 'employee'
+  },
+  deletedDate: {
+    type: Date,
+    default: null
   }
 }, { timestamps: true })
 
