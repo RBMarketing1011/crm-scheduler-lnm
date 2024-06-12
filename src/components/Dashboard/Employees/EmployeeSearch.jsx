@@ -6,142 +6,7 @@ import { UsersIcon, PlusIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { IoIosPeople } from "react-icons/io"
-
-const people = [
-  {
-    id: 1,
-    name: 'Leslie Alexander',
-    phone: '1-493-747-9031',
-    email: 'lesliealexander@example.com',
-    role: 'Co-Founder / CEO',
-    url: 'https://example.com',
-    profileUrl: '#',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 2,
-    name: 'Anthony Reynolds',
-    phone: '1-493-747-9031',
-    email: 'lesliealexander@example.com',
-    role: 'Co-Founder / CEO',
-    url: 'https://example.com',
-    profileUrl: '#',
-    imageUrl:
-      'https://wallpapers.com/images/featured/dbz-pictures-k5hhz7dgu1362s2v.webp',
-  },
-  {
-    id: 3,
-    name: 'Chris Floyd',
-    phone: '1-493-747-9031',
-    email: 'lesliealexander@example.com',
-    role: 'Co-Founder / CEO',
-    url: 'https://example.com',
-    profileUrl: '#',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 4,
-    name: 'Leslie Alexander',
-    phone: '1-493-747-9031',
-    email: 'lesliealexander@example.com',
-    role: 'Co-Founder / CEO',
-    url: 'https://example.com',
-    profileUrl: '#',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 5,
-    name: 'Anthony Reynolds',
-    phone: '1-493-747-9031',
-    email: 'lesliealexander@example.com',
-    role: 'Co-Founder / CEO',
-    url: 'https://example.com',
-    profileUrl: '#',
-    imageUrl:
-      'https://wallpapers.com/images/featured/dbz-pictures-k5hhz7dgu1362s2v.webp',
-  },
-  {
-    id: 6,
-    name: 'Chris Floyd',
-    phone: '1-493-747-9031',
-    email: 'lesliealexander@example.com',
-    role: 'Co-Founder / CEO',
-    url: 'https://example.com',
-    profileUrl: '#',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 7,
-    name: 'Leslie Alexander',
-    phone: '1-493-747-9031',
-    email: 'lesliealexander@example.com',
-    role: 'Co-Founder / CEO',
-    url: 'https://example.com',
-    profileUrl: '#',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 8,
-    name: 'Anthony Reynolds',
-    phone: '1-493-747-9031',
-    email: 'lesliealexander@example.com',
-    role: 'Co-Founder / CEO',
-    url: 'https://example.com',
-    profileUrl: '#',
-    imageUrl:
-      'https://wallpapers.com/images/featured/dbz-pictures-k5hhz7dgu1362s2v.webp',
-  },
-  {
-    id: 9,
-    name: 'Chris Floyd',
-    phone: '1-493-747-9031',
-    email: 'lesliealexander@example.com',
-    role: 'Co-Founder / CEO',
-    url: 'https://example.com',
-    profileUrl: '#',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 10,
-    name: 'Leslie Alexander',
-    phone: '1-493-747-9031',
-    email: 'lesliealexander@example.com',
-    role: 'Co-Founder / CEO',
-    url: 'https://example.com',
-    profileUrl: '#',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 11,
-    name: 'Anthony Reynolds',
-    phone: '1-493-747-9031',
-    email: 'lesliealexander@example.com',
-    role: 'Co-Founder / CEO',
-    url: 'https://example.com',
-    profileUrl: '#',
-    imageUrl:
-      'https://wallpapers.com/images/featured/dbz-pictures-k5hhz7dgu1362s2v.webp',
-  },
-  {
-    id: 12,
-    name: 'Chris Floyd',
-    phone: '1-493-747-9031',
-    email: 'lesliealexander@example.com',
-    role: 'Co-Founder / CEO',
-    url: 'https://example.com',
-    profileUrl: '#',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  // More people...
-]
+import Avatar from '@images/avatars/avatar.png'
 
 function classNames (...classes)
 {
@@ -152,7 +17,6 @@ export default function EmployeeSearch ()
 {
   // ================================ Get Employees
   const { data: session } = useSession()
-  const employees = session?.employees
   // ================================ End Get Employees
   // ================================ Filter
   const [ query, setQuery ] = useState('')
@@ -161,7 +25,7 @@ export default function EmployeeSearch ()
   const filteredEmployees =
     query === ''
       ? []
-      : employees.filter((person) =>
+      : session?.employees.filter((person) =>
       {
         return person.firstname.toLowerCase().includes(query.toLowerCase())
       })
@@ -194,24 +58,38 @@ export default function EmployeeSearch ()
             >
               <div className="-mx-2 text-sm text-gray-700">
                 {
-                  employees &&
-                    employees.length ?
-                    (query === '' ? employees : filteredEmployees).map((person) => (
+                  session?.employees &&
+                    session?.employees.length ?
+                    (query === '' ? session?.employees : filteredEmployees).map((person) => (
                       <div
                         key={ person._id }
-                        value={ person }
+                        // value={ person }
                         className='flex cursor-pointer select-none items-center rounded-md p-2 hover:bg-primary-100 hover:text-primary-300'
                         onClick={ () => setActiveOption(person) }
                       >
-                        <Image
-                          src={ person.imageUrl }
-                          alt=""
-                          className="h-6 w-6 flex-none rounded-full"
-                          width={ 0 }
-                          height={ 0 }
-                          sizes='100vw'
-                        />
-                        <span className="ml-3 flex-auto truncate">{ person.name }</span>
+                        {
+                          person.image ?
+                            <Image
+                              src={ person.image }
+                              alt="Employee Profile Image"
+                              className="h-6 w-6 flex-none rounded-full"
+                              width={ 0 }
+                              height={ 0 }
+                              sizes='100vw'
+                            />
+
+                            :
+
+                            <Image
+                              src={ Avatar }
+                              alt="Employee Profile Image"
+                              className="h-6 w-6 flex-none rounded-full"
+                              width={ 0 }
+                              height={ 0 }
+                              sizes='100vw'
+                            />
+                        }
+                        <span className="ml-3 flex-auto truncate">{ person.firstname } { person.lastname }</span>
                       </div>
                     ))
 
@@ -231,21 +109,35 @@ export default function EmployeeSearch ()
 
                 <div className="xl:h-96 w-full flex xl:flex-col divide-y divide-gray-100 gap-5">
                   <div className="xl:flex-none xl:p-6 text-center">
-                    <Image
-                      src={ activeOption.imageUrl }
-                      alt=""
-                      className="mx-auto h-16 w-16 rounded-full"
-                      width={ 0 }
-                      height={ 0 }
-                      sizes='100vw'
-                    />
-                    <h2 className="mt-3 font-semibold text-gray-900">{ activeOption.name }</h2>
-                    <p className="text-sm leading-6 text-gray-500">{ activeOption.role }</p>
+                    {
+                      activeOption.image ?
+                        <Image
+                          src={ activeOption.image }
+                          alt=""
+                          className="mx-auto h-16 w-16 rounded-full"
+                          width={ 0 }
+                          height={ 0 }
+                          sizes='100vw'
+                        />
+
+                        :
+
+                        <Image
+                          src={ Avatar }
+                          alt="Employee Profile Image"
+                          className="mx-auto h-16 w-16 rounded-full"
+                          width={ 0 }
+                          height={ 0 }
+                          sizes='100vw'
+                        />
+                    }
+                    <h2 className="mt-3 font-semibold text-gray-900">{ activeOption.firstname } { activeOption.lastname }</h2>
+                    <p className="text-sm leading-6 text-gray-500">{ activeOption.employeeRole }</p>
                   </div>
                   <div className="flex flex-auto flex-col xl:justify-between xl:p-6">
                     <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-700">
                       <dt className="col-end-1 font-semibold text-gray-900">Phone</dt>
-                      <dd>{ activeOption.phone }</dd>
+                      <dd>{ activeOption.phone ? activeOption.phone : 'N/A' }</dd>
                       <dt className="col-end-1 font-semibold text-gray-900">Email</dt>
                       <dd className="truncate">
                         <a href={ `mailto:${ activeOption.email }` } className="text-primary-300 underline">
@@ -253,21 +145,14 @@ export default function EmployeeSearch ()
                         </a>
                       </dd>
                     </dl>
-                    <button
-                      type="button"
-                      className="mt-6 w-full rounded-md bg-primary-300 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                      Send message
-                    </button>
                   </div>
                 </div>
-
               )
             }
           </div>
         ) }
 
-        { query !== '' && filteredPeople.length === 0 && (
+        { query !== '' && filteredEmployees.length === 0 && (
           <div className="px-6 py-14 text-center text-sm sm:px-14">
             <UsersIcon className="mx-auto h-6 w-6 text-gray-400" aria-hidden="true" />
             <p className="mt-4 font-semibold text-gray-900">No people found</p>

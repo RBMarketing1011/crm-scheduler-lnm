@@ -17,7 +17,6 @@ import { useState } from 'react'
 const Dashboard = () =>
 {
   const { data: session } = useSession()
-  // console.log(session?.user)
 
   // ================================= PopupForm
   const [ openPopupForm, setOpenPopupForm ] = useState(false)
@@ -30,8 +29,13 @@ const Dashboard = () =>
     firstname: '',
     lastname: '',
     email: '',
+    shops: '',
     employeeRole: '',
   })
+
+  let shopsOptions = []
+  shopsOptions.push('All')
+  session?.shops?.map(el => (shopsOptions.push(el.name)))
   // ================================= End Popup Form
   return (
     <Container>
@@ -54,7 +58,7 @@ const Dashboard = () =>
         httpRequest={ {
           url: `${ process.env.NEXT_PUBLIC_API_DOMAIN }/employees`,
           method: 'POST',
-          body: JSON.stringify({ employee: formData, accountId: session?.userInfo?.accountId })
+          body: JSON.stringify({ employee: formData, accountId: session?.user?.accountId })
         } }
         notifiSetState={ setNotify }
         textFields={ [
@@ -103,6 +107,21 @@ const Dashboard = () =>
           {
             width: 'sm:w-[99.5%]',
             type: 'select',
+            label: 'Shops',
+            options: shopsOptions,
+            required: true,
+            value: formData.shops,
+            onChange: (e) =>
+            {
+              setFormData(prev => ({
+                ...prev,
+                shops: e.target.value
+              }))
+            }
+          },
+          {
+            width: 'sm:w-[99.5%]',
+            type: 'select',
             label: 'Employee Role',
             options: [
               'Employee',
@@ -111,6 +130,7 @@ const Dashboard = () =>
               'Admin'
             ],
             required: true,
+            value: formData.employeeRole,
             onChange: (e) =>
             {
               setFormData(prev => ({

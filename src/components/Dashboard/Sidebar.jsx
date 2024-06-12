@@ -32,11 +32,6 @@ const navigation = [
   { name: 'Account', href: '/dashboard/account', icon: HomeIcon, },
   { name: 'Appointments', href: '/dashboard/appointments', icon: CalendarDaysIcon, count: '12' },
 ]
-const shops = [
-  { id: 1, name: 'Blairsville', href: '/dashboard/shops/b', },
-  { id: 2, name: 'Thomaston', href: '/dashboard/shops/t', },
-  { id: 3, name: 'Cornerstone', href: '/dashboard/shops/c', },
-]
 const account = [
   { name: 'Settings', href: '/dashboard/settings', icon: Cog8ToothIcon, },
 ]
@@ -61,7 +56,7 @@ const Sidebar = () =>
 
   // console.log(userInfo)
   // console.log(accountInfo)
-  // console.log(shopsInfo)
+  // console.log(session?.shops)
   // ================= End Session Data
 
   // ================= Add Shop Popup

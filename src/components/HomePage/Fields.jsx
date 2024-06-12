@@ -39,7 +39,6 @@ export function SelectField ({ label, className, options, onChange, ...props })
         id={ id }
         { ...props }
         className={ clsx(formClasses, 'pr-8') }
-        defaultValue='blank'
         onChange={ onChange }
       >
         <option value="blank"></option>

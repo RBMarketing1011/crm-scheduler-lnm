@@ -40,11 +40,20 @@ const verifyUserWithToken = async (request, { params }) =>
     } else
     {
       // update user.emailVerified
-      await Employee.findByIdAndUpdate(emailToken.user._id, {
+      const employee = await Employee.findByIdAndUpdate(emailToken.user._id, {
         emailVerified: true
       })
       // delete email token
       await EmployeeEmailToken.findByIdAndDelete(emailToken._id)
+      // if no password redirect to /users/setpassword/[userId]
+      console.log(employee.password)
+      if (employee.password === 'reset')
+      {
+        // generate token to verify password reset
+        const token = await genUserVerifyEmailToken(employee._id)
+        // return redirect to reset password
+        return Response.redirect(new URL(`/users/setpassword/${ employee._id }?token=${ token }`, request.url))
+      }
       // return Response.success
       return Response.redirect(loginUrl)
     }

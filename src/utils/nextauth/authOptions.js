@@ -8,6 +8,7 @@ import Employee from '@models/employees'
 import Account from '@models/accounts'
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import clientPromise from "@utils/nextauth/adapter"
+import Shop from '@models/shops'
 
 const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -115,7 +116,22 @@ const authOptions = {
       // find user to add to session 
       const findUser = await Employee.findById(token.id).select('-password').select('-createdAt').select('-updatedAt')
 
-      const account = await Account.findById(findUser.accountId).populate('shops').populate('employees')
+      let account = await Account.findById(findUser.accountId)
+
+      if (account.shops.length > 0)
+      {
+        account = await Account.findById(findUser.accountId).populate('shops')
+      }
+
+      if (account.employees.length > 0)
+      {
+        account = await Account.findById(findUser.accountId).populate('employees')
+      }
+
+      if (account.shops.length > 0 && account.employees.length > 0)
+      {
+        account = await Account.findById(findUser.accountId).populate('shops').populate('employees')
+      }
 
       //assign User to session 
       session.user = findUser

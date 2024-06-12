@@ -7,8 +7,7 @@ const employeeSchema = new Schema({
   },
   shops: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'Shop'
+      type: String
     }
   ],
   firstname: {
@@ -26,7 +25,7 @@ const employeeSchema = new Schema({
   },
   password: {
     type: String,
-    required: [ true, 'Please provide your password' ],
+    default: null
   },
   image: {
     type: String,
