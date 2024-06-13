@@ -63,5 +63,5 @@ const vehicleSchema = new Schema({
   }
 }, { timestamps: true })
 
-const Vehicle = models.Vehicle || model('Vehicle', vehicleSchema)
+const Vehicle = models?.Vehicle || model('Vehicle', vehicleSchema)
 export default Vehicle

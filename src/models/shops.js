@@ -55,5 +55,5 @@ const shopSchema = new Schema({
   ]
 }, { timestamps: true })
 
-const Shop = models.Shop || model('Shop', shopSchema)
+const Shop = models?.Shop || model('Shop', shopSchema)
 export default Shop

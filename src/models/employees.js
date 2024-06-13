@@ -80,5 +80,5 @@ const employeeSchema = new Schema({
   }
 }, { timestamps: true })
 
-const Employee = models.Employee || model('Employee', employeeSchema)
+const Employee = models?.Employee || model('Employee', employeeSchema)
 export default Employee

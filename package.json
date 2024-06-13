@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "node ./src/sampleData/seedDB.js",
-    "createModels": "node ./src/sampleData/createModels.js"
+    "seed": "node ./src/sampleData/seedDB.js"
   },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {

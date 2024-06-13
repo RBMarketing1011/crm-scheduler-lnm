@@ -24,5 +24,5 @@ const userEmailTokenSchema = new Schema({
   }
 }, { timestamps: true })
 
-const UserEmailToken = models.UserEmailToken || model('UserEmailToken', userEmailTokenSchema)
+const UserEmailToken = models?.UserEmailToken || model('UserEmailToken', userEmailTokenSchema)
 export default UserEmailToken

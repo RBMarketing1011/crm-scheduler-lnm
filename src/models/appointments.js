@@ -49,5 +49,5 @@ const appointmentSchema = new Schema({
   },
 }, { timestamps: true })
 
-const Appointment = models.Appointment || model('Appointment', appointmentSchema)
+const Appointment = models?.Appointment || model('Appointment', appointmentSchema)
 export default Appointment

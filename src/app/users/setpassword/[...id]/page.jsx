@@ -2,11 +2,10 @@
 
 //dependencies
 import { useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { signIn } from 'next-auth/react'
 
 //components
 import Button from '@components/Dashboard/Button'
@@ -20,8 +19,18 @@ import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6'
 //images
 import Logo from '@images/logos/lnm-logo-black.png'
 
-const SetPassword = ({ params }) =>
+const SetPasswordPage = ({ params }) =>
 {
+  // ======================== Get ID & Token from params
+  const { id } = params
+  const search = useSearchParams()
+  const token = search.get('token')
+  // ======================== End Params
+  // ======================== Check Id & Token
+  const router = useRouter()
+
+  // ======================== End Check Id & Token
+  // ======================== All State Management
   const [ notify, setNotify ] = useState({
     type: '',
     text: '',
@@ -32,6 +41,54 @@ const SetPassword = ({ params }) =>
     p1: '',
     p2: ''
   })
+  // ======================== End All State Management
+  // ======================== Form subit 
+  const submitForm = async (e) =>
+  {
+    e.preventDefault()
+
+    let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,16}$/
+
+    if (!regex.test(password.p1))
+    {
+      notifi.error("Password doesn't follow guidelines.", setNotify)
+    } else if (password.p2 !== password.p1)
+    {
+      notifi.error("Passwords do not match.", setNotify)
+    } else
+    {
+      try
+      {
+        const result = await fetch(`${ process.env.NEXT_PUBLIC_API_DOMAIN }/employees`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ password: password.p1, id, token })
+        })
+
+        const res = await result.json()
+
+        if (res.success)
+        {
+          notifi.success(res.success, setNotify)
+          setTimeout(() =>
+          {
+            router.push('/login')
+          }, 2000)
+        } else if (res.error)
+        {
+          notifi.error(res.error, setNotify)
+        }
+
+      } catch (error)
+      {
+        notifi.error(error.message, setNotify)
+      }
+    }
+  }
+  // ======================== End form submit
+
   return (
     <SlimLayout>
       <Notifi data={ { state: notify, setState: setNotify } } />
@@ -133,7 +190,7 @@ const SetPassword = ({ params }) =>
               </div>
             </div>
             <div className="col-span-full">
-              <Button type="submit" text='Create Password' />
+              <Button type="submit" text='Create Password' onClick={ submitForm } />
             </div>
           </form>
         </div>
@@ -142,4 +199,4 @@ const SetPassword = ({ params }) =>
   )
 }
 
-export default SetPassword
+export default SetPasswordPage

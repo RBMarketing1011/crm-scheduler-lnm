@@ -24,5 +24,5 @@ const customerEmailTokenSchema = new Schema({
   }
 }, { timestamps: true })
 
-const CustomerEmailToken = models.CustomerEmailToken || model('CustomerEmailToken', customerEmailTokenSchema)
+const CustomerEmailToken = models?.CustomerEmailToken || model('CustomerEmailToken', customerEmailTokenSchema)
 export default CustomerEmailToken

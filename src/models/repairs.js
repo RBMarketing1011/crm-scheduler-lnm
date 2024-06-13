@@ -117,5 +117,5 @@ const repairSchema = new Schema({
   }
 }, { timestamps: true })
 
-const Repair = models.Repair || model('Repair', repairSchema)
+const Repair = models?.Repair || model('Repair', repairSchema)
 export default Repair

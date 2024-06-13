@@ -22,5 +22,5 @@ const accountSchema = new Schema({
     }
   ],
 })
-const Account = models.Account || model('Account', accountSchema)
+const Account = models?.Account || model('Account', accountSchema)
 export default Account

@@ -83,5 +83,5 @@ const customerSchema = new Schema({
   },
 }, { timestamps: true })
 
-const Customer = models.Customer || model('Customer', customerSchema)
+const Customer = models?.Customer || model('Customer', customerSchema)
 export default Customer
