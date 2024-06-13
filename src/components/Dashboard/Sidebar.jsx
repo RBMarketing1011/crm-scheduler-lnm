@@ -10,7 +10,6 @@ import
   HomeIcon,
   XMarkIcon,
   RectangleGroupIcon,
-  ChatBubbleLeftEllipsisIcon,
   Cog8ToothIcon,
   CalendarDaysIcon,
   PlusIcon
@@ -23,8 +22,8 @@ import Avatar from '@images/avatars/avatar.png'
 import Image from 'next/image'
 import Logo from '@images/logos/lnm-logo-black.png'
 import Link from 'next/link'
-import LinkPopover from './LinkPopover'
-import PopupForm from './PopupForm'
+import LinkPopover from './Popups/LinkPopover'
+import PopupForm from './Popups/PopupForm'
 import { Notifi } from '@components/Notifications/Notify'
 
 const navigation = [
@@ -50,12 +49,8 @@ const Sidebar = () =>
   // ================== Session Data
   const { data: session } = useSession()
 
-  const userInfo = session?.user
-  const accountInfo = session?.account
-  const shopsInfo = session?.shops
-
-  // console.log(userInfo)
-  // console.log(accountInfo)
+  // console.log(session?.user)
+  // console.log(session?.account)
   // console.log(session?.shops)
   // ================= End Session Data
 
@@ -201,9 +196,8 @@ const Sidebar = () =>
                         </div>
                         <ul role="list" className="-mx-2 mt-2 space-y-1">
                           {
-                            shopsInfo &&
-                            Object.keys(shopsInfo).length > 0 &&
-                            shopsInfo.map(shop => (
+                            session?.shops &&
+                            session?.shops.map(shop => (
 
                               <li key={ shop.name }>
                                 <Link
@@ -353,9 +347,9 @@ const Sidebar = () =>
                 </div>
                 <ul role="list" className="-mx-2 mt-2 space-y-1">
                   {
-                    shopsInfo &&
-                    Object.keys(shopsInfo).length > 0 &&
-                    shopsInfo.map((shop, shopIdx) => (
+                    session?.shops &&
+                    Object.keys(session?.shops).length > 0 &&
+                    session?.shops.map((shop, shopIdx) => (
 
                       <li key={ shopIdx }>
                         <Link
@@ -431,14 +425,14 @@ const Sidebar = () =>
                     <>
                       <Image
                         className="h-8 w-8 rounded-full bg-gray-50 border border-primary-300"
-                        src={ userInfo?.image || Avatar }
+                        src={ session?.user?.image || Avatar }
                         alt="User Profile Image"
                         width={ 0 }
                         height={ 0 }
                         sizes='100vw'
                       />
                       <span className="sr-only">Your profile</span>
-                      <span aria-hidden="true">{ userInfo?.firstname }</span>
+                      <span aria-hidden="true">{ session?.user?.firstname }</span>
                       <ChevronRightIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
                     </>
                   }
@@ -463,7 +457,7 @@ const Sidebar = () =>
               <span className="sr-only">Your profile</span>
               <Image
                 className="h-8 w-8 rounded-full bg-gray-50 border border-primary-300"
-                src={ userInfo?.image || Avatar }
+                src={ session?.user?.image || Avatar }
                 alt=""
                 width={ 0 }
                 height={ 0 }
@@ -483,7 +477,7 @@ const Sidebar = () =>
         httpRequest={ {
           url: `${ process.env.NEXT_PUBLIC_API_DOMAIN }/shops`,
           method: 'POST',
-          body: JSON.stringify({ shop: addShopFormData, accountId: userInfo?.accountId })
+          body: JSON.stringify({ shop: addShopFormData, accountId: session?.user?.accountId })
         } }
         notifiSetState={ setNotify }
         textFields={ [

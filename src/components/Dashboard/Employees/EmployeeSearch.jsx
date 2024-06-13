@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { UsersIcon, PlusIcon } from '@heroicons/react/24/outline'
+import { UsersIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { IoIosPeople } from "react-icons/io"

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Label, Switch, SwitchGroup } from '@headlessui/react'
+import { Label, Switch, Field } from '@headlessui/react'
 import
 {
   BellIcon,
@@ -256,7 +256,7 @@ export default function Page ()
                         Appointments
                       </p>
                       <dl className="pl-10 mt-2 space-y-6 text-sm leading-6 border-t border-gray-200">
-                        <SwitchGroup as="div" className="flex pt-2">
+                        <Field as="div" className="flex pt-2">
                           <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                             Appointment reminders
                           </Label>
@@ -278,10 +278,10 @@ export default function Page ()
                               />
                             </Switch>
                           </dd>
-                        </SwitchGroup>
+                        </Field>
                       </dl>
                       <dl className="pl-10 mt-2 space-y-6 text-sm leading-6">
-                        <SwitchGroup as="div" className="flex pt-2">
+                        <Field as="div" className="flex pt-2">
                           <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                             Appointment booked
                           </Label>
@@ -303,10 +303,10 @@ export default function Page ()
                               />
                             </Switch>
                           </dd>
-                        </SwitchGroup>
+                        </Field>
                       </dl>
                       <dl className="pl-10 mt-2 space-y-6 text-sm leading-6">
-                        <SwitchGroup as="div" className="flex pt-2">
+                        <Field as="div" className="flex pt-2">
                           <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                             Appointment rescheduled
                           </Label>
@@ -328,10 +328,10 @@ export default function Page ()
                               />
                             </Switch>
                           </dd>
-                        </SwitchGroup>
+                        </Field>
                       </dl>
                       <dl className="pl-10 mt-2 space-y-6 text-sm leading-6">
-                        <SwitchGroup as="div" className="flex pt-2">
+                        <Field as="div" className="flex pt-2">
                           <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                             Appointment canceled
                           </Label>
@@ -353,7 +353,7 @@ export default function Page ()
                               />
                             </Switch>
                           </dd>
-                        </SwitchGroup>
+                        </Field>
                       </dl>
                     </div>
                   </div>
@@ -362,7 +362,7 @@ export default function Page ()
                       Services
                     </p>
                     <dl className="pl-10 mt-2 space-y-6 text-sm leading-6 border-t border-gray-200">
-                      <SwitchGroup as="div" className="flex pt-2">
+                      <Field as="div" className="flex pt-2">
                         <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                           Service updates
                         </Label>
@@ -384,10 +384,10 @@ export default function Page ()
                             />
                           </Switch>
                         </dd>
-                      </SwitchGroup>
+                      </Field>
                     </dl>
                     <dl className="pl-10 mt-2 space-y-6 text-sm leading-6">
-                      <SwitchGroup as="div" className="flex pt-2">
+                      <Field as="div" className="flex pt-2">
                         <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                           Service completed
                         </Label>
@@ -409,7 +409,7 @@ export default function Page ()
                             />
                           </Switch>
                         </dd>
-                      </SwitchGroup>
+                      </Field>
                     </dl>
                   </div>
                   <div className='mt-6 border-t border-gray-200 text-sm leading-6 pt-4'>
@@ -417,7 +417,7 @@ export default function Page ()
                       Security
                     </p>
                     <dl className="pl-10 mt-2 space-y-6 text-sm leading-6 border-t border-gray-200">
-                      <SwitchGroup as="div" className="flex pt-2">
+                      <Field as="div" className="flex pt-2">
                         <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                           Account activity alerts
                         </Label>
@@ -439,10 +439,10 @@ export default function Page ()
                             />
                           </Switch>
                         </dd>
-                      </SwitchGroup>
+                      </Field>
                     </dl>
                     <dl className="pl-10 mt-2 space-y-6 text-sm leading-6">
-                      <SwitchGroup as="div" className="flex pt-2">
+                      <Field as="div" className="flex pt-2">
                         <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                           Billing and payment notifications
                         </Label>
@@ -464,10 +464,10 @@ export default function Page ()
                             />
                           </Switch>
                         </dd>
-                      </SwitchGroup>
+                      </Field>
                     </dl>
                     <dl className="pl-10 mt-2 space-y-6 text-sm leading-6">
-                      <SwitchGroup as="div" className="flex pt-2">
+                      <Field as="div" className="flex pt-2">
                         <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                           Payment proccessed
                         </Label>
@@ -489,10 +489,10 @@ export default function Page ()
                             />
                           </Switch>
                         </dd>
-                      </SwitchGroup>
+                      </Field>
                     </dl>
                     <dl className="pl-10 mt-2 space-y-6 text-sm leading-6">
-                      <SwitchGroup as="div" className="flex pt-2">
+                      <Field as="div" className="flex pt-2">
                         <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                           Plan upgraded/downgraded
                         </Label>
@@ -514,10 +514,10 @@ export default function Page ()
                             />
                           </Switch>
                         </dd>
-                      </SwitchGroup>
+                      </Field>
                     </dl>
                     <dl className="pl-10 mt-2 space-y-6 text-sm leading-6">
-                      <SwitchGroup as="div" className="flex pt-2">
+                      <Field as="div" className="flex pt-2">
                         <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                           Security settings updated
                         </Label>
@@ -539,7 +539,7 @@ export default function Page ()
                             />
                           </Switch>
                         </dd>
-                      </SwitchGroup>
+                      </Field>
                     </dl>
                   </div>
                   <div className='mt-6 border-t border-gray-200 text-sm leading-6 pt-4'>
@@ -547,7 +547,7 @@ export default function Page ()
                       Miscellaneous
                     </p>
                     <dl className="pl-10 mt-2 space-y-6 text-sm leading-6 border-t border-gray-200">
-                      <SwitchGroup as="div" className="flex pt-2">
+                      <Field as="div" className="flex pt-2">
                         <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                           Special offers and promotions
                         </Label>
@@ -569,10 +569,10 @@ export default function Page ()
                             />
                           </Switch>
                         </dd>
-                      </SwitchGroup>
+                      </Field>
                     </dl>
                     <dl className="pl-10 mt-2 space-y-6 text-sm leading-6">
-                      <SwitchGroup as="div" className="flex pt-2">
+                      <Field as="div" className="flex pt-2">
                         <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                           New feature announcements
                         </Label>
@@ -594,10 +594,10 @@ export default function Page ()
                             />
                           </Switch>
                         </dd>
-                      </SwitchGroup>
+                      </Field>
                     </dl>
                     <dl className="pl-10 mt-2 space-y-6 text-sm leading-6">
-                      <SwitchGroup as="div" className="flex pt-2">
+                      <Field as="div" className="flex pt-2">
                         <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                           Customer feedback requests
                         </Label>
@@ -619,10 +619,10 @@ export default function Page ()
                             />
                           </Switch>
                         </dd>
-                      </SwitchGroup>
+                      </Field>
                     </dl>
                     <dl className="pl-10 mt-2 space-y-6 text-sm leading-6">
-                      <SwitchGroup as="div" className="flex pt-2">
+                      <Field as="div" className="flex pt-2">
                         <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                           New message received
                         </Label>
@@ -644,10 +644,10 @@ export default function Page ()
                             />
                           </Switch>
                         </dd>
-                      </SwitchGroup>
+                      </Field>
                     </dl>
                     <dl className="pl-10 mt-2 space-y-6 text-sm leading-6">
-                      <SwitchGroup as="div" className="flex pt-2">
+                      <Field as="div" className="flex pt-2">
                         <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                           Profile information changed
                         </Label>
@@ -669,10 +669,10 @@ export default function Page ()
                             />
                           </Switch>
                         </dd>
-                      </SwitchGroup>
+                      </Field>
                     </dl>
                     <dl className="pl-10 mt-2 space-y-6 text-sm leading-6">
-                      <SwitchGroup as="div" className="flex pt-2">
+                      <Field as="div" className="flex pt-2">
                         <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                           System maintenance alerts
                         </Label>
@@ -694,7 +694,7 @@ export default function Page ()
                             />
                           </Switch>
                         </dd>
-                      </SwitchGroup>
+                      </Field>
                     </dl>
                   </div>
                 </div>

@@ -93,4 +93,30 @@ const updateEmployee = async (req) =>
   }
 }
 
-export { createEmployeeOfShop as POST, updateEmployee as PUT }
+const deleteEmployee = async (req) =>
+{
+  const { id, accountId } = await req.json()
+  console.log(id, accountId)
+  try
+  {
+    await connectDB()
+    const account = await Account.findById(accountId)
+    const index = account.employees.indexOf(id)
+
+    if (index > -1)
+    {
+      account.employees.splice(index, 1)
+    }
+
+    await Employee.findByIdAndDelete(id)
+
+    return Response.json({ success: 'Employee deleted successfully' })
+
+  } catch (error)
+  {
+    console.log(error)
+    return Response.json({ error: 'Employee delete unsuccessful' })
+  }
+}
+
+export { createEmployeeOfShop as POST, updateEmployee as PUT, deleteEmployee as DELETE }

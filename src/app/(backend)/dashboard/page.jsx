@@ -7,7 +7,7 @@ import EmployeeSearch from '@components/Dashboard/Employees/EmployeeSearch'
 import TitleHeading from '@components/Dashboard/Headings/TitleHeading'
 import CardWithHeader from '@components/Dashboard/Cards/CardWithHeader'
 import CardWithHeaderBtn from '@components/Dashboard/Cards/CardWithHeaderBtn'
-import PopupForm from '@components/Dashboard/PopupForm'
+import PopupForm from '@components/Dashboard/Popups/PopupForm'
 import { Notifi } from '@components/Notifications/Notify'
 
 import { useSession } from 'next-auth/react'
@@ -51,7 +51,7 @@ const Dashboard = () =>
         </CardWithHeaderBtn>
       </div>
 
-      {/* Modal for Add Shop Form */ }
+      {/* Modal for Add Employee Form */ }
       <PopupForm
         title='Add Employee'
         openPopupState={ { state: openPopupForm, setState: setOpenPopupForm } }

@@ -121,23 +121,25 @@ const authOptions = {
       if (account.shops.length > 0)
       {
         account = await Account.findById(findUser.accountId).populate('shops')
+        session.shops = account.shops
       }
 
       if (account.employees.length > 0)
       {
         account = await Account.findById(findUser.accountId).populate('employees')
+        session.employees = account.employees
       }
 
       if (account.shops.length > 0 && account.employees.length > 0)
       {
         account = await Account.findById(findUser.accountId).populate('shops').populate('employees')
+        session.shops = account.shops
+        session.employees = account.employees
       }
 
       //assign User to session 
       session.user = findUser
       session.account = account
-      session.shops = account.shops
-      session.employees = account.employees
       session.accessToken = token.accessToken
 
       //return session 

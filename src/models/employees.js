@@ -5,11 +5,9 @@ const employeeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Account'
   },
-  shops: [
-    {
-      type: String
-    }
-  ],
+  shops: {
+    type: String,
+  },
   firstname: {
     type: String,
     required: [ true, 'Please provide your first name' ]
