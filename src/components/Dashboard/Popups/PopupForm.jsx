@@ -5,7 +5,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { TextField, SelectField } from '@components/HomePage/Fields'
 import { notifi } from '@components/Notifications/Notify'
 
-export default function PopupForm ({ title, openPopupState, textFields, httpRequest, notifiSetState })
+export default function PopupForm ({ title, openPopupState, textFields, httpRequest, notifiSetState, refreshSession })
 {
   // ==================== Submit as POST request
   const submitPostReq = async () =>
@@ -48,6 +48,7 @@ export default function PopupForm ({ title, openPopupState, textFields, httpRequ
             let e = { target: { value: '' } }
             el.onChange(e)
           })
+
         } else if (res.error)
         {
           notifi.error(res.error, notifiSetState)

@@ -21,6 +21,7 @@ const TestApiCalls = async () =>
     })
 
     const data = await res.json()
+    console.log(data)
     return data
   }
 
@@ -40,7 +41,7 @@ const TestApiCalls = async () =>
   // IM GUESSING WE NEED TO GET AUTHORIZATION PER SHOP THAT WANTS TO USE TEKMETRIC
   const getAllShops = async () =>
   {
-    const res = await fetch(`${ process.env.NEXT_PUBLIC_TEKMETRIC_URL }/api/v1/shops`, {
+    const res = await fetch(`${ process.env.NEXT_PUBLIC_TEKMETRIC_URL }/api/v1/shops/5020`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${ accessToken }`
@@ -52,7 +53,7 @@ const TestApiCalls = async () =>
   }
 
   const allShops = await getAllShops()
-  // console.log(allShops)
+  console.log(allShops)
   // ========================================GET ALL SHOP DETAILS
 
   //                            NEW API CALL
@@ -120,11 +121,11 @@ const TestApiCalls = async () =>
       }
     })
 
-    const data = await res.json()
-    return data
+    // const data = await res.json()
+    // return data
   }
 
-  const customer = await getCustomer()
+  // const customer = await getCustomer()
   // console.log(customer)
   // ======Returns a list of all customers filtered by the provided search parameters.
 
@@ -216,7 +217,7 @@ const TestApiCalls = async () =>
     return data
   }
 
-  const newCustomer = await createCustomer()
+  // const newCustomer = await createCustomer()
   // console.log(newCustomer)
 
 
@@ -367,7 +368,7 @@ const TestApiCalls = async () =>
     return data
   }
 
-  const vehicles = await getVehicles()
+  // const vehicles = await getVehicles()
   // console.log(vehicles)
 
   // =============================== GET VEHICLE THROUGH SEARCH PARAMS
@@ -453,7 +454,7 @@ const TestApiCalls = async () =>
     return data
   }
 
-  const newVehicle = await createVehicle()
+  // const newVehicle = await createVehicle()
   // console.log(newVehicle)
 
   // =============================== CREATE CUSTOMER VEHICLE (CUSTOMER ID SPECIFIC)
@@ -579,7 +580,7 @@ const TestApiCalls = async () =>
     return data
   }
 
-  const appts = await getAppts()
+  // const appts = await getAppts()
   // console.log(appts)
 
   // =============================================================== APPOINTMENTS
@@ -660,7 +661,7 @@ const TestApiCalls = async () =>
     return data
   }
 
-  const newAppt = await createAppt()
+  // const newAppt = await createAppt()
   // console.log(newAppt)
 
 

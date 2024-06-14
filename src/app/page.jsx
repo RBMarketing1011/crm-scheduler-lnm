@@ -8,11 +8,13 @@ import { PrimaryFeatures } from '@components/HomePage/PrimaryFeatures'
 import { SecondaryFeatures } from '@components/HomePage/SecondaryFeatures'
 import { Testimonials } from '@components/HomePage/Testimonials'
 
+import TestApiCalls from '@components/TekMetricApi/TestApiCalls'
 export default function Home ()
 {
   return (
     <>
       <Header />
+      <TestApiCalls />
       <main>
         <Hero />
         <PrimaryFeatures />

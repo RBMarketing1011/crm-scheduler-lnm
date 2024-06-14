@@ -75,4 +75,67 @@ const createShop = async (req) =>
   }
 }
 
-export { createShop as POST }
+const updateShop = async (req) =>
+{
+  const {
+    id,
+    name,
+    nickname,
+    email,
+    phone,
+    website,
+    address1,
+    address2,
+    city,
+    state,
+    zip,
+  } = await req.json()
+
+  console.log(
+    id,
+    name,
+    nickname,
+    email,
+    phone,
+    website,
+    address1,
+    address2,
+    city,
+    state,
+    zip,
+  )
+
+  try
+  {
+    const shop = await Shop.findById(id)
+
+    if (!shop)
+    {
+      throw new Error('Shop not found')
+    }
+
+    await Shop.findByIdAndUpdate(id, {
+      name,
+      nickname,
+      email,
+      phone,
+      website,
+      address: {
+        address1,
+        address2,
+        city,
+        state,
+        zip,
+      }
+    })
+
+    return Response.json({ success: 'Shop details updated successfully' })
+  } catch (error)
+  {
+    return Response.json({ error: error.message }, { status: 403 })
+  }
+
+  return Response.json({ error: 'Testing' })
+}
+
+export { createShop as POST, updateShop as PUT }

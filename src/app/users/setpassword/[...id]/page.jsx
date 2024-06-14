@@ -29,6 +29,12 @@ const SetPasswordPage = ({ params }) =>
   // ======================== Check Id & Token
   const router = useRouter()
 
+  useEffect(() =>
+  {
+    !token && router.push('/')
+
+  }, [ token ])
+
   // ======================== End Check Id & Token
   // ======================== All State Management
   const [ notify, setNotify ] = useState({

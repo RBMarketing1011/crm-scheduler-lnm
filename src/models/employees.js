@@ -72,6 +72,9 @@ const employeeSchema = new Schema({
     required: true,
     default: 'employee'
   },
+  notifications: [
+    { type: String }
+  ],
   deletedDate: {
     type: Date,
     default: null

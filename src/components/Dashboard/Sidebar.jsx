@@ -28,7 +28,6 @@ import { Notifi } from '@components/Notifications/Notify'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: RectangleGroupIcon, },
-  { name: 'Account', href: '/dashboard/account', icon: HomeIcon, },
   { name: 'Appointments', href: '/dashboard/appointments', icon: CalendarDaysIcon, count: '12' },
 ]
 const account = [
@@ -47,7 +46,10 @@ const Sidebar = () =>
   const path = usePathname()
 
   // ================== Session Data
-  const { data: session } = useSession()
+  const {
+    data: session,
+    update
+  } = useSession()
 
   // console.log(session?.user)
   // console.log(session?.account)
@@ -129,7 +131,7 @@ const Sidebar = () =>
                     <Image
                       className="h-8 w-auto"
                       src={ Logo }
-                      alt="Your Company"
+                      alt="Leads Near Me Logo"
                       width={ 0 }
                       height={ 0 }
                       sizes='100vw'
@@ -285,7 +287,7 @@ const Sidebar = () =>
             <Image
               className="h-auto w-auto mt-4"
               src={ Logo }
-              alt="Your Company"
+              alt="Leads Near Me Logo"
               width={ 0 }
               height={ 0 }
               sizes='100vw'
@@ -473,6 +475,7 @@ const Sidebar = () =>
       {/* Modal for Add Shop Form */ }
       <PopupForm
         title='Add Shop'
+        refreshSession={ update }
         openPopupState={ { state: openAddShopPopup, setState: setOpenAddShopPopup } }
         httpRequest={ {
           url: `${ process.env.NEXT_PUBLIC_API_DOMAIN }/shops`,
