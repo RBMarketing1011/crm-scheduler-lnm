@@ -12,6 +12,7 @@ import
   UsersIcon,
   CalendarDaysIcon
 } from '@heroicons/react/24/outline'
+import { FaCircleXmark, FaCircleCheck } from 'react-icons/fa6'
 import TitleHeading from '@components/Dashboard/Headings/TitleHeading'
 import Container from '@components/Dashboard/Container'
 
@@ -84,15 +85,50 @@ export default function Page ()
   const [ showPw, setShowPw ] = useState(false)
   const [ changePw, setChangePw ] = useState({
     current: '',
-    new: '',
+    newPw: '',
     confirm: ''
   })
 
   const updatePw = async () =>
   {
-    if (!changePw.current || !changePw.new || !changePw.confirm)
+    let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,16}$/
+
+    if (!changePw.current || !changePw.newPw || !changePw.confirm)
     {
       notifi.error('Please fill out all password fields', setNotify)
+    } else if (!regex.test(changePw.newPw))
+    {
+      notifi.error("New password doesn't follow guidelines.", setNotify)
+    } else if (changePw.newPw !== changePw.confirm)
+    {
+      notifi.error('New password does not match confirm password', setNotify)
+    } else
+    {
+      try
+      {
+        const employeeId = session?.user._id
+
+        const result = await fetch(`${ process.env.NEXT_PUBLIC_API_DOMAIN }/employees/updatepassword`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ password: changePw, employeeId })
+        })
+
+        const res = await result.json()
+
+        if (res.success)
+        {
+          notifi.success(res.success, setNotify)
+        } else if (res.error)
+        {
+          notifi.error(res.error, setNotify)
+        }
+      } catch (error)
+      {
+        notifi.error(error.message, setNotify)
+      }
     }
   }
   // ================================= Change/Update Password
@@ -197,10 +233,10 @@ export default function Page ()
                           name="Confirm Password"
                           id="confirmPassword"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-300 sm:text-sm sm:leading-6"
-                          value={ changePw.new }
+                          value={ changePw.newPw }
                           onChange={ (e) => setChangePw(prev => ({
                             ...prev,
-                            new: e.target.value
+                            newPw: e.target.value
                           })) }
                         />
                       </div>
@@ -231,6 +267,56 @@ export default function Page ()
                       onClick={ () => setShowPw(!showPw) }
                     >
                       { showPw ? 'Hide Passwords' : 'Show Passwords' }
+                    </div>
+                    <div className='col-span-full flex flex-col gap-5'>
+                      <p className='text-xs'>Password guidelines:</p>
+                      <div className='flex flex-wrap gap-2'>
+                        <p className="text-xs flex gap-1 items-center">
+                          {
+                            changePw.newPw.length > 7 && changePw.newPw.length < 17 ?
+                              <FaCircleCheck className='text-green-500' />
+                              :
+                              <FaCircleXmark className='text-red-500' />
+                          }
+                          8-16 characters
+                        </p>
+                        <p className="text-xs flex gap-1 items-center">
+                          {
+                            changePw.newPw.search(/[A-Z]/) < 0 ?
+                              <FaCircleXmark className='text-red-500' />
+                              :
+                              <FaCircleCheck className='text-green-500' />
+                          }
+                          1 uppercase letter
+                        </p>
+                        <p className="text-xs flex gap-1 items-center">
+                          {
+                            changePw.newPw.search(/[a-z]/) < 0 ?
+                              <FaCircleXmark className='text-red-500' />
+                              :
+                              <FaCircleCheck className='text-green-500' />
+                          }
+                          1 lowercase letter
+                        </p>
+                        <p className="text-xs flex gap-1 items-center">
+                          {
+                            changePw.newPw.search(/[0-9]/) < 0 ?
+                              <FaCircleXmark className='text-red-500' />
+                              :
+                              <FaCircleCheck className='text-green-500' />
+                          }
+                          1 number
+                        </p>
+                        <p className="text-xs flex gap-1 items-center">
+                          {
+                            changePw.newPw.search(/[[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]/) < 0 ?
+                              <FaCircleXmark className='text-red-500' />
+                              :
+                              <FaCircleCheck className='text-green-500' />
+                          }
+                          1 special character
+                        </p>
+                      </div>
                     </div>
                   </dl>
                 </div>

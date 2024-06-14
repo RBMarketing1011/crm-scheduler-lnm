@@ -10,24 +10,4 @@ const encrypt = async (string) =>
   return hash
 }
 
-const decryptPw = async (string, userId) =>
-{
-  try
-  {
-    await connectDB()
-    const employee = await Employee.findById(userId)
-    const match = bcrypt.compare(string, employee.password)
-    if (match)
-    {
-      return true
-    } else
-    {
-      return false
-    }
-  } catch (error)
-  {
-    throw new Error(error.message)
-  }
-}
-
-export default { encrypt, decryptPw }
+export default encrypt
