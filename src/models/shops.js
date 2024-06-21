@@ -1,4 +1,5 @@
 import { Schema, models, model } from 'mongoose'
+import Customer from './customers'
 
 const shopSchema = new Schema({
   name: {
@@ -52,8 +53,18 @@ const shopSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Customer',
     }
-  ]
+  ],
+  tekMetricIntegration: {
+    shopId: {
+      type: String,
+      default: null
+    },
+    connected: {
+      type: Boolean,
+      default: false
+    }
+  }
 }, { timestamps: true })
 
-const Shop = models?.Shop || model('Shop', shopSchema)
+const Shop = models.Shop || model('Shop', shopSchema)
 export default Shop

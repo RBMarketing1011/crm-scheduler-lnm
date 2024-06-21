@@ -1,4 +1,5 @@
 import { Schema, models, model } from 'mongoose'
+import Employee from './employees'
 
 const userEmailTokenSchema = new Schema({
   token: {
@@ -8,7 +9,7 @@ const userEmailTokenSchema = new Schema({
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Employee',
     required: true
   },
   expiration: {
@@ -24,5 +25,5 @@ const userEmailTokenSchema = new Schema({
   }
 }, { timestamps: true })
 
-const UserEmailToken = models?.UserEmailToken || model('UserEmailToken', userEmailTokenSchema)
+const UserEmailToken = models.UserEmailToken || model('UserEmailToken', userEmailTokenSchema)
 export default UserEmailToken

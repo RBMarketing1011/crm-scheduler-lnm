@@ -12,7 +12,7 @@ const verifyCustomerToken = async (req, { params }) =>
   {
     const verifyToken = await CustomerEmailToken.findOne({ token }).populate('customer')
     const customer = await Customer.findById(id)
-    const allTokens = await EmailToken.find({})
+    const allTokens = await CustomerEmailToken.find({})
 
     // map through all tokens and remove expired tokens
     allTokens.map(async (token) =>

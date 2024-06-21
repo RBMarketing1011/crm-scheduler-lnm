@@ -2,13 +2,12 @@ import GoogleProvider from 'next-auth/providers/google'
 import EmailProvider from 'next-auth/providers/email'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcrypt'
-import encrypt from '../encrypt'
 import connectDB from '@config/connectDB'
 import Employee from '@models/employees'
 import Account from '@models/accounts'
+import Appointment from '@models/appointments'
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import clientPromise from "@utils/nextauth/adapter"
-import Shop from '@models/shops'
 
 const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -107,8 +106,6 @@ const authOptions = {
     //Modify session object 
     async session ({ session, token, user })
     {
-      // console.log(token)
-      // console.log(session)
 
       // connect database 
       await connectDB()
@@ -118,28 +115,37 @@ const authOptions = {
 
       let account = await Account.findById(findUser.accountId)
 
-      if (account.shops.length > 0)
+      if (account.shops.length <= 0 && account.employees.length <= 0)
       {
-        account = await Account.findById(findUser.accountId).populate('shops')
-        session.shops = account.shops
-      }
+        const newAcct = await Account.findById(findUser.accountId)
+        session.account = newAcct
 
-      if (account.employees.length > 0)
+      } else if (account.shops.length > 0 && account.employees.length > 0)
       {
-        account = await Account.findById(findUser.accountId).populate('employees')
-        session.employees = account.employees
-      }
+        const newAcct = await Account.findById(findUser.accountId).populate('shops').populate('employees')
+        session.account = newAcct
+        session.shops = newAcct.shops
+        session.employees = newAcct.employees
 
-      if (account.shops.length > 0 && account.employees.length > 0)
+      } else if (account.shops.length > 0 || account.employees.length > 0)
       {
-        account = await Account.findById(findUser.accountId).populate('shops').populate('employees')
-        session.shops = account.shops
-        session.employees = account.employees
+        if (account.shops.length > 0)
+        {
+          const newAcct = await Account.findById(findUser.accountId).populate('shops')
+          session.account = newAcct
+          session.shops = newAcct.shops
+        }
+
+        if (account.employees.length > 0)
+        {
+          const newAcct = await Account.findById(findUser.accountId).populate('employees')
+          session.account = newAcct
+          session.employees = newAcct.employees
+        }
       }
 
       //assign User to session 
       session.user = findUser
-      session.account = account
       session.accessToken = token.accessToken
 
       //return session 
@@ -149,7 +155,7 @@ const authOptions = {
   pages: {
     signIn: '/login',
     signOut: '/logout',
-    error: null, // Error code passed in query string as ?error=
+    // error: null, // Error code passed in query string as ?error=
     // verifyRequest: null, // (used for check email message)
     // newUser: '/dashboard/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
   }

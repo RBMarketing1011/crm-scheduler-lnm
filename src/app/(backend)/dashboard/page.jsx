@@ -43,13 +43,15 @@ const Dashboard = () =>
       <TitleHeading title='Dashboard' />
       <DashboardStats />
       <div className='flex flex-col lg:flex-row gap-5'>
-        <CardWithHeader title='Upcoming Appointments' height='500px' >
-          <CustomerAppts />
+        <CardWithHeader title='Upcoming Appointments'>
+          <CustomerAppts data={ session?.appts } />
         </CardWithHeader >
-        <CardWithHeaderBtn title='Employees' onClick={ () => setOpenPopupForm(true) }>
+        <CardWithHeaderBtn title='Employees' btnTitle='Add Employee' onClick={ () => setOpenPopupForm(true) }>
           <EmployeeSearch />
         </CardWithHeaderBtn>
       </div>
+
+
 
       {/* Modal for Add Employee Form */ }
       <PopupForm

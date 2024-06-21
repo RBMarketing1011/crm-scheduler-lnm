@@ -1,4 +1,6 @@
 import { Schema, models, model } from 'mongoose'
+import Shop from './shops'
+import Employee from './employees'
 
 
 const accountSchema = new Schema({
@@ -22,5 +24,5 @@ const accountSchema = new Schema({
     }
   ],
 })
-const Account = models?.Account || model('Account', accountSchema)
+const Account = models.Account || model('Account', accountSchema)
 export default Account

@@ -1,10 +1,12 @@
 import headlessuiPlugin from '@headlessui/tailwindcss'
 import formsPlugin from '@tailwindcss/forms'
+import { nextui } from '@nextui-org/react'
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './src/**/*.jsx'
+    './src/**/*.jsx',
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
     fontSize: {
@@ -45,6 +47,20 @@ export default {
   },
   plugins: [
     formsPlugin,
-    headlessuiPlugin
+    headlessuiPlugin,
+    nextui({
+      themes: {
+        light: {
+          colors: {
+            primary: {
+              '100': '#FEF0EC',
+              '300': '#ef5124',
+              '500': '#BE340E',
+              '700': '#721F09'
+            }
+          }
+        }
+      }
+    })
   ],
 }

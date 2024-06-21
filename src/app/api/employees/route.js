@@ -119,4 +119,38 @@ const deleteEmployee = async (req) =>
   }
 }
 
-export { createEmployeeOfShop as POST, updateEmployee as PUT, deleteEmployee as DELETE }
+const updateNotifications = async (req) =>
+{
+  const { notifications, employeeId } = await req.json()
+  console.log(employeeId)
+
+  try
+  {
+    await connectDB()
+
+    const employee = await Employee.findById(employeeId)
+
+    if (!employee)
+    {
+      throw new Error('Employee not found')
+    }
+
+    await Employee.findByIdAndUpdate(employeeId, {
+      notifications
+    })
+
+    return Response.json(
+      { success: 'Notification settings updated successfully' },
+      { status: 200 }
+    )
+
+  } catch (error)
+  {
+    return Response.json(
+      { error: error.message },
+      { status: 403 }
+    )
+  }
+}
+
+export { createEmployeeOfShop as POST, updateEmployee as PUT, updateNotifications as PATCH, deleteEmployee as DELETE }

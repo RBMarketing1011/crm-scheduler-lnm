@@ -133,13 +133,47 @@ export default function Page ()
   }
 
   // ======================================== For Notifications toggle
-  let turnOn = true
   const [ sliders, setSliders ] = useState()
 
   const isSelected = (string) =>
   (
     sliders?.includes(string) ? true : false
   )
+
+  const addRemoveItem = (string) =>
+  {
+    if (sliders.includes(string))
+    {
+      setSliders(sliders.filter(slide => slide !== string))
+    } else if (!sliders.includes(string))
+    {
+      setSliders(prev => ([
+        ...prev,
+        string
+      ]))
+    }
+  }
+
+  const saveNotifications = async () =>
+  {
+    const result = await fetch(`${ process.env.NEXT_PUBLIC_API_DOMAIN }/employees`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ notifications: sliders, employeeId: session?.user._id })
+    })
+
+    const res = await result.json()
+
+    if (res.success)
+    {
+      notifi.success(res.success, setNotify)
+    } else if (res.error)
+    {
+      notifi.error(res.error, setNotify)
+    }
+  }
   // ======================================== End For Notifications toggle
 
   // ================================= PopupForm
@@ -722,7 +756,8 @@ export default function Page ()
                       <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                           {
-                            session?.employees.length ?
+                            session?.employees &&
+                              session?.employees.length ?
 
                               <table className="min-w-full divide-y divide-gray-300">
                                 <thead>
@@ -851,7 +886,7 @@ export default function Page ()
                           Choose what type of notifications to recieve.
                         </p>
                       </div>
-                      <Button text='Save Changes' />
+                      <Button text='Save Changes' onClick={ saveNotifications } />
                     </div>
 
                     {
@@ -865,27 +900,30 @@ export default function Page ()
                           {
                             el.children.map((child, childIdx) => (
 
-                              <dl key={ childIdx } className="pl-10 mt-2 space-y-6 text-sm leading-6 border-t border-gray-200">
+                              <dl key={ childIdx } className="pl-10 mt-2 space-y-6 text-sm leading-6 border-t border-gray-200" >
                                 <Field as="div" className="flex pt-2">
                                   <Label as="dt" className="flex-none pr-6 font-medium text-gray-900 sm:w-64" passive>
                                     { child }
                                   </Label>
                                   <dd className="flex flex-auto items-center justify-end">
                                     <Switch
-                                      checked={ (child) =>
+                                      checked={ () =>
                                       {
                                         isSelected(child)
                                       } }
-                                      onChange={ () => console.log('change') }
+                                      onChange={ () =>
+                                      {
+                                        addRemoveItem(child)
+                                      } }
                                       className={ classNames(
-                                        turnOn ? 'bg-primary-300' : 'bg-gray-200',
+                                        isSelected(child) ? 'bg-primary-300' : 'bg-gray-200',
                                         'flex w-8 cursor-pointer rounded-full p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300'
                                       ) }
                                     >
                                       <span
                                         aria-hidden="true"
                                         className={ classNames(
-                                          turnOn ? 'translate-x-3.5' : 'translate-x-0',
+                                          isSelected(child) ? 'translate-x-3.5' : 'translate-x-0',
                                           'h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out'
                                         ) }
                                       />

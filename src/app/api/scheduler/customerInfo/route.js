@@ -32,7 +32,7 @@ const createOrVerifyUser = async (req) =>
 
     } else
     {
-      const newCustomer = await Customer.create({ firstname, lastname, email })
+      const newCustomer = await Customer.create({ firstname, lastname, email, shopId: shop._id })
       currentShop.customers.push(newCustomer)
       await currentShop.save()
       const token = await genShortToken(newCustomer._id)
@@ -42,7 +42,7 @@ const createOrVerifyUser = async (req) =>
   } catch (error)
   {
     console.log(error)
-    throw new Error(error)
+    return Response.json({ error: error.message }, { status: 403 })
   }
 }
 

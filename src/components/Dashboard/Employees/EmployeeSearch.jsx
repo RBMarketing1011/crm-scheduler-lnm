@@ -7,6 +7,8 @@ import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { IoIosPeople } from "react-icons/io"
 import Avatar from '@images/avatars/avatar.png'
+import InitialsIcon from './InitialsIcon'
+import NoData from '../NoData'
 
 function classNames (...classes)
 {
@@ -67,39 +69,24 @@ export default function EmployeeSearch ()
                         className='flex cursor-pointer select-none items-center rounded-md p-2 hover:bg-primary-100 hover:text-primary-300'
                         onClick={ () => setActiveOption(person) }
                       >
-                        {
-                          person.image ?
-                            <Image
-                              src={ person.image }
-                              alt="Employee Profile Image"
-                              className="h-6 w-6 flex-none rounded-full"
-                              width={ 0 }
-                              height={ 0 }
-                              sizes='100vw'
-                            />
-
-                            :
-
-                            <Image
-                              src={ Avatar }
-                              alt="Employee Profile Image"
-                              className="h-6 w-6 flex-none rounded-full"
-                              width={ 0 }
-                              height={ 0 }
-                              sizes='100vw'
-                            />
-                        }
+                        <InitialsIcon
+                          firstInitial={ person.firstname.slice(0, 1) }
+                          lastInitial={ person.lastname.slice(0, 1) }
+                          borderColor='border-primary-300'
+                        />
                         <span className="ml-3 flex-auto truncate">{ person.firstname } { person.lastname }</span>
                       </div>
                     ))
 
                     :
 
-                    <div className="w-full h-full flex flex-col justify-center items-center gap-1">
-                      <IoIosPeople className='text-6xl text-primary-300' />
-                      <h3 className="mt-2 text-sm font-semibold text-gray-900">No Employees</h3>
-                      <p className="mt-1 text-sm text-gray-500">Get started by adding some employees to your account.</p>
-                    </div>
+                    <NoData
+                      data={ {
+                        title: 'No Employees',
+                        text: 'Get started by adding some employees to your account.',
+                        icon: IoIosPeople
+                      } }
+                    />
                 }
               </div>
             </div>

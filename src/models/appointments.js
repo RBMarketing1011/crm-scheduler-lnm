@@ -1,4 +1,6 @@
 import { Schema, models, model } from 'mongoose'
+import Shop from './shops'
+import Customer from './customers'
 
 const appointmentSchema = new Schema({
   "shopId": {
@@ -49,5 +51,5 @@ const appointmentSchema = new Schema({
   },
 }, { timestamps: true })
 
-const Appointment = models?.Appointment || model('Appointment', appointmentSchema)
+const Appointment = models.Appointment || model('Appointment', appointmentSchema)
 export default Appointment

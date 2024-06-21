@@ -14,7 +14,7 @@ export default function Home ()
   return (
     <>
       <Header />
-      <TestApiCalls />
+      {/* <TestApiCalls /> */ }
       <main>
         <Hero />
         <PrimaryFeatures />

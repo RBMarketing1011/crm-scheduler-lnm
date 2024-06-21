@@ -1,11 +1,13 @@
 import { Schema, models, model } from 'mongoose'
+import Shop from './shops'
+import Vehicle from './vehicles'
 
 const customerSchema = new Schema({
-  "firstName": {
+  "firstname": {
     type: String,
     required: [ true, 'First name is required.' ]
   },
-  "lastName": {
+  "lastname": {
     type: String,
     required: [ true, 'Last name is required.' ]
   },
@@ -34,11 +36,11 @@ const customerSchema = new Schema({
     type: String,
     default: 'Person'
   },
-  "contactFirstName": {
+  "contactFirstname": {
     type: String,
     default: null
   },
-  "contactLastName": {
+  "contactLastname": {
     type: String,
     default: null
   },
@@ -83,5 +85,5 @@ const customerSchema = new Schema({
   },
 }, { timestamps: true })
 
-const Customer = models?.Customer || model('Customer', customerSchema)
+const Customer = models.Customer || model('Customer', customerSchema)
 export default Customer

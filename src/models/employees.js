@@ -1,4 +1,5 @@
 import { Schema, models, model } from 'mongoose'
+import Account from './accounts'
 
 const employeeSchema = new Schema({
   accountId: {
@@ -81,5 +82,5 @@ const employeeSchema = new Schema({
   }
 }, { timestamps: true })
 
-const Employee = models?.Employee || model('Employee', employeeSchema)
+const Employee = models.Employee || model('Employee', employeeSchema)
 export default Employee

@@ -45,6 +45,9 @@ const EmailAuthScreen = ({ shop, customerChange, nextScreen, prevScreen }) =>
         {
           customerChange(data._id)
           nextScreen()
+        } else
+        {
+          notifi.error(res.error, setNotify)
         }
       } catch (error)
       {

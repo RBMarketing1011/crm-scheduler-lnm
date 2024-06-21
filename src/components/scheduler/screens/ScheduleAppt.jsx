@@ -1,24 +1,17 @@
 import SchedulerNextScreenBtn from '../btns/SchedulerNextScreenBtn'
 import SchedulerBackScreenBtn from '../btns/SchedulerBackScreenBtn'
+import DateTimePicker from '../datepicker/DateTimePicker'
 
-const ScheduleAppt = ({ nextScreen, prevScreen }) =>
+const ScheduleAppt = ({ nextScreen, prevScreen, dateTime }) =>
 {
   return (
     <main className='w-full h-[100%] flex flex-col justify-between'>
       <div className='w-full flex flex-col gap-10'>
-        <div className='w-full'>
-          <h1 className='text-xl font-bold text-primary-300'>Please enter your one time passcode below.</h1>
-        </div>
 
         <div className='w-full flex flex-col gap-5'>
-          <input
-            className='w-full rounded-md pl-2 h-[40px]'
-            type="date"
-            placeholder='Token'
-            min='1'
-            max='5'
-            step='1,2,3,4,5'
-            required
+          <h1 className='text-xl font-bold text-primary-300'>Pick your date and time.</h1>
+          <DateTimePicker
+            dateTime={ dateTime }
           />
         </div>
       </div>

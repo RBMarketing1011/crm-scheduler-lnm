@@ -21,6 +21,9 @@ import VehicleInfo from './screens/VehicleInfo'
 import ScheduleAppt from './screens/ScheduleAppt'
 
 
+import { now, getLocalTimeZone } from "@internationalized/date"
+
+
 const SchedulerMainContent = () =>
 {
   // =========================Notifi State 
@@ -64,7 +67,7 @@ const SchedulerMainContent = () =>
   // ======================== Get Account & Shop info from search params and set State
 
   // ======================= State To determine what screen is in the Content Area
-  const [ contentScreen, setContentScreen ] = useState('Vehicle Info')
+  const [ contentScreen, setContentScreen ] = useState('Schedule Appt')
   // ======================= State To determine what screen is in the Content Area
 
   // ======================== Handle All actions on click to setState with services
@@ -110,6 +113,9 @@ const SchedulerMainContent = () =>
   const [ make, setMake ] = useState('')
   const [ model, setModel ] = useState('')
   // ================================= state to log vehicle year, make, model
+  // ===================================== Appointment date and time state
+  const [ apptDate, setApptDate ] = useState(now(getLocalTimeZone()))
+  // ===================================== End Appointment date and time state
 
   return (
     <main className='w-full h-[100%] p-2 bg-gray-100 rounded-md flex flex-col justify-between gap-3 overflow-y-auto'>
@@ -200,7 +206,7 @@ const SchedulerMainContent = () =>
                           !year || !make || !model ?
                             notifi.error('Please Select A Service', setNotify)
                             :
-                            setContentScreen('Service Questions')
+                            setContentScreen('Schedule Appt')
                         } }
                         prevScreen={ () => setContentScreen('Verify Email Token') }
                       />
@@ -210,6 +216,7 @@ const SchedulerMainContent = () =>
                       contentScreen === 'Schedule Appt' ?
 
                         <ScheduleAppt
+                          dateTime={ { state: apptDate, setState: setApptDate } }
                           nextScreen={ () => setContentScreen('Next') }
                           prevScreen={ () => setContentScreen('Vehicle Info') }
                         />

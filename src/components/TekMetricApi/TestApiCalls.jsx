@@ -52,8 +52,8 @@ const TestApiCalls = async () =>
     return data
   }
 
-  const allShops = await getAllShops()
-  console.log(allShops)
+  // const allShops = await getAllShops()
+  // console.log(allShops)
   // ========================================GET ALL SHOP DETAILS
 
   //                            NEW API CALL

@@ -25,6 +25,7 @@ import Link from 'next/link'
 import LinkPopover from './Popups/LinkPopover'
 import PopupForm from './Popups/PopupForm'
 import { Notifi } from '@components/Notifications/Notify'
+import InitialsIcon from './Employees/InitialsIcon'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: RectangleGroupIcon, },
@@ -425,13 +426,12 @@ const Sidebar = () =>
                 <LinkPopover
                   button={
                     <>
-                      <Image
-                        className="h-8 w-8 rounded-full bg-gray-50 border border-primary-300"
-                        src={ session?.user?.image || Avatar }
-                        alt="User Profile Image"
-                        width={ 0 }
-                        height={ 0 }
-                        sizes='100vw'
+                      <InitialsIcon
+                        borderColor='border-primary-300'
+                        textColor='text-primary-300'
+                        bgColor='bg-primary-100'
+                        firstInitial={ session?.user?.firstname.slice(0, 1) }
+                        lastInitial={ session?.user?.lastname.slice(0, 1) }
                       />
                       <span className="sr-only">Your profile</span>
                       <span aria-hidden="true">{ session?.user?.firstname }</span>
