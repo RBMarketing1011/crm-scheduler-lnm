@@ -1,7 +1,7 @@
-import connectDB from '@config/connectDB'
-import Employee from '@models/employees'
-import EmployeeEmailToken from '@models/UserEmailToken'
-import genUserVerifyEmailToken from '@utils/tokenGenerators/genUserVerifyEmailToken'
+import connectDB from '@db/connectDB'
+import Employee from '@db/models/employees'
+import EmployeeEmailToken from '@db/models/UserEmailToken'
+import genUserVerifyEmailToken from '@lib/helpers/tokenGenerators/genUserVerifyEmailToken'
 
 const verifyUserWithToken = async (request, { params }) =>
 {

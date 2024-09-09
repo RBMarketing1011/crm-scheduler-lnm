@@ -1,9 +1,9 @@
-import Employee from '@models/employees'
-import Account from '@models/accounts'
-import connectDB from '@config/connectDB'
-import encrypt from '@utils/encrypt'
-import genUserVerifyEmailToken from '@utils/tokenGenerators/genUserVerifyEmailToken'
-import verifyEmailUser from '@utils/nodemailerEmails/verifyEmailUser'
+import Employee from '@db/models/employees'
+import Account from '@db/models/accounts'
+import connectDB from '@db/connectDB'
+import encrypt from '@lib/helpers/bcrypt/encrypt'
+import genUserVerifyEmailToken from '@lib/helpers/tokenGenerators/genUserVerifyEmailToken'
+import verifyEmailUser from '@lib/utils/nodemailer/verifyEmailUser'
 
 const createUserFromCredentials = async (req) =>
 {

@@ -156,9 +156,9 @@ const ChooseServicesContent = ({ data, handleClick, nextScreen, selected }) =>
   ]
   // ======================= Info for select Your Own service
 
-  // let select = true
-
   return (
+    data &&
+
     <>
       <h2 className='text-xl text-primary-300 font-bold'>Popular Services At { data.shop.name }</h2>
       <div className='w-full flex flex-wrap justify-center items-center gap-5'>

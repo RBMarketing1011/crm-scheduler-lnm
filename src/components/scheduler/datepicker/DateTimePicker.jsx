@@ -1,43 +1,54 @@
 import React from "react"
-import { DatePicker } from "@nextui-org/react"
-import { today, isWeekend, getLocalTimeZone } from "@internationalized/date"
-import { useLocale } from "@react-aria/i18n"
+import { DatePicker, TimeInput } from "@nextui-org/react"
+import { today, isWeekend, getLocalTimeZone, Time, parseDate } from "@internationalized/date"
+import { useLocale, useDateFormatter } from "@react-aria/i18n"
 
-export default function DateTimePicker ({ dateTime })
+export default function DateTimePicker ({ date, time })
 {
 
-  let now = today(getLocalTimeZone())
+  let formatter = useDateFormatter({ dateStyle: "full" })
 
-  let disabledRanges = [
-    [ now, now.add({ days: 14 }) ],
-    // [ now.add({ days: 14 }), now.add({ days: 16 }) ],
-    // [ now.add({ days: 23 }), now.add({ days: 24 }) ],
-  ]
+  let now = today(getLocalTimeZone())
 
   let { locale } = useLocale()
 
   let isDateUnavailable = (date) =>
-    isWeekend(date, locale) ||
-    disabledRanges.some(
-      (interval) => date.compare(interval[ 0 ]) >= 14
-        && date.compare(interval[ 0 ]) <= 0,
-    )
-
+    isWeekend(date, locale)
 
   return (
-    <div className="light w-full max-w-xl flex flex-row gap-4">
+    <div className="light w-full max-w-xl flex flex-col gap-4">
 
       <DatePicker
-        className="max-w-full"
-        classNames={ {
-          svg: 'text-primary-300'
-        } }
-        granularity="second"
-        label="Date and time"
-        value={ dateTime.state }
-        onChange={ dateTime.setState }
+        className="max-w-full text-primary-300"
+        granularity='day'
+        label="Appointment Date"
+        value={ date.state }
+        onChange={ date.setState }
+        minValue={ now }
+        maxValue={ now.add({ days: 21 }) }
         isDateUnavailable={ isDateUnavailable }
+        color='secondary'
       />
+
+      <TimeInput
+        label="Appointment Time"
+        defaultValue={ new Time(8) }
+        minValue={ new Time(8) }
+        maxValue={ new Time(19) }
+        value={ time.state }
+        onChange={ time.setState }
+        color='secondary'
+      />
+
+      <div>
+        <h4 className='text-md font-semibold'>Appointment:</h4>
+        <p className="text-default-500 text-sm">
+          Date: { date.state ? formatter.format(date.state.toDate()) : "--" }
+        </p>
+        <p className="text-default-500 text-sm">
+          Time: { time.state ? new Date().setTime(time.state) : "--" }
+        </p>
+      </div>
 
     </div>
   )

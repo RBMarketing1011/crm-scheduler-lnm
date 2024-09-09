@@ -1,5 +1,5 @@
-import { getToken } from '@utils/TekMetric/TekMetricApi.js'
-import Shop from '@models/shops'
+import { getToken } from '@lib/utils/TekMetric/TekMetricApi.js'
+import Shop from '@db/models/shops'
 
 const connectTM = async (req) =>
 {

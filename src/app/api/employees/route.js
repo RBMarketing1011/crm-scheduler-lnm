@@ -1,10 +1,10 @@
-import Employee from '@models/employees'
-import Account from '@models/accounts'
-import connectDB from '@config/connectDB'
-import genUserVerifyEmailToken from '@utils/tokenGenerators/genUserVerifyEmailToken'
-import verifyEmailUser from '@utils/nodemailerEmails/verifyEmailUser'
-import encrypt from '@utils/encrypt'
-import UserEmailToken from '@models/UserEmailToken'
+import Employee from '@db/models/employees'
+import Account from '@db/models/accounts'
+import connectDB from '@db/connectDB'
+import genUserVerifyEmailToken from '@lib/helpers/tokenGenerators/genUserVerifyEmailToken'
+import verifyEmailUser from '@lib/utils/nodemailer/verifyEmailUser'
+import encrypt from '@lib/helpers/bcrypt/encrypt'
+import UserEmailToken from '@db/models/UserEmailToken'
 
 const createEmployeeOfShop = async (req) =>
 {

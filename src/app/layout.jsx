@@ -29,7 +29,7 @@ const Layout = ({ children }) =>
     <html
       lang="en"
       className={ clsx(
-        'h-full scroll-smooth bg-white antialiased --font-lexend --font-inter',
+        'h-full scroll-smooth bg-white antialiased --font-inter --font-lexend',
         inter.variable,
         lexend.variable,
       ) }

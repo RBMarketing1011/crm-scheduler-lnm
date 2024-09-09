@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Button } from '@components/HomePage/Button'
+import Button from '@components/atom/Button'
 import Logo from '@images/logos/lnm-logo-black.png'
-import { SlimLayout } from '@components/HomePage/SlimLayout'
+import { SlimLayout } from '@components/template/SlimLayout'
 
 export default function NotFound ()
 {

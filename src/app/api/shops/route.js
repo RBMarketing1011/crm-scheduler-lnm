@@ -1,6 +1,6 @@
-import Account from '@models/accounts'
-import Shop from '@models/shops'
-import connectDB from '@config/connectDB'
+import Account from '@db/models/accounts'
+import Shop from '@db/models/shops'
+import connectDB from '@db/connectDB'
 
 const createShop = async (req) =>
 {
@@ -10,6 +10,12 @@ const createShop = async (req) =>
     accountId,
     shop: {
       name,
+      weekdayOpenHour,
+      weekdayCloseHour,
+      openOnWeekends,
+      weekendOpenOn,
+      weekendOpenHour,
+      weekendCloseHour,
       nickname,
       phone,
       email,
@@ -48,6 +54,18 @@ const createShop = async (req) =>
       // create Shop
       const shop = await Shop.create({
         name,
+        hoursOfOp: {
+          weekdays: {
+            open: weekdayOpenHour,
+            close: weekdayCloseHour,
+          },
+          weekends: {
+            open: openOnWeekends,
+            days: weekendOpenOn || null,
+            open: weekendOpenHour || null,
+            close: weekendCloseHour || null,
+          }
+        },
         nickname: nickname || null,
         phone,
         email,
@@ -80,6 +98,12 @@ const updateShop = async (req) =>
   const {
     id,
     name,
+    weekdayOpenHour,
+    weekdayCloseHour,
+    openOnWeekends,
+    weekendOpenOn,
+    weekendOpenHour,
+    weekendCloseHour,
     nickname,
     email,
     phone,
@@ -90,20 +114,6 @@ const updateShop = async (req) =>
     state,
     zip,
   } = await req.json()
-
-  console.log(
-    id,
-    name,
-    nickname,
-    email,
-    phone,
-    website,
-    address1,
-    address2,
-    city,
-    state,
-    zip,
-  )
 
   try
   {
@@ -116,6 +126,18 @@ const updateShop = async (req) =>
 
     await Shop.findByIdAndUpdate(id, {
       name,
+      hoursOfOp: {
+        weekdays: {
+          open: weekdayOpenHour,
+          close: weekdayCloseHour,
+        },
+        weekends: {
+          open: openOnWeekends,
+          days: weekendOpenOn || null,
+          open: weekendOpenHour || null,
+          close: weekendCloseHour || null,
+        }
+      },
       nickname,
       email,
       phone,
@@ -134,8 +156,6 @@ const updateShop = async (req) =>
   {
     return Response.json({ error: error.message }, { status: 403 })
   }
-
-  return Response.json({ error: 'Testing' })
 }
 
 export { createShop as POST, updateShop as PUT }

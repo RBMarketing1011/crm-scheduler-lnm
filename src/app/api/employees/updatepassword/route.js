@@ -1,6 +1,6 @@
-import connectDB from '@config/connectDB'
-import Employee from '@models/employees'
-import encrypt from '@utils/encrypt'
+import connectDB from '@db/connectDB'
+import Employee from '@db/models/employees'
+import encrypt from '@lib/helpers/bcrypt/encrypt'
 import bcrypt from 'bcrypt'
 
 const updatePassword = async (req) =>

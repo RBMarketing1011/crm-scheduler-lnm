@@ -1,5 +1,5 @@
-import connectDB from '@config/connectDB'
-import Employee from '@models/employees'
+import connectDB from '@db/connectDB'
+import Employee from '@db/models/employees'
 
 const updateEmployee = async (req) =>
 {

@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 import SchedulerNextScreenBtn from '../btns/SchedulerNextScreenBtn'
 import SchedulerBackScreenBtn from '../btns/SchedulerBackScreenBtn'
-import { Notifi, notifi } from '@components/Notifications/Notify'
+import { Notifi, notifi } from '@lib/utils/Notifications/Notify'
 
 const EmailAuthScreen = ({ shop, customerChange, nextScreen, prevScreen }) =>
 {

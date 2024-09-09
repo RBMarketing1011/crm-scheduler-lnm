@@ -1,8 +1,8 @@
-import Customer from '@models/customers'
-import Shop from '@models/shops'
-import connectDB from '@config/connectDB'
-import genShortToken from '@utils/tokenGenerators/genShortToken'
-import verifyEmail from '@utils/nodemailerEmails/verifyEmailScheduler'
+import Customer from '@db/models/customers'
+import Shop from '@db/models/shops'
+import connectDB from '@db/connectDB'
+import genShortToken from '@lib/helpers/tokenGenerators/genShortToken'
+import verifyEmail from '@lib/utils/nodemailer/verifyEmailScheduler'
 
 const createOrVerifyUser = async (req) =>
 {

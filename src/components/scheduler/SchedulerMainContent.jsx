@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react'
 
 //components
 import ChooseServicesContent from './screens/ChooseServicesContent'
-import Loader from '../Loader'
-import { Notifi, notifi } from '@components/Notifications/Notify'
+import Loader from '../../components/atom/Loader'
+import { Notifi, notifi } from '@lib/utils/Notifications/Notify'
 
 //images
 
@@ -41,6 +41,12 @@ const SchedulerMainContent = () =>
 
   const [ data, setData ] = useState('')
 
+  // ======================= State To determine what screen is in the Content Area
+  const [ contentScreen, setContentScreen ] = useState('Choose Services')
+  // ======================= State To determine what screen is in the Content Area
+
+  const [ errorMsg, setErrorMsg ] = useState(null)
+
   useEffect(() =>
   {
     const getAccount = async () =>
@@ -54,7 +60,17 @@ const SchedulerMainContent = () =>
           },
           body: JSON.stringify({ accountId, shopId })
         })
-        setData(await res.json())
+
+        const data = await res.json()
+
+        if (data.success)
+        {
+          setData(data.success)
+        } else if (data.error)
+        {
+          setContentScreen('Error')
+          setErrorMsg(data.error)
+        }
       } catch (error)
       {
         console.log(error)
@@ -65,10 +81,6 @@ const SchedulerMainContent = () =>
 
   }, [])
   // ======================== Get Account & Shop info from search params and set State
-
-  // ======================= State To determine what screen is in the Content Area
-  const [ contentScreen, setContentScreen ] = useState('Schedule Appt')
-  // ======================= State To determine what screen is in the Content Area
 
   // ======================== Handle All actions on click to setState with services
   const [ servicesSelected, setServicesSelected ] = useState([])
@@ -114,7 +126,10 @@ const SchedulerMainContent = () =>
   const [ model, setModel ] = useState('')
   // ================================= state to log vehicle year, make, model
   // ===================================== Appointment date and time state
-  const [ apptDate, setApptDate ] = useState(now(getLocalTimeZone()))
+  const [ apptDate, setApptDate ] = useState(now())
+  const [ apptTime, setApptTime ] = useState(null)
+
+  // apptDate && console.log(new Date(apptDate.month + '-' + apptDate.day + '-' + apptDate.year))
   // ===================================== End Appointment date and time state
 
   return (
@@ -216,7 +231,8 @@ const SchedulerMainContent = () =>
                       contentScreen === 'Schedule Appt' ?
 
                         <ScheduleAppt
-                          dateTime={ { state: apptDate, setState: setApptDate } }
+                          date={ { state: apptDate, setState: setApptDate } }
+                          time={ { state: apptDate, setState: setApptDate } }
                           nextScreen={ () => setContentScreen('Next') }
                           prevScreen={ () => setContentScreen('Vehicle Info') }
                         />
@@ -229,7 +245,16 @@ const SchedulerMainContent = () =>
 
           :
 
-          <Loader />
+          errorMsg ?
+
+            <div className='w-full h-full flex flex-col justify-center items-center text-center gap-3 divide-y-1 divide-primary-300/50'>
+              <h2>{ errorMsg }</h2>
+              <h2 className='pt-3'>Please contact your shop admin for details</h2>
+            </div>
+
+            :
+
+            <Loader />
       }
     </main>
   )

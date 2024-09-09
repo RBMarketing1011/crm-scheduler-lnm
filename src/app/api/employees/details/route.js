@@ -1,6 +1,6 @@
-import connectDB from '@config/connectDB'
-import Employee from '@models/employees'
-import Account from '@models/accounts'
+import connectDB from '@db/connectDB'
+import Employee from '@db/models/employees'
+import Account from '@db/models/accounts'
 
 const updateDetails = async (req) =>
 {

@@ -8,10 +8,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 //components
-import Button from '@components/Dashboard/Button'
-import { TextField } from '@components/HomePage/Fields'
-import { SlimLayout } from '@components/HomePage/SlimLayout'
-import { Notifi, notifi } from '@components/Notifications/Notify'
+import Button from '@components/atom/Button'
+import { TextField } from '@components/template/Fields'
+import { SlimLayout } from '@components/template/SlimLayout'
+import { Notifi, notifi } from '@lib/utils/Notifications/Notify'
 
 //icons
 import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6'

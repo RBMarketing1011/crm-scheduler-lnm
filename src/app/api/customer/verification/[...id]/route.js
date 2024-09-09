@@ -1,6 +1,6 @@
-import connectDB from '@config/connectDB'
-import Customer from '@models/customers'
-import CustomerEmailToken from '@models/customerEmailToken'
+import connectDB from '@db/connectDB'
+import Customer from '@db/models/customers'
+import CustomerEmailToken from '@db/models/customerEmailToken'
 
 const verifyCustomerToken = async (req, { params }) =>
 {

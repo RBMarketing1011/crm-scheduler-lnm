@@ -2,7 +2,7 @@
 
 import SchedulerBackScreenBtn from '../btns/SchedulerBackScreenBtn'
 import SchedulerNextScreenBtn from '../btns/SchedulerNextScreenBtn'
-import { Notifi, notifi } from '@components/Notifications/Notify'
+import { Notifi, notifi } from '@lib/utils/Notifications/Notify'
 
 import { useState } from 'react'
 
