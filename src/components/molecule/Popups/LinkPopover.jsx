@@ -3,17 +3,13 @@
 import { Fragment, useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import Link from 'next/link'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-
-function classNames (...classes)
-{
-  return classes.filter(Boolean).join(' ')
-}
 
 const LinkPopover = ({ button, x, y }) =>
 {
   const [ openMenu, setOpenMenu ] = useState(false)
+  const { data: session } = useSession()
   const container = useRef(null)
   const router = useRouter()
 
@@ -54,14 +50,14 @@ const LinkPopover = ({ button, x, y }) =>
         <div className={ `absolute ${ x } ${ y } z-10 mt-2 w-56 rounded-md bg-white shadow-lg` } ref={ container }>
           <div className="py-1">
             <Link
-              href="/dashboard/settings"
+              href={ `/account/${ session?.user?.accountId }/user/${ session?.user._id }/settings` }
               className='text-gray-700 hover:bg-primary-100 hover:text-primary-300 block w-full px-4 py-2 text-left text-sm'
               onClick={ () => setOpenMenu(false) }
             >
               User settings
             </Link>
             <Link
-              href="/dashboard/account"
+              href={ `/account/${ session?.user?.accountId }/settings` }
               className='text-gray-700 hover:bg-primary-100 hover:text-primary-300 block w-full px-4 py-2 text-left text-sm'
               onClick={ () => setOpenMenu(false) }
             >

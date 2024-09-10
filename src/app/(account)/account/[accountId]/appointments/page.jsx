@@ -1,11 +1,15 @@
 'use client'
 
+// Context 
+import { useContext } from 'react'
+
 import Container from '@components/atom/Container'
 import TitleHeading from '@components/atom/Headings/TitleHeading'
+import { convertDate, convertTime } from '@lib/helpers/apptDateTime/convertDateTime'
+
 import { Fragment, useState } from 'react'
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { PaperClipIcon } from '@heroicons/react/20/solid'
 
 const navigation = [
   { name: 'Today', count: '3' },
@@ -16,15 +20,11 @@ const navigation = [
   { name: 'Year To Date' },
 ]
 
+// Sample Data
 import { getAllShops } from '@sampleData/sample'
 import { getAllAppts } from '@sampleData/sample'
 import { getAllCustomers } from '@sampleData/sample'
 import { getAllVehicles } from '@sampleData/sample'
-
-function classNames (...classes)
-{
-  return classes.filter(Boolean).join(' ')
-}
 
 export default function Page ()
 {
@@ -36,18 +36,6 @@ export default function Page ()
   const appts = getAllAppts.content
   const customers = getAllCustomers.content
   const vehicles = getAllVehicles.content
-
-  const convertDate = (x) =>
-  {
-    const d = new Date(x).toLocaleDateString()
-    return d
-  }
-
-  const convertTime = (x) =>
-  {
-    const t = new Date(x).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-    return t
-  }
 
   return (
     <Container>
@@ -79,12 +67,10 @@ export default function Page ()
           <div className="hidden sm:block">
             <nav className="-mb-px flex space-x-8">
               <button
-                className={ classNames(
-                  tab === 'All Shops'
-                    ? 'border-primary-300 text-primary-300'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
-                  'whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium'
-                ) }
+                className={ `${ tab === 'All Shops'
+                  ? 'border-primary-300 text-primary-300'
+                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' } whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium`
+                }
                 aria-current={ tab === 'All Shops' ? 'page' : undefined }
                 onClick={ () => setTab('All Shops') }
               >
@@ -100,12 +86,10 @@ export default function Page ()
 
                   <button
                     key={ shop.name }
-                    className={ classNames(
-                      tab === shop.name
-                        ? 'border-primary-300 text-primary-300'
-                        : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
-                      'whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium'
-                    ) }
+                    className={ ` ${ tab === shop.name
+                      ? 'border-primary-300 text-primary-300'
+                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' } whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium`
+                    }
                     aria-current={ tab === shop.name ? 'page' : undefined }
                     onClick={ () => setTab(shop.name) }
                   >

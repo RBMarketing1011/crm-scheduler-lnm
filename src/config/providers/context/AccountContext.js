@@ -8,7 +8,7 @@ export const AccountContextProvider = ({ children }) =>
 {
 
   return (
-    <AccountContext.Provider>
+    <AccountContext.Provider value={ {} }>
       { children }
     </AccountContext.Provider>
   )

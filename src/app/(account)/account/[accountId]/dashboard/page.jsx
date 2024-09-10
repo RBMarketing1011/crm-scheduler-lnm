@@ -1,8 +1,16 @@
 'use client'
 
-import CustomerAppts from '@components/page/CustomerAppts'
+// Context 
+import { useContext } from 'react'
+
+import { UserContext } from '@config/providers/context/UserContext'
+import { MiscContext } from '@config/providers/context/MiscContext'
+import { EmployeeContext } from '@config/providers/context/EmployeeContext'
+
+// Components
+import CustomerAppts from '@components/organism/CustomerAppts'
 import Container from '@components/atom/Container'
-import DashboardStats from '@components/page/DashboardStats'
+import DashboardStats from '@components/organism/DashboardStats'
 import EmployeeSearch from '@components/molecule/Employees/EmployeeSearch'
 import TitleHeading from '@components/atom/Headings/TitleHeading'
 import CardWithHeader from '@components/atom/Cards/CardWithHeader'
@@ -10,28 +18,27 @@ import CardWithHeaderBtn from '@components/atom/Cards/CardWithHeaderBtn'
 import PopupForm from '@components/molecule/Popups/PopupForm'
 import { Notifi } from '@lib/utils/Notifications/Notify'
 
-import { useSession } from 'next-auth/react'
-import { useState } from 'react'
-
 
 const Dashboard = () =>
 {
-  const { data: session } = useSession()
+  const {
+    sessionState
+  } = useContext(UserContext)
+
+  const { addEmployeeFormState, addEmployeeState } = useContext(EmployeeContext)
+
+  const {
+    notifyState
+  } = useContext(MiscContext)
+
+  const [ session, update ] = sessionState
+  const [ openEmployeeForm, setOpenEmployeeForm ] = addEmployeeFormState
+  const [ addEmployee, setAddEmployee ] = addEmployeeState
+
+
+  const [ notify, setNotify ] = notifyState
 
   // ================================= PopupForm
-  const [ openPopupForm, setOpenPopupForm ] = useState(false)
-  const [ notify, setNotify ] = useState({
-    type: '',
-    text: '',
-    show: false
-  })
-  const [ formData, setFormData ] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    shops: '',
-    employeeRole: '',
-  })
 
   let shopsOptions = []
   shopsOptions.push('All')
@@ -45,8 +52,11 @@ const Dashboard = () =>
       <div className='flex flex-col lg:flex-row gap-5'>
         <CardWithHeader title='Upcoming Appointments'>
           <CustomerAppts data={ session?.appts } />
-        </CardWithHeader >
-        <CardWithHeaderBtn title='Employees' btnTitle='Add Employee' onClick={ () => setOpenPopupForm(true) }>
+        </CardWithHeader>
+        <CardWithHeaderBtn
+          title='Employees'
+          btnTitle='Add Employee'
+          onClick={ () => setOpenEmployeeForm(true) }>
           <EmployeeSearch />
         </CardWithHeaderBtn>
       </div>
@@ -56,11 +66,11 @@ const Dashboard = () =>
       {/* Modal for Add Employee Form */ }
       <PopupForm
         title='Add Employee'
-        openPopupState={ { state: openPopupForm, setState: setOpenPopupForm } }
+        openPopupState={ { state: openEmployeeForm, setState: setOpenEmployeeForm } }
         httpRequest={ {
           url: `${ process.env.NEXT_PUBLIC_API_DOMAIN }/employees`,
           method: 'POST',
-          body: JSON.stringify({ employee: formData, accountId: session?.user?.accountId })
+          body: JSON.stringify({ employee: addEmployee, accountId: session?.user?.accountId })
         } }
         notifiSetState={ setNotify }
         textFields={ [
@@ -68,11 +78,11 @@ const Dashboard = () =>
             width: 'sm:w-[48.5%]',
             type: 'text',
             label: 'First Name',
-            value: formData.firstname,
+            value: addEmployee.firstname,
             required: true,
             onChange: (e) =>
             {
-              setFormData(prev => ({
+              setAddEmployee(prev => ({
                 ...prev,
                 firstname: e.target.value
               }))
@@ -82,11 +92,11 @@ const Dashboard = () =>
             width: 'sm:w-[48.5%]',
             type: 'text',
             label: 'Last Name',
-            value: formData.lastname,
+            value: addEmployee.lastname,
             required: true,
             onChange: (e) =>
             {
-              setFormData(prev => ({
+              setAddEmployee(prev => ({
                 ...prev,
                 lastname: e.target.value
               }))
@@ -96,11 +106,11 @@ const Dashboard = () =>
             width: 'sm:w-[99.5%]',
             type: 'email',
             label: 'Email',
-            value: formData.email,
+            value: addEmployee.email,
             required: true,
             onChange: (e) =>
             {
-              setFormData(prev => ({
+              setAddEmployee(prev => ({
                 ...prev,
                 email: e.target.value
               }))
@@ -112,10 +122,10 @@ const Dashboard = () =>
             label: 'Shops',
             options: shopsOptions,
             required: true,
-            value: formData.shops,
+            value: addEmployee.shops,
             onChange: (e) =>
             {
-              setFormData(prev => ({
+              setAddEmployee(prev => ({
                 ...prev,
                 shops: e.target.value
               }))
@@ -132,10 +142,10 @@ const Dashboard = () =>
               'Admin'
             ],
             required: true,
-            value: formData.employeeRole,
+            value: addEmployee.employeeRole,
             onChange: (e) =>
             {
-              setFormData(prev => ({
+              setAddEmployee(prev => ({
                 ...prev,
                 employeeRole: e.target.value
               }))

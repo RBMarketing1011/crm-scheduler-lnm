@@ -8,7 +8,7 @@ export const LocationContextProvider = ({ children }) =>
 {
 
   return (
-    <LocationContext.Provider>
+    <LocationContext.Provider value={ {} }>
       { children }
     </LocationContext.Provider>
   )

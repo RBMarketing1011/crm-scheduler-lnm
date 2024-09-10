@@ -40,7 +40,7 @@ const authOptions = {
         // check for credentials
         if (!credentials.email || !credentials.password)
         {
-          return { error: 'Email & password required' }
+          throw new Error('Email & password required')
         }
 
         //connect DB
@@ -51,7 +51,7 @@ const authOptions = {
         // if no user return null
         if (!user)
         {
-          return { error: 'Please check your credentials and try again.' }
+          throw new Error('Please check your credentials and try again.')
         }
 
         //compare PW 
@@ -60,7 +60,7 @@ const authOptions = {
         // if pw dont match return null 
         if (!matched)
         {
-          return { error: 'Please check your credentials and try again.' }
+          throw new Error('Please check your credentials and try again.')
         }
 
         // return user if everything checks out 
@@ -154,10 +154,9 @@ const authOptions = {
   },
   pages: {
     signIn: '/login',
-    signOut: '/logout',
     // error: null, // Error code passed in query string as ?error=
     // verifyRequest: null, // (used for check email message)
-    // newUser: '/dashboard/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
+    // newUser: '/account/dashboard/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
   }
 }
 

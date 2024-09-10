@@ -1,6 +1,8 @@
 import '@styles/tailwind.css'
 import { Inter, Lexend } from 'next/font/google'
 import clsx from 'clsx'
+import { AppContextProvider } from '@config/providers/context/index/AppContext'
+import Provider from '@config/providers/SessionProvider'
 
 export const metadata = {
   title: {
@@ -35,7 +37,11 @@ const Layout = ({ children }) =>
       ) }
     >
       <body className="flex h-full flex-col">
-        { children }
+        <Provider>
+          <AppContextProvider>
+            { children }
+          </AppContextProvider>
+        </Provider>
       </body>
     </html>
   )

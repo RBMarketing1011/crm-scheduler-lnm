@@ -26,34 +26,22 @@ import PopupForm from '@components/molecule/Popups/PopupForm'
 import { Notifi } from '@lib/utils/Notifications/Notify'
 import InitialsIcon from '@components/molecule/Employees/InitialsIcon'
 
-const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: RectangleGroupIcon, },
-  { name: 'Appointments', href: '/dashboard/appointments', icon: CalendarDaysIcon, count: '12' },
-]
-const account = [
-  { name: 'Settings', href: '/dashboard/settings', icon: Cog8ToothIcon, },
-]
-
-function classNames (...classes)
-{
-  return classes.filter(Boolean).join(' ')
-}
-
-
 const Sidebar = () =>
 {
   const [ sidebarOpen, setSidebarOpen ] = useState(false)
   const path = usePathname()
 
   // ================== Session Data
-  const {
-    data: session,
-    update
-  } = useSession()
+  const { data: session, update } = useSession()
 
-  // console.log(session?.user)
-  // console.log(session?.account)
-  // console.log(session?.shops)
+  const navigation = [
+    { name: 'Dashboard', href: `/account/${ session?.user?.accountId }/dashboard`, icon: RectangleGroupIcon, },
+    { name: 'Appointments', href: `/account/${ session?.user?.accountId }/appointments`, icon: CalendarDaysIcon, count: '12' },
+  ]
+  const account = [
+    { name: 'Settings', href: `/account/${ session?.user?.accountId }/settings`, icon: Cog8ToothIcon, },
+  ]
+
   // ================= End Session Data
 
   // ================= Add Shop Popup
@@ -142,6 +130,7 @@ const Sidebar = () =>
                       height={ 0 }
                       sizes='100vw'
                       priority
+                      preload={ false }
                     />
                   </div>
                   <nav className="flex flex-1 flex-col">
@@ -209,9 +198,9 @@ const Sidebar = () =>
 
                               <li key={ shop.name }>
                                 <Link
-                                  href={ `/dashboard/shops/${ shop._id }` }
+                                  href={ `/account/${ session?.user?.accountId }/shops/${ shop._id }/appointments` }
                                   className={ `
-                                    ${ path === `/dashboard/shops/${ shop._id }`
+                                    ${ path.includes(`/account/${ session?.user?.accountId }/shops/${ shop._id }`)
                                       ? 'bg-primary-100 text-primary-300'
                                       : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                                     group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
@@ -220,7 +209,7 @@ const Sidebar = () =>
                                 >
                                   <span
                                     className={ `
-                                      ${ path === `/dashboard/shops/${ shop._id }`
+                                      ${ path.includes(`/account/${ session?.user?.accountId }/shops/${ shop._id }`)
                                         ? 'text-primary-300 border-primary-300'
                                         : 'text-gray-700 border-gray-200' } group-hover:border-primary-300 group-hover:text-primary-300 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
                                     `}
@@ -361,9 +350,9 @@ const Sidebar = () =>
 
                       <li key={ shopIdx }>
                         <Link
-                          href={ `/dashboard/shops/${ shop._id }` }
+                          href={ `/account/${ session?.user?.accountId }/shops/${ shop._id }/appointments` }
                           className={ `
-                            ${ path === `/dashboard/shops/${ shop._id }`
+                            ${ path.includes(`/account/${ session?.user?.accountId }/shops/${ shop._id }`)
                               ? 'bg-primary-100 text-primary-300'
                               : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                             group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
@@ -371,7 +360,7 @@ const Sidebar = () =>
                         >
                           <span
                             className={ `
-                              ${ path === `/dashboard/shops/${ shop._id }`
+                              ${ path.includes(`/account/${ session?.user?.accountId }/shops/${ shop._id }`)
                                 ? 'text-primary-300 border-primary-300'
                                 : 'text-gray-400 border-gray-200 group-hover:border-primary-300 group-hover:text-primary-300' }
                               flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
