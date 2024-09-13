@@ -1,9 +1,9 @@
 import { getToken } from '@lib/utils/TekMetric/TekMetricApi.js'
-import Shop from '@db/models/shops'
+import Shop from '@db/models/locations'
 
 const connectTM = async (req) =>
 {
-  const { shopId, tmShopId } = await req.json()
+  const { locationId, tmlocationId } = await req.json()
 
   const token = await getToken()
 
@@ -11,7 +11,7 @@ const connectTM = async (req) =>
 
   try
   {
-    const shop = await Shop.findById(shopId)
+    const location = await Location.findById(locationId)
 
     if (!shop)
     {
@@ -20,25 +20,25 @@ const connectTM = async (req) =>
 
     // throw new Error('Test')
 
-    if (!token.scope.includes(tmShopId))
+    if (!token.scope.includes(tmlocationId))
     {
-      await Shop.findByIdAndUpdate(shopId, {
+      await Location.findByIdAndUpdate(locationId, {
         tekMetricIntegration: {
-          shopId: tmShopId,
+          locationId: tmlocationId,
           connected: false
         }
       })
-      throw new Error('ShopId not contained in our scope. Please contact TekMetric to have it added to our scope.')
+      throw new Error('locationId not contained in our scope. Please contact TekMetric to have it added to our scope.')
     }
 
-    await Shop.findByIdAndUpdate(shopId, {
+    await Location.findByIdAndUpdate(locationId, {
       tekMetricIntegration: {
-        shopId: tmShopId,
+        locationId: tmlocationId,
         connected: true
       }
     })
 
-    return Response.json({ success: 'Integration successful. ShopId added to your profile.' })
+    return Response.json({ success: 'Integration successful. locationId added to your profile.' })
 
   } catch (error)
   {

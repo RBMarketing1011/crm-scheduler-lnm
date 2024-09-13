@@ -1,9 +1,9 @@
 import { Schema, models, model } from 'mongoose'
-import Shop from './shops'
+import Shop from './locations'
 import Customer from './customers'
 
 const appointmentSchema = new Schema({
-  "shopId": {
+  "locationId": {
     type: Schema.Types.ObjectId,
     ref: 'Shop'
   },

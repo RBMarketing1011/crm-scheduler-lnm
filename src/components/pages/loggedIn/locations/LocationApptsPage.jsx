@@ -10,7 +10,7 @@ import
 
 import NoData from '@components/atom/NoData'
 
-const ShopApptsPage = () =>
+const LocationApptsPage = () =>
 {
   // ====================================== Session details
   const {
@@ -18,7 +18,7 @@ const ShopApptsPage = () =>
     update: refresh
   } = useSession()
 
-  // ======================================= End set shop data
+  // ======================================= End set location data
 
   return (
     <main className="px-4 py-5 sm:px-6 lg:flex-auto lg:px-0 lg:py-5">
@@ -118,4 +118,4 @@ const ShopApptsPage = () =>
   )
 }
 
-export default ShopApptsPage
+export default LocationApptsPage

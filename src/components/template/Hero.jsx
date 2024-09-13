@@ -29,7 +29,7 @@ export function Hero ()
         for Auto Repair Shops.
       </h1>
       <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
-        Most auto repair appointment scheduling software strives for accuracy but can be cumbersome to navigate. We take a different approach, prioritizing user-friendliness while maintaining precision, ensuring a seamless scheduling experience for your shop without the headache.
+        Most auto repair appointment scheduling software strives for accuracy but can be cumbersome to navigate. We take a different approach, prioritizing user-friendliness while maintaining precision, ensuring a seamless scheduling experience for your location without the headache.
       </p>
       <div className="mt-10 flex justify-center gap-x-6">
         <Button href="/register">Get 3 months free</Button>

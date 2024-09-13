@@ -1,17 +1,17 @@
 import Customer from '@db/models/customers'
-import Shop from '@db/models/shops'
+import Shop from '@db/models/locations'
 import connectDB from '@db/connectDB'
 import genShortToken from '@lib/helpers/tokenGenerators/genShortToken'
 import verifyEmail from '@lib/utils/nodemailer/verifyEmailScheduler'
 
 const createOrVerifyUser = async (req) =>
 {
-  const { firstname, lastname, email, shop } = await req.json()
+  const { firstname, lastname, email, location } = await req.json()
   await connectDB()
 
   try
   {
-    const currentShop = await Shop.findById(shop._id)
+    const currentShop = await Location.findById(location._id)
     const customerExists = await Customer.findOne({ email })
     // Does this customer already exist 
     if (customerExists)
@@ -32,7 +32,7 @@ const createOrVerifyUser = async (req) =>
 
     } else
     {
-      const newCustomer = await Customer.create({ firstname, lastname, email, shopId: shop._id })
+      const newCustomer = await Customer.create({ firstname, lastname, email, locationId: location._id })
       currentShop.customers.push(newCustomer)
       await currentShop.save()
       const token = await genShortToken(newCustomer._id)

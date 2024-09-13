@@ -418,7 +418,7 @@ const websites = [
   "https://www.topgeargarage.com",
   "https://www.expertautocare.com",
   "https://www.eliteautosolutions.com",
-  "https://www.supremeautoshop.com",
+  "https://www.supremeautolocation.com",
   "https://www.trustedcarcare.com",
   "https://www.proautoservice.com",
   "https://www.ultimateautorepair.com",

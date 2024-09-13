@@ -193,14 +193,14 @@ const Sidebar = () =>
                         </div>
                         <ul role="list" className="-mx-2 mt-2 space-y-1">
                           {
-                            session?.shops &&
-                            session?.shops.map(shop => (
+                            session?.locations &&
+                            session?.locations.map(location => (
 
-                              <li key={ shop.name }>
+                              <li key={ location.name }>
                                 <Link
-                                  href={ `/account/${ session?.user?.accountId }/shops/${ shop._id }/appointments` }
+                                  href={ `/account/${ session?.user?.accountId }/locations/${ location._id }/appointments` }
                                   className={ `
-                                    ${ path.includes(`/account/${ session?.user?.accountId }/shops/${ shop._id }`)
+                                    ${ path.includes(`/account/${ session?.user?.accountId }/locations/${ location._id }`)
                                       ? 'bg-primary-100 text-primary-300'
                                       : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                                     group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
@@ -209,14 +209,14 @@ const Sidebar = () =>
                                 >
                                   <span
                                     className={ `
-                                      ${ path.includes(`/account/${ session?.user?.accountId }/shops/${ shop._id }`)
+                                      ${ path.includes(`/account/${ session?.user?.accountId }/locations/${ location._id }`)
                                         ? 'text-primary-300 border-primary-300'
                                         : 'text-gray-700 border-gray-200' } group-hover:border-primary-300 group-hover:text-primary-300 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
                                     `}
                                   >
-                                    { shop.name.slice(0, 1) }
+                                    { location.name.slice(0, 1) }
                                   </span>
-                                  <span className="truncate inline-flex">{ shop.name }</span>
+                                  <span className="truncate inline-flex">{ location.name }</span>
                                 </Link>
                               </li>
 
@@ -344,15 +344,15 @@ const Sidebar = () =>
                 </div>
                 <ul role="list" className="-mx-2 mt-2 space-y-1">
                   {
-                    session?.shops &&
-                    Object.keys(session?.shops).length > 0 &&
-                    session?.shops.map((shop, shopIdx) => (
+                    session?.locations &&
+                    Object.keys(session?.locations).length > 0 &&
+                    session?.locations.map((location, locationIdx) => (
 
-                      <li key={ shopIdx }>
+                      <li key={ locationIdx }>
                         <Link
-                          href={ `/account/${ session?.user?.accountId }/shops/${ shop._id }/appointments` }
+                          href={ `/account/${ session?.user?.accountId }/locations/${ location._id }/appointments` }
                           className={ `
-                            ${ path.includes(`/account/${ session?.user?.accountId }/shops/${ shop._id }`)
+                            ${ path.includes(`/account/${ session?.user?.accountId }/locations/${ location._id }`)
                               ? 'bg-primary-100 text-primary-300'
                               : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                             group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
@@ -360,15 +360,15 @@ const Sidebar = () =>
                         >
                           <span
                             className={ `
-                              ${ path.includes(`/account/${ session?.user?.accountId }/shops/${ shop._id }`)
+                              ${ path.includes(`/account/${ session?.user?.accountId }/locations/${ location._id }`)
                                 ? 'text-primary-300 border-primary-300'
                                 : 'text-gray-400 border-gray-200 group-hover:border-primary-300 group-hover:text-primary-300' }
                               flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
                             `}
                           >
-                            { shop.name.slice(0, 1) }
+                            { location.name.slice(0, 1) }
                           </span>
-                          <span className="truncate">{ shop.name }</span>
+                          <span className="truncate">{ location.name }</span>
                         </Link>
                       </li>
 
@@ -472,7 +472,7 @@ const Sidebar = () =>
         refreshSession={ update }
         openPopupState={ { state: openAddShopPopup, setState: setOpenAddShopPopup } }
         httpRequest={ {
-          url: `${ process.env.NEXT_PUBLIC_API_DOMAIN }/shops`,
+          url: `${ process.env.NEXT_PUBLIC_API_DOMAIN }/locations`,
           method: 'POST',
           body: JSON.stringify({ shop: addShopFormData, accountId: session?.user?.accountId })
         } }

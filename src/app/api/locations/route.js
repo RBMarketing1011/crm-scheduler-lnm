@@ -1,5 +1,5 @@
 import Account from '@db/models/accounts'
-import Shop from '@db/models/shops'
+import Location from '@db/models/locations'
 import connectDB from '@db/connectDB'
 
 const createShop = async (req) =>
@@ -41,9 +41,9 @@ const createShop = async (req) =>
 
       // connect to DB
       await connectDB()
-      // if shop name exists in account return error 
-      const shopAccount = await Account.findById(accountId).populate('shops')
-      shopAccount.shops.map(el =>
+      // if location name exists in account return error 
+      const locationAccount = await Account.findById(accountId).populate('locations')
+      locationAccount.locations.map(el =>
       {
         if (el.name == name)
         {
@@ -52,7 +52,7 @@ const createShop = async (req) =>
       })
 
       // create Shop
-      const shop = await Shop.create({
+      const location = await Location.create({
         name,
         hoursOfOp: {
           weekdays: {
@@ -81,8 +81,8 @@ const createShop = async (req) =>
       })
       // Find account
       const account = await Account.findById(accountId)
-      // push shop onto Account 
-      account.shops.push(shop)
+      // push location onto Account 
+      account.locations.push(location)
       await account.save()
       // return success 
       return Response.json({ success: 'Shop created successfully' }, { status: 200 })
@@ -117,14 +117,14 @@ const updateShop = async (req) =>
 
   try
   {
-    const shop = await Shop.findById(id)
+    const location = await Location.findById(id)
 
-    if (!shop)
+    if (!location)
     {
       throw new Error('Shop not found')
     }
 
-    await Shop.findByIdAndUpdate(id, {
+    await Location.findByIdAndUpdate(id, {
       name,
       hoursOfOp: {
         weekdays: {

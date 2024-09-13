@@ -10,7 +10,7 @@ export const metadata = {
     default: 'LeadsNearMe® CRM',
   },
   description:
-    'Most auto repair appointment scheduling software strives for accuracy but can be cumbersome to navigate. We take a different approach, prioritizing user-friendliness while maintaining precision, ensuring a seamless scheduling experience for your shop without the headache.',
+    'Most auto repair appointment scheduling software strives for accuracy but can be cumbersome to navigate. We take a different approach, prioritizing user-friendliness while maintaining precision, ensuring a seamless scheduling experience for your location without the headache.',
 }
 
 const inter = Inter({

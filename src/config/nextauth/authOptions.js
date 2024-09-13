@@ -1,11 +1,10 @@
-import GoogleProvider from 'next-auth/providers/google'
+// import GoogleProvider from 'next-auth/providers/google'
 import EmailProvider from 'next-auth/providers/email'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcrypt'
 import connectDB from '@db/connectDB'
 import Employee from '@db/models/employees'
 import Account from '@db/models/accounts'
-import Appointment from '@db/models/appointments'
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import clientPromise from './adapter'
 
@@ -99,7 +98,7 @@ const authOptions = {
       if (account)
       {
         token.accessToken = account.access_token
-        token.id = token.sub || profile.id || account.providerAccountId
+        token.id = token.sub
       }
       return token
     },
@@ -115,25 +114,26 @@ const authOptions = {
 
       let account = await Account.findById(findUser.accountId)
 
-      if (account.shops.length <= 0 && account.employees.length <= 0)
+      if (account.locations.length <= 0 && account.employees.length <= 0)
       {
         const newAcct = await Account.findById(findUser.accountId)
         session.account = newAcct
 
-      } else if (account.shops.length > 0 && account.employees.length > 0)
+      } else if (account.locations.length > 0 && account.employees.length > 0)
       {
-        const newAcct = await Account.findById(findUser.accountId).populate('shops').populate('employees')
+        const newAcct = await Account.findById(findUser.accountId).populate('locations').populate('employees')
+
         session.account = newAcct
-        session.shops = newAcct.shops
+        session.locations = newAcct.locations
         session.employees = newAcct.employees
 
-      } else if (account.shops.length > 0 || account.employees.length > 0)
+      } else if (account.locations.length > 0 || account.employees.length > 0)
       {
-        if (account.shops.length > 0)
+        if (account.locations.length > 0)
         {
-          const newAcct = await Account.findById(findUser.accountId).populate('shops')
+          const newAcct = await Account.findById(findUser.accountId).populate('locations')
           session.account = newAcct
-          session.shops = newAcct.shops
+          session.locations = newAcct.locations
         }
 
         if (account.employees.length > 0)

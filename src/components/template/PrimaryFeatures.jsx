@@ -16,7 +16,7 @@ const features = [
   {
     title: 'Appointments',
     description:
-      "Seamlessly schedule, reschedule, and track appointments to optimize workflow and ensure timely service for your auto repair shop.",
+      "Seamlessly schedule, reschedule, and track appointments to optimize workflow and ensure timely service for your auto repair location.",
     image: screenshotPayroll,
   },
   {
@@ -34,7 +34,7 @@ const features = [
   {
     title: 'Employees',
     description:
-      'Empower your team with task assignment, productivity tracking, and schedule management to enhance efficiency and deliver exceptional service at every level of your auto repair shop.',
+      'Empower your team with task assignment, productivity tracking, and schedule management to enhance efficiency and deliver exceptional service at every level of your auto repair location.',
     image: screenshotReporting,
   },
 ]
@@ -78,7 +78,7 @@ export function PrimaryFeatures ()
       <Container className="relative">
         <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl md:text-5xl">
-            Everything you need to run your shop.
+            Everything you need to run your location.
           </h2>
           <p className="mt-6 text-lg tracking-tight text-blue-100">
             Well everything you need if you aren’t that picky about minor

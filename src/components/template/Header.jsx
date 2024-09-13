@@ -17,6 +17,7 @@ import { Container } from './Container'
 import Logo from '@images/logos/lnm-logo-black.png'
 import { NavLink } from '@components/template/NavLink'
 import Image from 'next/image'
+import { useSession } from 'next-auth/react'
 
 function MobileNavLink ({ href, children })
 {
@@ -113,6 +114,8 @@ function MobileNavigation ()
 
 export function Header ()
 {
+  const { data: session } = useSession()
+
   return (
     <header className="w-full py-10 fixed top-0 left-0 bg-white z-[100]">
       <Container>
@@ -141,9 +144,16 @@ export function Header ()
             </div>
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
-            <div className="hidden md:block">
-              <NavLink href="/account/dashboard">Dashboard</NavLink>
-            </div>
+
+            {
+              session?.user &&
+              <div className="hidden md:block">
+                <NavLink href={ `/account/${ session?.user?.accountId }/dashboard` }>
+                  Dashboard
+                </NavLink>
+              </div>
+            }
+
             <div className="hidden md:block">
               <NavLink href="/login">Sign in</NavLink>
             </div>

@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react'
 import TitleHeading from '@components/atom/Headings/TitleHeading'
 import PopupForm from '@components/molecule/Popups/PopupForm'
 
-const ShopIntegrationsPage = ({ shopId }) =>
+const LocationIntegrationsPage = ({ locationId }) =>
 {
   // ====================================== Notifi state 
   const [ notify, setNotify ] = useState({
@@ -21,36 +21,36 @@ const ShopIntegrationsPage = ({ shopId }) =>
 
   // ================================== Connect to tekmetric 
   const [ tmPopup, setTmPopup ] = useState(false)
-  const [ tmShopId, setTmShopId ] = useState('')
+  const [ tmlocationId, setTmlocationId ] = useState('')
   // ================================== End Connect to tekmetric
-  // ====================================== Set shop data
-  const [ shop, setShop ] = useState()
+  // ====================================== Set location data
+  const [ location, setLocation ] = useState()
 
   useEffect(() =>
   {
     const getShop = () =>
     {
-      session?.shops.length &&
-        session?.shops.map(shop =>
+      session?.locations.length &&
+        session?.locations.map(location =>
         {
-          if (shop._id.includes(shopId))
+          if (location._id.includes(locationId))
           {
-            setShop({
-              id: shop?._id,
-              name: shop?.name,
-              nickname: shop?.nickname,
-              email: shop?.email,
-              phone: shop?.phone,
-              website: shop?.website,
-              address1: shop?.address.address1,
-              address2: shop?.address.address2,
-              city: shop?.address.city,
-              state: shop?.address.state,
-              zip: shop?.address.zip,
-              tekMetricConnected: shop?.tekMetricIntegration.connected,
-              tekmetricShopId: shop?.tekMetricIntegration.shopId
+            setLocation({
+              id: location?._id,
+              name: location?.name,
+              nickname: location?.nickname,
+              email: location?.email,
+              phone: location?.phone,
+              website: location?.website,
+              address1: location?.address.address1,
+              address2: location?.address.address2,
+              city: location?.address.city,
+              state: location?.address.state,
+              zip: location?.address.zip,
+              tekMetricConnected: location?.tekMetricIntegration.connected,
+              tekmetriclocationId: location?.tekMetricIntegration.locationId
             })
-            setTmShopId(shop?.tekMetricIntegration.shopId || '')
+            setTmlocationId(location?.tekMetricIntegration.locationId || '')
           }
         })
     }
@@ -59,7 +59,7 @@ const ShopIntegrationsPage = ({ shopId }) =>
 
   }, [ session ])
 
-  // ======================================= End set shop data
+  // ======================================= End set location data
 
   return (
     <main className="px-4 py-5 sm:px-6 lg:flex-auto lg:px-0 lg:py-4">
@@ -73,12 +73,12 @@ const ShopIntegrationsPage = ({ shopId }) =>
               <div className='flex gap-20'>
                 <h2 className="text-base font-semibold leading-7 text-gray-900">
                   Tek Metric -
-                  <span className={ `${ shop?.tekMetricConnected ? 'text-green-500'
+                  <span className={ `${ location?.tekMetricConnected ? 'text-green-500'
                     :
                     'text-red-500' }` }
                   >
                     {
-                      shop?.tekMetricConnected ?
+                      location?.tekMetricConnected ?
                         ' Connected'
                         :
                         ' Not Connected'
@@ -87,18 +87,18 @@ const ShopIntegrationsPage = ({ shopId }) =>
                 </h2>
                 <h2 className="text-base font-semibold leading-7 text-primary-300">
                   {
-                    shop?.tekmetricShopId &&
+                    location?.tekmetriclocationId &&
                     <>
                       <span className='text-gray-900'>
-                        shopId: { ' ' }
+                        locationId: { ' ' }
                       </span>
-                      { shop?.tekmetricShopId }
+                      { location?.tekmetriclocationId }
                     </>
                   }
                 </h2>
               </div>
               <p className="mt-1 text-sm leading-6 text-gray-500 w-1/2">
-                Make sure your shopId is correct and associated with this shop. Leads Near Me® is not responsible for bad data associated with integrating the wrong shopId.
+                Make sure your locationId is correct and associated with this location. Leads Near Me® is not responsible for bad data associated with integrating the wrong location id.
               </p>
             </div>
             <button
@@ -107,7 +107,7 @@ const ShopIntegrationsPage = ({ shopId }) =>
               onClick={ () => setTmPopup(true) }
             >
               {
-                shop?.tekMetricConnected ?
+                location?.tekMetricConnected ?
                   'Disconnect'
                   :
                   'Connect'
@@ -124,7 +124,7 @@ const ShopIntegrationsPage = ({ shopId }) =>
         httpRequest={ {
           url: `${ process.env.NEXT_PUBLIC_API_DOMAIN }/tekmetric/connect`,
           method: 'POST',
-          body: JSON.stringify({ shopId: shop?.id, tmShopId })
+          body: JSON.stringify({ locationId: location?.id, tmlocationId })
         } }
         notifiSetState={ setNotify }
         textFields={ [
@@ -132,11 +132,11 @@ const ShopIntegrationsPage = ({ shopId }) =>
             width: 'sm:w-[100%]',
             type: 'text',
             label: 'TekMetric Shop ID',
-            value: tmShopId,
+            value: tmlocationId,
             required: true,
             onChange: (e) =>
             {
-              setTmShopId(e.target.value)
+              setTmlocationId(e.target.value)
             }
           }
         ] }
@@ -147,4 +147,4 @@ const ShopIntegrationsPage = ({ shopId }) =>
   )
 }
 
-export default ShopIntegrationsPage
+export default LocationIntegrationsPage

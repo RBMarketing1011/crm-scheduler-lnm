@@ -36,7 +36,7 @@ const EmailAuthScreen = ({ shop, customerChange, nextScreen, prevScreen }) =>
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ firstname, lastname, email: email.toLowerCase(), shop })
+          body: JSON.stringify({ firstname, lastname, email: email.toLowerCase(), location })
         })
 
         const data = await res.json()
@@ -61,7 +61,7 @@ const EmailAuthScreen = ({ shop, customerChange, nextScreen, prevScreen }) =>
       <Notifi data={ { state: notify, setState: setNotify } } />
       <div className='w-full flex flex-col gap-10'>
         <div className='w-full'>
-          <h1 className='text-xl font-bold text-primary-300'>To schedule your appointment at { shop.name }, please enter your details below!</h1>
+          <h1 className='text-xl font-bold text-primary-300'>To schedule your appointment at { location.name }, please enter your details below!</h1>
         </div>
 
         <div className='w-full flex flex-col gap-5'>
@@ -95,7 +95,7 @@ const EmailAuthScreen = ({ shop, customerChange, nextScreen, prevScreen }) =>
 
         <div className='w-full flex justify-start items-center gap-5'>
           <input id='consent' type="checkbox" defaultChecked={ true } onClick={ () => setConsent(!consent) } />
-          <label htmlFor="consent">I agree to receive email messages about my appointment with { shop.name }. You can unsubscribe at any time.</label>
+          <label htmlFor="consent">I agree to receive email messages about my appointment with { location.name }. You can unsubscribe at any time.</label>
         </div>
       </div>
 

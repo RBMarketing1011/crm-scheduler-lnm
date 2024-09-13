@@ -37,7 +37,7 @@ const SchedulerMainContent = () =>
   const searchParams = useSearchParams()
 
   const accountId = searchParams.get('accountId')
-  const shopId = searchParams.get('shopId')
+  const locationId = searchParams.get('locationId')
 
   const [ data, setData ] = useState('')
 
@@ -58,7 +58,7 @@ const SchedulerMainContent = () =>
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ accountId, shopId })
+          body: JSON.stringify({ accountId, locationId })
         })
 
         const data = await res.json()
@@ -192,7 +192,7 @@ const SchedulerMainContent = () =>
                 contentScreen === 'Email Auth Screen' ?
 
                   <EmailAuthScreen
-                    shop={ data.shop }
+                    shop={ data.location }
                     customerChange={ setCustomerId }
                     nextScreen={ () => setContentScreen('Verify Email Token') }
                     prevScreen={ () => setContentScreen('Additional Comments') }
@@ -249,7 +249,7 @@ const SchedulerMainContent = () =>
 
             <div className='w-full h-full flex flex-col justify-center items-center text-center gap-3 divide-y-1 divide-primary-300/50'>
               <h2>{ errorMsg }</h2>
-              <h2 className='pt-3'>Please contact your shop admin for details</h2>
+              <h2 className='pt-3'>Please contact your location admin for details</h2>
             </div>
 
             :

@@ -37,7 +37,7 @@ const getToken = async () =>
 //                            NEW API CALL
 
 // ========================================GET ALL SHOP DETAILS
-// Get all shops - if you want single shop URL + /:shopId
+// Get all shops - if you want single location URL + /:locationId
 
 // THIS RETURNS AN ARRAY OF SHOPS THAT YOUR BEARER TOKEN HAS BEEN AUTHORIZED FOR
 // IM GUESSING WE NEED TO GET AUTHORIZATION PER SHOP THAT WANTS TO USE TEKMETRIC
@@ -68,7 +68,7 @@ const getAllShops = async (accessToken) =>
 
 // SEARCH PARAMS 
 // TYPE       KEY               VALUE 
-// integer    shop              Search for customers by shop
+// integer    location              Search for customers by shop
 // String     search            Search for customers by their name, email, or phone number
 // Boolean    okForMarketing    Boolean	Filter By customers who are ok for marketing
 // Date       updatedDateStart  Date	Filter by customer updated date
@@ -100,7 +100,7 @@ const getAllShops = async (accessToken) =>
 //     customerType: [ Object ],
 //     contactFirstName: 'Aman',
 //     contactLastName: 'Agarwal',
-//     shopId: 238,
+//     locationId: 238,
 //     okForMarketing: true,
 //     createdDate: '2023-12-13T13:04:31Z',
 //     updatedDate: '2023-12-13T13:04:31Z',
@@ -140,7 +140,7 @@ const getCustomer = async (accessToken) =>
 
 // BODY ATTRIBUTES 
 // REQUIRED     TYPE            KEY                VALUE    
-// true         integer         shopId             Shop Id
+// true         integer         locationId             Shop Id
 //              String          firstName          First Name 
 // false        Integer         customerTypeId     1: Person, 2: Business
 //              String          lastName           Last Name 
@@ -185,7 +185,7 @@ const getCustomer = async (accessToken) =>
 //     },
 //     "contactFirstName": null,
 //     "contactLastName": null,
-//     "shopId": 1,
+//     "locationId": 1,
 //     "okForMarketing": true,
 //     "createdDate": "2021-06-30T17:42:58.193Z",
 //     "updatedDate": "2021-06-30T17:42:58.193Z",
@@ -207,10 +207,10 @@ const createCustomer = async (accessToken) =>
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${ accessToken }`
     },
-    // ONLY SHOPID AND FIRSTNAME REQUIRED
+    // ONLY locationId AND FIRSTNAME REQUIRED
     // FOR A MORE DETAILED CUSTOMER PROFILE FILL OUT ALL RELATED FIELDS
     // PASS FIELDS INTO BODY OBJ
-    body: JSON.stringify({ shopId: `${ token.scope }`, firstName: 'Anthony' })
+    body: JSON.stringify({ locationId: `${ token.scope }`, firstName: 'Anthony' })
   })
 
   const data = await res.json()
@@ -234,7 +234,7 @@ const createCustomer = async (accessToken) =>
 
 // SEARCH PARAMS 
 // TYPE       KEY               VALUE 
-// integer    shop              Search for customers by shop
+// integer    location              Search for customers by shop
 // String     customerId        Specify a customerId
 //                              receive vehicles for specific customer
 // String     search            Search for customers by their name, email, or phone number
@@ -439,7 +439,7 @@ const createVehicle = async (accessToken) =>
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${ accessToken }`
     },
-    // ONLY SHOPID AND FIRSTNAME REQUIRED
+    // ONLY locationId AND FIRSTNAME REQUIRED
     // FOR A MORE DETAILED CUSTOMER PROFILE FILL OUT ALL RELATED FIELDS
     // PASS FIELDS INTO BODY OBJ
     body: JSON.stringify({
@@ -471,7 +471,7 @@ const createVehicle = async (accessToken) =>
 
 // SEARCH PARAMS 
 // TYPE       KEY               VALUE 
-// integer    shop              Search for appt by shop
+// integer    location              Search for appt by shop
 // String     customerId        Specify a customerId for appt
 //                              receive vehicles for specific customer
 // integer    vehicleId         Specify a vehicleId to search appointments
@@ -492,7 +492,7 @@ const createVehicle = async (accessToken) =>
 //   "content": [
 //     {
 //       "id": 1,
-//       "shopId": 1,
+//       "locationId": 1,
 //       "customerId": 1,
 //       "vehicleId": 2,
 //       "startTime": "2018-02-04T19:54:38",
@@ -510,7 +510,7 @@ const createVehicle = async (accessToken) =>
 //     },
 //     {
 //       "id": 2,
-//       "shopId": 1,
+//       "locationId": 1,
 //       "customerId": 1,
 //       "vehicleId": 2,
 //       "startTime": "2018-02-06T17:24:52",
@@ -565,9 +565,9 @@ const createVehicle = async (accessToken) =>
 // TO GET SINGLE APPT ADD /:apptId TO URL
 // DONT USE SEARCH PARAMS
 
-const getAppts = async (shopId, accessToken) =>
+const getAppts = async (locationId, accessToken) =>
 {
-  const searchParams = `shop=${ shopId }`
+  const searchParams = `shop=${ locationId }`
 
   const res = await fetch(`${ process.env.NEXT_PUBLIC_TEKMETRIC_URL }/api/v1/appointments?${ searchParams }`, {
     method: 'GET',
@@ -595,18 +595,18 @@ const getAppts = async (shopId, accessToken) =>
 
 // BODY ATTRIBUTES 
 // REQUIRED     TYPE            KEY                VALUE  
-// true         integer         shopId             Shop Id 
+// true         integer         locationId             Shop Id 
 //              DateTime        startTime          Start time of the appointment 
 //              DateTime        endTime            End time of the appointment
 //              string          title              Title of the appointment 
 // false        integer         customerId         Customer id - not required 
 //                                                 (unless there is vehicle)
-//                                                 by must belong to shopId
+//                                                 by must belong to locationId
 //              integer         vehicleId          Vehicle id - not required
 //                                                 (unless there is customer)
 //                                                 by must belong to customerId.
 //                                                 If customerId is not provided it must 
-//                                                 belong to a customer of the shop. 
+//                                                 belong to a customer of the location. 
 //              string          description        Description
 //              string          color              Color which will be shown with the //
 //                                                 Appointment
@@ -646,11 +646,11 @@ const createAppt = async (accessToken) =>
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${ accessToken }`
     },
-    // ONLY SHOPID AND FIRSTNAME REQUIRED
+    // ONLY locationId AND FIRSTNAME REQUIRED
     // FOR A MORE DETAILED CUSTOMER PROFILE FILL OUT ALL RELATED FIELDS
     // PASS FIELDS INTO BODY OBJ
     body: JSON.stringify({
-      shopId: `${ token.scope }`,
+      locationId: `${ token.scope }`,
       startTime: start,
       endTime: end,
       title: 'Appt set by LNM Scheduler'

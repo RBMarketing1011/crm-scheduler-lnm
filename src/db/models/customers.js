@@ -1,5 +1,5 @@
 import { Schema, models, model } from 'mongoose'
-import Shop from './shops'
+import Shop from './locations'
 import Vehicle from './vehicles'
 
 const customerSchema = new Schema({
@@ -70,7 +70,7 @@ const customerSchema = new Schema({
       default: null
     }
   },
-  "shopId": {
+  "locationId": {
     type: Schema.Types.ObjectId,
     ref: 'Shop',
     required: true

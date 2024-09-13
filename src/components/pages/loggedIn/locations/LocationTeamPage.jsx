@@ -5,12 +5,11 @@ import { useSession } from 'next-auth/react'
 import TitleHeading from '@components/atom/Headings/TitleHeading'
 
 import { IoIosPeople } from "react-icons/io"
-import { Notifi, notifi } from '@lib/utils/Notifications/Notify'
 import PopupForm from '@components/molecule/Popups/PopupForm'
 import DeleteItemPopup from '@components/molecule/Popups/DeleteItemPopup'
 import Button from '@components/atom/Button'
 
-const ShopTeamPage = ({ shopId }) =>
+const LocationTeamPage = ({ locationId }) =>
 {
   // ====================================== Notifi state 
   const [ notify, setNotify ] = useState({
@@ -24,32 +23,32 @@ const ShopTeamPage = ({ shopId }) =>
     update: refresh
   } = useSession()
 
-  // ====================================== Set shop data
-  const [ shop, setShop ] = useState()
+  // ====================================== Set location data
+  const [ location, setLocation ] = useState()
 
   useEffect(() =>
   {
     const getShop = () =>
     {
-      session?.shops.length &&
-        session?.shops.map(shop =>
+      session?.locations.length &&
+        session?.locations.map(location =>
         {
-          if (shop._id.includes(shopId))
+          if (location._id.includes(locationId))
           {
-            setShop({
-              id: shop?._id,
-              name: shop?.name,
-              nickname: shop?.nickname,
-              email: shop?.email,
-              phone: shop?.phone,
-              website: shop?.website,
-              address1: shop?.address.address1,
-              address2: shop?.address.address2,
-              city: shop?.address.city,
-              state: shop?.address.state,
-              zip: shop?.address.zip,
-              tekMetricConnected: shop?.tekMetricIntegration.connected,
-              tekmetricShopId: shop?.tekMetricIntegration.shopId
+            setLocation({
+              id: location?._id,
+              name: location?.name,
+              nickname: location?.nickname,
+              email: location?.email,
+              phone: location?.phone,
+              website: location?.website,
+              address1: location?.address.address1,
+              address2: location?.address.address2,
+              city: location?.address.city,
+              state: location?.address.state,
+              zip: location?.address.zip,
+              tekMetricConnected: location?.tekMetricIntegration.connected,
+              tekmetriclocationId: location?.tekMetricIntegration.locationId
             })
           }
         })
@@ -59,7 +58,7 @@ const ShopTeamPage = ({ shopId }) =>
 
   }, [ session ])
 
-  // ======================================= End set shop data
+  // ======================================= End set location data
 
   // ================================= PopupForm
   // For adding employee
@@ -68,7 +67,7 @@ const ShopTeamPage = ({ shopId }) =>
     firstname: '',
     lastname: '',
     email: '',
-    shops: shop?.name,
+    shops: location?.name,
     employeeRole: '',
   })
   // For Editing Employee
@@ -78,7 +77,7 @@ const ShopTeamPage = ({ shopId }) =>
     firstname: '',
     lastname: '',
     email: '',
-    shops: shop?.name,
+    shops: location?.name,
     employeeRole: '',
   })
   // ================================= PopupForm
@@ -91,9 +90,9 @@ const ShopTeamPage = ({ shopId }) =>
   })
   // ================================= End Delete Employee 
   // ================================= Options for adding shops employee has access to
-  let shopsEmployees = session?.employees.filter(el =>
+  let shopsEmployees = session?.employees?.filter(el =>
   {
-    return el.shops === shop?.name || el.shops === 'All'
+    return el.shops === location?.name || el.shops === 'All'
   })
   // ================================= End Options for adding shops employee has access to 
 
@@ -294,7 +293,7 @@ const ShopTeamPage = ({ shopId }) =>
             width: 'sm:w-[99.5%]',
             type: 'select',
             label: 'Shops',
-            options: [ shop?.name ],
+            options: [ location?.name ],
             required: true,
             value: formData.shops,
             onChange: (e) =>
@@ -386,7 +385,7 @@ const ShopTeamPage = ({ shopId }) =>
             width: 'sm:w-[99.5%]',
             type: 'select',
             label: 'Shops',
-            options: [ shop?.name ],
+            options: [ location?.name ],
             required: true,
             value: editEmployeeData.shops,
             onChange: (e) =>
@@ -433,4 +432,4 @@ const ShopTeamPage = ({ shopId }) =>
   )
 }
 
-export default ShopTeamPage
+export default LocationTeamPage

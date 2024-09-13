@@ -23,7 +23,7 @@ const tiers = [
     id: 'tier-scale',
     href: '#',
     featured: true,
-    description: 'The best scheduling for your thriving shop.',
+    description: 'The best scheduling for your thriving location.',
     price: { monthly: '$99', annually: '$967' },
     mainFeatures: [
       'Intuitive Appointment Booking',

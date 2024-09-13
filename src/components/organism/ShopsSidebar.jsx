@@ -10,15 +10,15 @@ import
   PuzzlePieceIcon
 } from '@heroicons/react/24/outline'
 
-const ShopsSidebar = ({ accountId, shopId }) =>
+const ShopsSidebar = ({ accountId, locationId }) =>
 {
   const pathname = usePathname()
 
   const sideNav = [
-    { name: 'Appointments', href: `/account/${ accountId }/shops/${ shopId }/appointments`, icon: CalendarDaysIcon },
-    { name: 'Team Members', href: `/account/${ accountId }/shops/${ shopId }/team`, icon: UserGroupIcon },
-    { name: 'Shop Details', href: `/account/${ accountId }/shops/${ shopId }/details`, icon: IdentificationIcon },
-    { name: 'Integrations', href: `/account/${ accountId }/shops/${ shopId }/integrations`, icon: PuzzlePieceIcon }
+    { name: 'Appointments', href: `/account/${ accountId }/locations/${ locationId }/appointments`, icon: CalendarDaysIcon },
+    { name: 'Team Members', href: `/account/${ accountId }/locations/${ locationId }/team`, icon: UserGroupIcon },
+    { name: 'Shop Details', href: `/account/${ accountId }/locations/${ locationId }/details`, icon: IdentificationIcon },
+    { name: 'Integrations', href: `/account/${ accountId }/locations/${ locationId }/integrations`, icon: PuzzlePieceIcon }
   ]
 
   return (

@@ -6,7 +6,7 @@ import TitleHeading from '@components/atom/Headings/TitleHeading'
 
 import { Notifi, notifi } from '@lib/utils/Notifications/Notify'
 
-const ShopDetailsPage = ({ accountId, shopId }) =>
+const LocationDetailsPage = ({ locationId }) =>
 {
   // ====================================== Notifi state 
   const [ notify, setNotify ] = useState({
@@ -20,32 +20,32 @@ const ShopDetailsPage = ({ accountId, shopId }) =>
     update: refresh
   } = useSession()
 
-  // ====================================== Set shop data
-  const [ shop, setShop ] = useState()
+  // ====================================== Set location data
+  const [ location, setLocation ] = useState()
 
   useEffect(() =>
   {
     const getShop = () =>
     {
-      session?.shops.length &&
-        session?.shops.map(shop =>
+      session?.locations.length &&
+        session?.locations.map(location =>
         {
-          if (shop._id === shopId)
+          if (location._id === locationId)
           {
-            setShop({
-              id: shop?._id,
-              name: shop?.name,
-              nickname: shop?.nickname,
-              email: shop?.email,
-              phone: shop?.phone,
-              website: shop?.website,
-              address1: shop?.address.address1,
-              address2: shop?.address.address2,
-              city: shop?.address.city,
-              state: shop?.address.state,
-              zip: shop?.address.zip,
-              tekMetricConnected: shop?.tekMetricIntegration.connected,
-              tekmetricShopId: shop?.tekMetricIntegration.shopId
+            setLocation({
+              id: location?._id || '',
+              name: location?.name || '',
+              nickname: location?.nickname || '',
+              email: location?.email || '',
+              phone: location?.phone || '',
+              website: location?.website || '',
+              address1: location?.address.address1 || '',
+              address2: location?.address.address2 || '',
+              city: location?.address.city || '',
+              state: location?.address.state || '',
+              zip: location?.address.zip || '',
+              tekMetricConnected: location?.tekMetricIntegration.connected || '',
+              tekmetriclocationId: location?.tekMetricIntegration.locationId || ''
             })
           }
         })
@@ -55,8 +55,8 @@ const ShopDetailsPage = ({ accountId, shopId }) =>
 
   }, [ session ])
 
-  // ======================================= End set shop data
-  // ======================================= Update shop details
+  // ======================================= End set location data
+  // ======================================= Update location details
   const submitForm = async (e) =>
   {
     e.preventDefault()
@@ -116,10 +116,10 @@ const ShopDetailsPage = ({ accountId, shopId }) =>
                       name="name"
                       id="name"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-300 sm:text-sm sm:leading-6"
-                      value={ shop?.name }
+                      value={ location?.name }
                       onChange={ (e) =>
                       {
-                        setShop(prev => ({
+                        setLocation(prev => ({
                           ...prev,
                           name: e.target.value
                         }))
@@ -139,10 +139,10 @@ const ShopDetailsPage = ({ accountId, shopId }) =>
                       id="nickname"
                       autoComplete="family-name"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-300 sm:text-sm sm:leading-6"
-                      value={ shop?.nickname }
+                      value={ location?.nickname }
                       onChange={ (e) =>
                       {
-                        setShop(prev => ({
+                        setLocation(prev => ({
                           ...prev,
                           nickname: e.target.value
                         }))
@@ -163,10 +163,10 @@ const ShopDetailsPage = ({ accountId, shopId }) =>
                         id="email"
                         autoComplete="email"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-300 sm:text-sm sm:leading-6"
-                        value={ shop?.email }
+                        value={ location?.email }
                         onChange={ (e) =>
                         {
-                          setShop(prev => ({
+                          setLocation(prev => ({
                             ...prev,
                             email: e.target.value
                           }))
@@ -186,10 +186,10 @@ const ShopDetailsPage = ({ accountId, shopId }) =>
                       name="phone"
                       id="phone"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-300 sm:text-sm sm:leading-6"
-                      value={ shop?.phone }
+                      value={ location?.phone }
                       onChange={ (e) =>
                       {
-                        setShop(prev => ({
+                        setLocation(prev => ({
                           ...prev,
                           phone: e.target.value
                         }))
@@ -208,10 +208,10 @@ const ShopDetailsPage = ({ accountId, shopId }) =>
                       name="website"
                       id="website"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-300 sm:text-sm sm:leading-6"
-                      value={ shop?.website }
+                      value={ location?.website }
                       onChange={ (e) =>
                       {
-                        setShop(prev => ({
+                        setLocation(prev => ({
                           ...prev,
                           website: e.target.value
                         }))
@@ -236,10 +236,10 @@ const ShopDetailsPage = ({ accountId, shopId }) =>
                         id="address1"
                         autoComplete="street-address"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-300 sm:text-sm sm:leading-6"
-                        value={ shop?.address1 }
+                        value={ location?.address1 }
                         onChange={ (e) =>
                         {
-                          setShop(prev => ({
+                          setLocation(prev => ({
                             ...prev,
                             address1: e.target.value
                           }))
@@ -260,10 +260,10 @@ const ShopDetailsPage = ({ accountId, shopId }) =>
                         name="address2"
                         id="address2"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-300 sm:text-sm sm:leading-6"
-                        value={ shop?.address2 }
+                        value={ location?.address2 }
                         onChange={ (e) =>
                         {
-                          setShop(prev => ({
+                          setLocation(prev => ({
                             ...prev,
                             address2: e.target.value
                           }))
@@ -285,10 +285,10 @@ const ShopDetailsPage = ({ accountId, shopId }) =>
                         id="city"
                         autoComplete='city'
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-300 sm:text-sm sm:leading-6"
-                        value={ shop?.city }
+                        value={ location?.city }
                         onChange={ (e) =>
                         {
-                          setShop(prev => ({
+                          setLocation(prev => ({
                             ...prev,
                             city: e.target.value
                           }))
@@ -309,10 +309,10 @@ const ShopDetailsPage = ({ accountId, shopId }) =>
                         name="state"
                         id="state"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-300 sm:text-sm sm:leading-6"
-                        value={ shop?.state }
+                        value={ location?.state }
                         onChange={ (e) =>
                         {
-                          setShop(prev => ({
+                          setLocation(prev => ({
                             ...prev,
                             state: e.target.value
                           }))
@@ -333,10 +333,10 @@ const ShopDetailsPage = ({ accountId, shopId }) =>
                         name="zip"
                         id="zip"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-300 sm:text-sm sm:leading-6"
-                        value={ shop?.zip }
+                        value={ location?.zip }
                         onChange={ (e) =>
                         {
-                          setShop(prev => ({
+                          setLocation(prev => ({
                             ...prev,
                             zip: e.target.value
                           }))
@@ -363,4 +363,4 @@ const ShopDetailsPage = ({ accountId, shopId }) =>
   )
 }
 
-export default ShopDetailsPage
+export default LocationDetailsPage

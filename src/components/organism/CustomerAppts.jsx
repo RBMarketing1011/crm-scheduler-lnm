@@ -39,7 +39,7 @@ const CustomerAppts = ({ data: appointments }) =>
                         <span className="sr-only">Location</span>
                         <MapPinIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                       </dt>
-                      <dd>{ appt.shop }</dd>
+                      <dd>{ appt.location }</dd>
                     </div>
                   </dl>
                 </div>

@@ -1,7 +1,7 @@
 import { Schema, models, model } from 'mongoose'
 import Customer from './customers'
 
-const shopSchema = new Schema({
+const locationSchema = new Schema({
   name: {
     type: String,
     required: [ true, 'Shop name is required.' ]
@@ -85,7 +85,7 @@ const shopSchema = new Schema({
     }
   },
   tekMetricIntegration: {
-    shopId: {
+    locationId: {
       type: String,
       default: null
     },
@@ -96,5 +96,5 @@ const shopSchema = new Schema({
   }
 }, { timestamps: true })
 
-const Shop = models.Shop || model('Shop', shopSchema)
-export default Shop
+const Location = models.Location || model('Location', locationSchema)
+export default Location

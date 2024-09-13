@@ -108,7 +108,7 @@ export const getAllCustomers = {
         "streetAddress": "5103 Swift Park",
         "fullAddress": "5103 Swift Park, Tyreseview, VT 48824"
       },
-      "shopId": 79,
+      "locationId": 79,
       "okForMarketing": true,
       "createdDate": "2019-02-27T10:31:59Z",
       "updatedDate": "2019-02-28T10:32:28Z",
@@ -142,7 +142,7 @@ export const getAllCustomers = {
         "streetAddress": "5103 Swift Park",
         "fullAddress": "5103 Swift Park, Tyreseview, VT 48824"
       },
-      "shopId": 79,
+      "locationId": 79,
       "okForMarketing": true,
       "createdDate": "2019-02-27T10:31:59Z",
       "updatedDate": "2019-02-28T10:32:28Z",
@@ -176,7 +176,7 @@ export const getAllCustomers = {
         "streetAddress": "5103 Swift Park",
         "fullAddress": "5103 Swift Park, Tyreseview, VT 48824"
       },
-      "shopId": 79,
+      "locationId": 79,
       "okForMarketing": true,
       "createdDate": "2019-02-27T10:31:59Z",
       "updatedDate": "2019-02-28T10:32:28Z",
@@ -230,7 +230,7 @@ export const getCustomer = {
     "streetAddress": "5103 Swift Park",
     "fullAddress": "5103 Swift Park, Tyreseview, VT 48824"
   },
-  "shopId": 79,
+  "locationId": 79,
   "okForMarketing": true,
   "createdDate": "2019-02-27T10:31:59Z",
   "updatedDate": "2019-02-28T10:32:28Z",
@@ -242,7 +242,7 @@ export const getRepairOrders = {
     {
       "id": 869586,
       "repairOrderNumber": 43,
-      "shopId": 1,
+      "locationId": 1,
       "repairOrderStatus": {
         "id": 2,
         "code": "WORKINPROGRESS",
@@ -447,7 +447,7 @@ export const getRepairOrders = {
     {
       "id": 869586,
       "repairOrderNumber": 43,
-      "shopId": 1,
+      "locationId": 1,
       "repairOrderStatus": {
         "id": 2,
         "code": "WORKINPROGRESS",
@@ -652,7 +652,7 @@ export const getRepairOrders = {
     {
       "id": 869586,
       "repairOrderNumber": 43,
-      "shopId": 1,
+      "locationId": 1,
       "repairOrderStatus": {
         "id": 2,
         "code": "WORKINPROGRESS",
@@ -885,7 +885,7 @@ export const getRepairOrders = {
 export const getRepairOrder = {
   "id": 869586,
   "repairOrderNumber": 43,
-  "shopId": 1,
+  "locationId": 1,
   "repairOrderStatus": {
     "id": 2,
     "code": "WORKINPROGRESS",
@@ -1768,7 +1768,7 @@ export const getAllAppts = {
   "content": [
     {
       "id": 1,
-      "shopId": 1,
+      "locationId": 1,
       "customerId": 1,
       "vehicleId": 2,
       "startTime": "2018-02-04T19:54:38",
@@ -1786,7 +1786,7 @@ export const getAllAppts = {
     },
     {
       "id": 2,
-      "shopId": 1,
+      "locationId": 1,
       "customerId": 1,
       "vehicleId": 2,
       "startTime": "2018-02-06T17:24:52",
@@ -1840,7 +1840,7 @@ export const getAllAppts = {
 
 export const getAAppt = {
   "id": 1,
-  "shopId": 1,
+  "locationId": 1,
   "customerId": 1,
   "vehicleId": 2,
   "startTime": "2018-02-04T19:54:38",

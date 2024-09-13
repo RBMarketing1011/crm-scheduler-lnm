@@ -14,7 +14,7 @@ import { ChatBubbleLeftRightIcon, PresentationChartLineIcon, GlobeAltIcon } from
 const features = [
   {
     name: 'TekMetric Integration',
-    summary: 'TekMetric Integration enables efficient data management and workflow optimization within our scheduling platform for auto repair shops.',
+    summary: 'TekMetric Integration enables efficient data management and workflow optimization within our scheduling platform for auto repair locations.',
     description:
       'Integrate TekMetric seamlessly with our software for streamlined data management and enhanced workflow efficiency.',
     image: screenshotProfitLoss,
@@ -23,7 +23,7 @@ const features = [
   {
     name: 'Team Messaging',
     summary:
-      'Team Messaging streamlines staff communication, enhancing collaboration and coordination for auto repair shops.',
+      'Team Messaging streamlines staff communication, enhancing collaboration and coordination for auto repair locations.',
     description:
       'Facilitate smooth communication and collaboration among team members directly within our scheduling software.',
     image: screenshotInventory,
@@ -32,7 +32,7 @@ const features = [
   {
     name: 'Shop Reports',
     summary:
-      'Shop Reports provide actionable insights, empowering informed decision-making and operational optimization for auto repair shops.',
+      'Shop Reports provide actionable insights, empowering informed decision-making and operational optimization for auto repair locations.',
     description:
       "Access comprehensive insights into your shop's performance and trends through integrated reporting features.",
     image: screenshotContacts,

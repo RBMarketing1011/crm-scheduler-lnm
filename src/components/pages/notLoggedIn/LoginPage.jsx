@@ -47,9 +47,10 @@ export default function LoginPage ()
 
       if (res?.ok)
       {
-        notifi.success('Sign in successful', setNotifiState)
         await update()
         router.push(`/account/${ session?.user.accountId }/dashboard`)
+        notifi.success('Sign in successful', setNotifiState)
+        console.log('object')
       } else if (res?.error)
       {
         notifi.error(res.error, setNotifiState)
