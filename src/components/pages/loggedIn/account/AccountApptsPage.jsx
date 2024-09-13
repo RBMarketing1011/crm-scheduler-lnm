@@ -32,7 +32,7 @@ const AccountApptsPage = () =>
   const [ page, setPage ] = useState('Today')
   const [ open, setOpen ] = useState(false)
 
-  const shops = getAllShops
+  const locations = getAllShops
   const appts = getAllAppts.content
   const customers = getAllCustomers.content
   const vehicles = getAllVehicles.content
@@ -187,7 +187,7 @@ const AccountApptsPage = () =>
                       { convertDate(appt.dropoffTime) }<br />{ convertTime(appt.dropoffTime) }
                     </td>
                     <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                      { shops[ 0 ].name }
+                      { locations[ 0 ].name }
                     </td>
                     <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                       { customers[ 2 ].firstName }<br />{ customers[ 2 ].lastName }

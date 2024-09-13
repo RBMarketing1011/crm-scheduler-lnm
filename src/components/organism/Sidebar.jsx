@@ -179,7 +179,7 @@ const Sidebar = () =>
                       <li>
                         <div className="flex justify-between items-center">
                           <div className="text-xs font-semibold leading-6 text-primary-300">
-                            Shops
+                            Locations
                           </div>
                           <div className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white flex items-center gap-2 hover:cursor-pointer"
                             onClick={ () =>
@@ -334,7 +334,7 @@ const Sidebar = () =>
               <li>
                 <div className="flex justify-between items-center">
                   <div className="text-xs font-semibold leading-6 text-primary-300">
-                    Shops
+                    Locations
                   </div>
                   <div className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white flex items-center gap-2 hover:cursor-pointer"
                     onClick={ () => setOpenAddShopPopup(true) }
