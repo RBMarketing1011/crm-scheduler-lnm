@@ -56,7 +56,7 @@ const LocationTeamPage = ({ locationId }) =>
 
     getShop()
 
-  }, [ session ])
+  }, [ session, locationId ])
 
   // ======================================= End set location data
 

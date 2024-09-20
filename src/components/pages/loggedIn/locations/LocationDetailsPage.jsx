@@ -53,7 +53,7 @@ const LocationDetailsPage = ({ locationId }) =>
 
     getShop()
 
-  }, [ session ])
+  }, [ session, locationId ])
 
   // ======================================= End set location data
   // ======================================= Update location details

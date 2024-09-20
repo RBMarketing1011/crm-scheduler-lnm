@@ -57,7 +57,7 @@ const LocationIntegrationsPage = ({ locationId }) =>
 
     getShop()
 
-  }, [ session ])
+  }, [ session, locationId ])
 
   // ======================================= End set location data
 

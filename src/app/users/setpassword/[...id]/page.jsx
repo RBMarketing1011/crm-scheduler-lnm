@@ -33,7 +33,7 @@ const SetPasswordPage = ({ params }) =>
   {
     !token && router.push('/')
 
-  }, [ token ])
+  }, [ token, router ])
 
   // ======================== End Check Id & Token
   // ======================== All State Management

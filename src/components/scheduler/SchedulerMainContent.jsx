@@ -79,7 +79,7 @@ const SchedulerMainContent = () =>
 
     getAccount()
 
-  }, [])
+  }, [ accountId, locationId ])
   // ======================== Get Account & Shop info from search params and set State
 
   // ======================== Handle All actions on click to setState with services
