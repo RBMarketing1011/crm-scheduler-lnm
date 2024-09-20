@@ -11,7 +11,8 @@ import
   RectangleGroupIcon,
   Cog8ToothIcon,
   CalendarDaysIcon,
-  PlusIcon
+  PlusIcon,
+  CodeBracketSquareIcon
 } from '@heroicons/react/24/outline'
 
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
@@ -40,6 +41,7 @@ const Sidebar = () =>
   ]
   const account = [
     { name: 'Settings', href: `/account/${ session?.user?.accountId }/settings`, icon: Cog8ToothIcon, },
+    { name: 'Install Scheduler', href: `/account/${ session?.user?.accountId }/scheduler/instructions`, icon: CodeBracketSquareIcon, },
   ]
 
   // ================= End Session Data
@@ -468,7 +470,7 @@ const Sidebar = () =>
 
       {/* Modal for Add Shop Form */ }
       <PopupForm
-        title='Add Shop'
+        title='Add Location'
         refreshSession={ update }
         openPopupState={ { state: openAddShopPopup, setState: setOpenAddShopPopup } }
         httpRequest={ {
@@ -801,7 +803,7 @@ const Sidebar = () =>
           {
             width: 'sm:w-[48.5%]',
             type: 'text',
-            label: 'Shop Phone',
+            label: 'Phone',
             value: addShopFormData.phone,
             required: true,
             onChange: (e) =>
@@ -815,7 +817,7 @@ const Sidebar = () =>
           {
             width: 'sm:w-[48.5%]',
             type: 'email',
-            label: 'Shop Email',
+            label: 'Email',
             value: addShopFormData.email,
             required: true,
             onChange: (e) =>

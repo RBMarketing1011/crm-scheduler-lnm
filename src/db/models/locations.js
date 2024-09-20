@@ -42,10 +42,6 @@ const locationSchema = new Schema({
     zip: {
       type: String,
       required: [ true, 'Shop zip code is required.' ]
-    },
-    fullAddress: {
-      type: String,
-      required: [ true, 'Full address is required.' ]
     }
   },
   customers: [
@@ -66,7 +62,7 @@ const locationSchema = new Schema({
       },
     },
     weekends: {
-      open: {
+      isOpen: {
         type: Boolean,
         default: false
       },
@@ -93,7 +89,27 @@ const locationSchema = new Schema({
       type: Boolean,
       default: false
     }
-  }
+  },
+  services: [ {
+    title: {
+      type: String,
+      required: [ true, 'Service title is required.' ]
+    },
+    desc: {
+      type: String,
+      default: null
+    },
+    question: {
+      text: {
+        type: String,
+        default: null
+      },
+      answers: [ {
+        type: String,
+        default: null
+      } ]
+    }
+  } ]
 }, { timestamps: true })
 
 const Location = models.Location || model('Location', locationSchema)

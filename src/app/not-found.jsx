@@ -25,13 +25,15 @@ export default function NotFound ()
       <h1 className="mt-3 text-lg font-semibold text-gray-900">
         Page not found
       </h1>
-      <p className="mt-3 text-sm text-gray-700">
+      <p className="mt-3 text-sm text-gray-700 mb-4">
         Sorry, we couldn’t find the page you’re looking for.
       </p>
-      <Link href='/'>
-        <Button className="mt-10">
-          Go back home
-        </Button>
+      <Link
+        href='/'
+      >
+        <Button
+          text='Go back home'
+        />
       </Link>
     </SlimLayout>
   )

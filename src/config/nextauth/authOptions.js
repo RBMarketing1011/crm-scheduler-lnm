@@ -112,8 +112,6 @@ const authOptions = {
       // find user to add to session 
       const findUser = await Employee.findById(token.id).select('-password').select('-createdAt').select('-updatedAt')
 
-      console.log(findUser)
-
       let account = await Account.findById(findUser.accountId)
 
       if (account.locations.length <= 0 && account.employees.length <= 0)

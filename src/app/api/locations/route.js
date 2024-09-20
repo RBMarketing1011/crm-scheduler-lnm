@@ -115,6 +115,8 @@ const updateShop = async (req) =>
     zip,
   } = await req.json()
 
+  console.log(openOnWeekends)
+
   try
   {
     const location = await Location.findById(id)
@@ -132,7 +134,7 @@ const updateShop = async (req) =>
           close: weekdayCloseHour,
         },
         weekends: {
-          open: openOnWeekends,
+          isOpen: openOnWeekends,
           days: weekendOpenOn || null,
           open: weekendOpenHour || null,
           close: weekendCloseHour || null,
@@ -158,4 +160,43 @@ const updateShop = async (req) =>
   }
 }
 
-export { createShop as POST, updateShop as PUT }
+const addLocationService = async (req) =>
+{
+  const { service } = await req.json()
+  const {
+    id,
+    title,
+    desc,
+    question,
+    answers
+  } = service
+
+  const data = {
+    title,
+    desc,
+    question: {
+      text: question,
+      answers
+    }
+  }
+
+  try
+  {
+    const location = await Location.findById(id)
+
+    if (!location)
+    {
+      throw new Error('Location not found')
+    }
+
+    location.services.push(data)
+    await location.save()
+
+    return Response.json({ success: 'Service added to shop successfully' })
+  } catch (error)
+  {
+    return Response.json({ error: error.message }, { status: 403 })
+  }
+}
+
+export { createShop as POST, updateShop as PUT, addLocationService as PATCH }
