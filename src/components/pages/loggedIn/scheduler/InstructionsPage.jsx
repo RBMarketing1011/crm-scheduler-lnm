@@ -65,7 +65,7 @@ const InstructionsPage = () =>
                   <strong className="font-semibold text-gray-900">
                     Save Changes:
                   </strong>{ ' ' }
-                  Once you've added all services and questions, make sure to save your settings.
+                  Once you&apos;ve added all services and questions, make sure to save your settings.
                 </span>
               </li>
             </ul>
@@ -160,7 +160,7 @@ const InstructionsPage = () =>
 
                   <ul className='list-disc space-y-2 ml-12'>
                     <li className='mt-3'>
-                      Once in the correct tab, you'll find a script tag under the Installation section. It will look something like this:
+                      Once in the correct tab, you&apos;ll find a script tag under the Installation section. It will look something like this:
                     </li>
                     <div className="divide-y divide-slate-500 overflow-hidden rounded-md bg-slate-800 shadow">
                       <div className="px-4 py-1 sm:px-6 text-primary-300/70 flex justify-between items-center">
@@ -183,14 +183,14 @@ const InstructionsPage = () =>
                             <span className='text-red-500/80'>script</span>
                             { ' ' }
                             <span className='text-purple-500'>src</span>
-                            <span className='text-cyan-100'>='</span>
+                            <span className='text-cyan-100'>=&apos;</span>
                             <span className="text-yellow-500">
                               https://your-url.com/scheduler.js
                             </span>
-                            <span className='text-cyan-100'>'</span>
+                            <span className='text-cyan-100'>&apos;</span>
                             { ' ' }
                             <span className='text-purple-500'>account</span>
-                            <span className='text-cyan-100'>='</span>
+                            <span className='text-cyan-100'>=&apos;</span>
                             <span className="text-yellow-500">
                               your-account-id
                             </span>
