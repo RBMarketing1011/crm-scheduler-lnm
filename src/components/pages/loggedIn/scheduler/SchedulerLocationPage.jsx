@@ -288,7 +288,7 @@ const SchedulerLocationPage = ({ accountId, locationId }) =>
                           <>
                             <div className="col-span-full py-3">
                               <p className='text-sm font-regular'>
-                                Copy the script below and paste it into your website's HTML code.
+                                Copy the script below and paste it into your website&apos;s HTML code.
                               </p>
                               <p className='text-sm font-regular'>
                                 Inside the{ ' ' }
@@ -328,16 +328,16 @@ const SchedulerLocationPage = ({ accountId, locationId }) =>
                                     <br />
                                     <code className='ml-5'>
                                       <span className='text-purple-500'>src</span>
-                                      <span className='text-cyan-100'>='</span>
+                                      <span className='text-cyan-100'>=&apos;</span>
                                       <span className="text-yellow-500">
                                         https://your-url.com/scheduler.js
                                       </span>
-                                      <span className='text-cyan-100'>'</span>
+                                      <span className='text-cyan-100'>&apos;</span>
                                     </code>
                                     <br />
                                     <code className='ml-5'>
                                       <span className='text-purple-500'>account</span>
-                                      <span className='text-cyan-100'>='</span>
+                                      <span className='text-cyan-100'>=&apos;</span>
                                       <span className="text-yellow-500">
                                         { accountId }
                                       </span>
@@ -350,7 +350,7 @@ const SchedulerLocationPage = ({ accountId, locationId }) =>
                                         <br />
                                         <code className='ml-5'>
                                           <span className='text-purple-500'>location</span>
-                                          <span className='text-cyan-100'>='</span>
+                                          <span className='text-cyan-100'>=&apos;</span>
                                           <span className="text-yellow-500">
                                             { locationId }
                                           </span>
