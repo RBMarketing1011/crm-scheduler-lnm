@@ -31,8 +31,6 @@ const SchedulerHours = ({ accountId, locationId }) =>
     zip: l.address.zip,
   })
 
-  console.log(session)
-
   const time = [
     '12:00 AM',
     '12:30 AM',

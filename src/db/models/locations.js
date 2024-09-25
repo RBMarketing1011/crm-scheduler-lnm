@@ -99,6 +99,16 @@ const locationSchema = new Schema({
       type: String,
       default: null
     },
+    icon: {
+      name: {
+        type: String,
+        default: null
+      },
+      icon: {
+        type: Object,
+        default: null
+      }
+    },
     question: {
       text: {
         type: String,

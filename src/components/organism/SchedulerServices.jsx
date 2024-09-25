@@ -7,6 +7,10 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 import { ExclamationTriangleIcon, XMarkIcon, WrenchScrewdriverIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import EmptyState from '@components/atom/EmptyState'
+import { icons } from '@lib/data/icons'
+import { SvgComponent } from '@components/atom/SvgComponent'
+
+
 
 const SchedulerServices = ({ accountId, locationId }) =>
 {
@@ -16,11 +20,15 @@ const SchedulerServices = ({ accountId, locationId }) =>
   const [ open, setOpen ] = useState(false)
   const [ openDelete, setOpenDelete ] = useState(false)
   const [ openUpdateService, setOpenUpdateService ] = useState(false)
+  const [ openDrawer, setOpenDrawer ] = useState(false)
+  const [ openDeleteIcon, setOpenDeleteIcon ] = useState(false)
+  const [ serviceTitle, setServiceTitle ] = useState('')
 
   const [ service, setService ] = useState({
     id: locationId,
     title: '',
     desc: '',
+    icon: '',
     addQuestion: false,
     question: '',
     answer: '',
@@ -65,6 +73,7 @@ const SchedulerServices = ({ accountId, locationId }) =>
       id: locationId,
       title: '',
       desc: '',
+      icon: '',
       addQuestion: false,
       question: '',
       answer: '',
@@ -106,11 +115,13 @@ const SchedulerServices = ({ accountId, locationId }) =>
       id: locationId,
       title: '',
       desc: '',
+      icon: '',
       addQuestion: false,
       question: '',
       answer: '',
       answers: []
     })
+    setOpenDrawer(false)
   }
 
   const deleteService = async () =>
@@ -141,6 +152,41 @@ const SchedulerServices = ({ accountId, locationId }) =>
 
     setOpenDelete(false)
     update()
+  }
+
+  const submitDeleteIconForm = async (e) =>
+  {
+    e.preventDefault()
+
+    console.log(serviceTitle)
+
+    try
+    {
+      const req = await fetch('/api/locations/service/icon', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: locationId, title: serviceTitle })
+      })
+
+      const res = await req.json()
+
+      if (res.error)
+      {
+        throw new Error(res.error)
+      } else
+      {
+        toast.success(res.success)
+        update()
+      }
+    } catch (error)
+    {
+      toast.error(error.message)
+    }
+
+    setOpenDeleteIcon(false)
+    setServiceTitle('')
   }
 
   return (
@@ -175,6 +221,9 @@ const SchedulerServices = ({ accountId, locationId }) =>
                         Title
                       </th>
                       <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                        Icon
+                      </th>
+                      <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                         Description
                       </th>
                       <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
@@ -201,6 +250,70 @@ const SchedulerServices = ({ accountId, locationId }) =>
                             { serv.title }
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+
+                            {
+                              serv.icon.icon ?
+
+                                <div className='flex items-center gap-1'>
+                                  <div className='w-8 h-8 fill-none text-gray-700 '>
+                                    <SvgComponent svgData={ serv.icon.icon } />
+                                  </div>
+                                  <div className='flex flex-col items-start'>
+                                    <button
+                                      className='text-xs text-primary-300 hover:cursor-pointer'
+                                      onClick={ () =>
+                                      {
+                                        setService(prev => ({
+                                          ...prev,
+                                          title: serv.title,
+                                          desc: serv.desc,
+                                          icon: serv.icon,
+                                          addQuestion: serv.question.text ? true : false,
+                                          question: serv.question.text,
+                                          answers: serv.question.answers,
+                                        }))
+                                        setOpenDrawer(true)
+                                      } }
+                                    >
+                                      Change
+                                    </button>
+                                    <button
+                                      className='text-xs text-red-700 hover:cursor-pointer'
+                                      onClick={ () =>
+                                      {
+                                        setServiceTitle(serv.title)
+                                        setOpenDeleteIcon(true)
+                                      } }
+                                    >
+                                      Delete
+                                    </button>
+                                  </div>
+                                </div>
+                                :
+                                <button
+                                  type="button"
+                                  className="rounded bg-primary-300 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primart-300"
+                                  onClick={ () =>
+                                  {
+                                    setService(prev => ({
+                                      ...prev,
+                                      title: serv.title,
+                                      desc: serv.desc,
+                                      icon: serv.icon,
+                                      addQuestion: serv.question.text ? true : false,
+                                      question: serv.question.text,
+                                      answers: serv.question.answers,
+                                    }))
+                                    setOpenDrawer(true)
+                                  } }
+                                >
+                                  <PlusIcon className='w-4 h-4 inline fone-bold' /> Icon
+                                </button>
+
+                            }
+
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                             { serv.desc }
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
@@ -224,6 +337,7 @@ const SchedulerServices = ({ accountId, locationId }) =>
                                   ...prev,
                                   title: serv.title,
                                   desc: serv.desc,
+                                  icon: serv.icon,
                                   addQuestion: serv.question.text ? true : false,
                                   question: serv.question.text,
                                   answers: serv.question.answers,
@@ -269,6 +383,188 @@ const SchedulerServices = ({ accountId, locationId }) =>
           />
 
       }
+
+
+      {/* Dialog or delete icon */ }
+      <Dialog open={ openDeleteIcon } onClose={ setOpenDeleteIcon } className="relative z-[1000]">
+        <DialogBackdrop
+          transition
+          className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+        />
+
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <DialogPanel
+              transition
+              className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
+            >
+              <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
+                <button
+                  type="button"
+                  onClick={ () => setOpenDeleteIcon(false) }
+                  className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
+                  <span className="sr-only">Close</span>
+                  <XMarkIcon aria-hidden="true" className="h-6 w-6" />
+                </button>
+              </div>
+              <div className="sm:flex sm:items-start">
+                <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                  <ExclamationTriangleIcon aria-hidden="true" className="h-6 w-6 text-red-600" />
+                </div>
+                <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                  <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                    Delete Icon
+                  </DialogTitle>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500">
+                      Are you sure you want to delete this icon?
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                <button
+                  type="button"
+                  onClick={ (e) => submitDeleteIconForm(e) }
+                  className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                >
+                  Delete Icon
+                </button>
+                <button
+                  type="button"
+                  onClick={ () => setOpenDeleteIcon(false) }
+                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                >
+                  Cancel
+                </button>
+              </div>
+            </DialogPanel>
+          </div>
+        </div>
+      </Dialog>
+
+
+      {/* Drawer for picking icons */ }
+      <Dialog open={ openDrawer } onClose={ setOpenDrawer } className="relative z-[100]">
+        <div className="fixed inset-0" />
+
+        <div className="fixed inset-0 overflow-hidden">
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+              <DialogPanel
+                transition
+                className="pointer-events-auto w-screen max-w-md transform transition duration-500 ease-in-out data-[closed]:translate-x-full sm:duration-700"
+              >
+                <div className="flex h-full flex-col overflow-y-hidden bg-white py-6 shadow-xl">
+                  <div className="px-4 sm:px-6">
+                    <div className="flex items-start justify-between">
+                      <DialogTitle className="text-base font-semibold leading-6 text-gray-900">
+                        Choose An Icon
+                      </DialogTitle>
+                      <div className="ml-3 flex h-7 items-center">
+                        <button
+                          type="button"
+                          onClick={ () =>
+                          {
+                            setService(prev => ({
+                              ...prev,
+                              icon: {
+                                name: '',
+                                icon: ''
+                              }
+                            }))
+                            setOpenDrawer(false)
+                          } }
+                          className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        >
+                          <span className="absolute -inset-2.5" />
+                          <span className="sr-only">Close panel</span>
+                          <XMarkIcon aria-hidden="true" className="h-6 w-6" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="relative mt-6 flex-1 px-4 sm:px-6 overflow-y-auto flex flex-col gap-0 justify-start items-center">
+                    {/* Your content */ }
+                    <div className='min-h-[30%] max-h-[30%] grid grid-cols-2 justify-items-center items-center w-full gap-x-3'>
+                      <div className='w-full flex flex-col gap-y-3'>
+                        <button
+                          type="button"
+                          className="rounded-md bg-indigo-600 min-w-full px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          onClick={ submitUpdateServiceForm }
+                        >
+                          Select Icon
+                        </button>
+                        <button
+                          type="button"
+                          className="w-full rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                          onClick={ () =>
+                          {
+                            setService(prev => ({
+                              ...prev,
+                              icon: {
+                                name: '',
+                                icon: ''
+                              }
+                            }))
+                            setOpenDrawer(false)
+                          } }
+                        >
+                          Cancel
+                        </button>
+                      </div>
+
+                      { service.icon.icon ?
+
+                        <div className='w-32 h-32 sm:w-40 sm:h-40 p-3 rounded-md shadow-[0_0_8px_lightgray] fill-none stroke-[1px] text-gray-800'>
+
+                          <SvgComponent svgData={ service.icon.icon } />
+
+                        </div>
+
+                        :
+
+                        <div className='w-32 h-32 sm:w-40 sm:h-40 p-3 rounded-md shadow-[0_0_8px_lightgray] flex justify-center items-center'>
+                          <p className='text-2xl font-semibold text-center'>
+                            Choose An Icon
+                          </p>
+                        </div>
+                      }
+
+                    </div>
+
+                    <div className='grid grid-cols-3 sm:grid-cols-6 justify-items-center items-center gap-6 py-12 px-3'>
+
+                      {
+                        icons.map((i, idx) => (
+
+                          <button
+                            key={ idx }
+                            type='button'
+                            className={ `${ i.name === service.icon.name
+                              ? 'bg-primary-300 text-white'
+                              : 'hover:bg-gray-50' }
+                              w-12 h-12 fill-none stroke-[1] shadow-[0_0_8px_grey] rounded-md p-1` }
+                            onClick={ () => setService(prev => ({
+                              ...prev,
+                              icon: i
+                            })) }
+                          >
+                            { i.icon }
+                          </button>
+
+                        ))
+                      }
+
+                    </div>
+                  </div>
+                </div>
+              </DialogPanel>
+            </div>
+          </div>
+        </div>
+      </Dialog>
 
 
       {/* Dialog For Adding Service */ }

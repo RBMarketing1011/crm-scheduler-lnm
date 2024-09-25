@@ -30,11 +30,15 @@ const updateService = async (req) =>
 {
   const { service } = await req.json()
 
-  const { id, title, desc, question, answers } = service
+  const { id, title, desc, question, answers, icon } = service
+
+  console.log(service)
+
 
   const data = {
     title,
     desc,
+    icon,
     question: {
       text: question,
       answers

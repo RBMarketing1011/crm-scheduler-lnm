@@ -5,9 +5,11 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { TextField, SelectField, CheckboxField } from '@components/template/Fields'
 import { notifi } from '@lib/utils/Notifications/Notify'
 import { useState } from 'react'
+import { useSession } from 'next-auth/react'
 
-export default function PopupForm ({ title, openPopupState, textFields, httpRequest, notifiSetState, refreshSession })
+export default function PopupForm ({ title, openPopupState, textFields, httpRequest, notifiSetState })
 {
+  const { data: session, update } = useSession()
   // ==================== Submit as POST request
   const submitPostReq = async () =>
   {
@@ -60,6 +62,9 @@ export default function PopupForm ({ title, openPopupState, textFields, httpRequ
         console.log(error)
         notifi.error(error.message, notifiSetState)
       }
+
+      openPopupState.setState(false)
+      update()
     }
   }
 
