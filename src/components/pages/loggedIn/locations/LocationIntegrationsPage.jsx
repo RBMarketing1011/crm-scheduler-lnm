@@ -108,7 +108,7 @@ const LocationIntegrationsPage = ({ locationId }) =>
                 location?.tekmetriclocationId &&
 
                 <span className="mt-5 p-5 max-w-72 inline-flex items-center rounded-md bg-red-50 text-center text-xs font-bold text-red-700 ring-1 ring-inset ring-red-600/10">
-                  Please contact TekMetric and request that they add your shop ID to the list of shops accessible by Leads Near Me. This is necessary to ensure that Leads Near Me can properly integrate with TekMetric and access the relevant data needed to enhance your shop's performance and lead management. Once your shop ID is included, the system will show that it is properly connected.
+                  Please contact TekMetric and request that they add your shop ID to the list of shops accessible by Leads Near Me. This is necessary to ensure that Leads Near Me can properly integrate with TekMetric and access the relevant data needed to enhance your shop&apos;s performance and lead management. Once your shop ID is included, the system will show that it is properly connected.
                 </span>
               }
 

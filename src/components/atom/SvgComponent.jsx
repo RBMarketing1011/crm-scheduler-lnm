@@ -14,7 +14,7 @@ const renderSvgElement = (element, key) =>
     : null // No children case
 
   // Add the unique key prop if provided
-  return createElement(type, { ...props, key, children })
+  return createElement(type, { ...props, key }, children)
 }
 
 export const SvgComponent = ({ svgData }) =>
