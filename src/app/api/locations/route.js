@@ -2,7 +2,7 @@ import Account from '@db/models/accounts'
 import Location from '@db/models/locations'
 import connectDB from '@db/connectDB'
 
-const createShop = async (req) =>
+const createLocation = async (req) =>
 {
   const body = await req.json()
 
@@ -95,9 +95,8 @@ const createShop = async (req) =>
   }
 }
 
-const updateShop = async (req) =>
+const updateLocation = async (req) =>
 {
-  console.log('THIS SHOWS PUT IS HIT')
 
   const {
     id,
@@ -203,4 +202,4 @@ const addLocationService = async (req) =>
   }
 }
 
-export { createShop as POST, updateShop as PUT, addLocationService as PATCH }
+export { createLocation as POST, updateLocation as PUT, addLocationService as PATCH }
