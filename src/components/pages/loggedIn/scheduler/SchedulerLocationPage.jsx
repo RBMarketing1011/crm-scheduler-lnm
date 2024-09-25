@@ -372,7 +372,7 @@ const SchedulerLocationPage = ({ accountId, locationId }) =>
 
                             <div className="col-span-full py-3">
                               <p className='text-sm font-regular'>
-                                Remember, to trigger the scheduler pop-up, you need to add the class <code className='text-primary-300'>.schedule-appt-btn</code> to any button or link you want to use for scheduling.
+                                Remember, to trigger the scheduler pop-up, you need to add the class <code className='text-primary-300'>.lnm-schedule-appt-btn</code> to any button or link you want to use for scheduling.
                               </p>
                             </div>
 

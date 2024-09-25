@@ -16,8 +16,8 @@ const ShopsSidebar = ({ accountId, locationId }) =>
 
   const sideNav = [
     { name: 'Appointments', href: `/account/${ accountId }/locations/${ locationId }/appointments`, icon: CalendarDaysIcon },
+    { name: 'Details', href: `/account/${ accountId }/locations/${ locationId }/details`, icon: IdentificationIcon },
     { name: 'Team Members', href: `/account/${ accountId }/locations/${ locationId }/team`, icon: UserGroupIcon },
-    { name: 'Shop Details', href: `/account/${ accountId }/locations/${ locationId }/details`, icon: IdentificationIcon },
     { name: 'Integrations', href: `/account/${ accountId }/locations/${ locationId }/integrations`, icon: PuzzlePieceIcon }
   ]
 

@@ -214,7 +214,7 @@ const InstructionsPage = () =>
 
                   <ul className='list-disc space-y-2 ml-12'>
                     <li className='mt-3'>
-                      To trigger the scheduler pop-up, you need to add the class <span className='text-primary-300 font-bold'>.schedule-appt-btn</span> to any button or link you want to use for scheduling.
+                      To trigger the scheduler pop-up, you need to add the class <span className='text-primary-300 font-bold'>.lnm-schedule-appt-btn</span> to any button or link you want to use for scheduling.
                     </li>
                   </ul>
                 </span>
@@ -225,7 +225,7 @@ const InstructionsPage = () =>
                   <strong className="font-semibold text-gray-900">
                     Test the Scheduler:
                   </strong>{ ' ' }
-                  Once everything is installed, test your website to ensure the scheduler pops up when you click the buttons or elements with the <span className='text-primary-300 font-bold'>.schedule-appt-btn</span>
+                  Once everything is installed, test your website to ensure the scheduler pops up when you click the buttons or elements with the <span className='text-primary-300 font-bold'>.lnm-schedule-appt-btn</span>
                 </span>
               </li>
             </ul>

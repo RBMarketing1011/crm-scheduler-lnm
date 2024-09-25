@@ -402,7 +402,7 @@ const SchedulerServices = ({ accountId, locationId }) =>
                 <button
                   type="button"
                   onClick={ () => setOpenDeleteIcon(false) }
-                  className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                 >
                   <span className="sr-only">Close</span>
                   <XMarkIcon aria-hidden="true" className="h-6 w-6" />
@@ -476,7 +476,7 @@ const SchedulerServices = ({ accountId, locationId }) =>
                             }))
                             setOpenDrawer(false)
                           } }
-                          className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                          className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                         >
                           <span className="absolute -inset-2.5" />
                           <span className="sr-only">Close panel</span>
@@ -491,7 +491,7 @@ const SchedulerServices = ({ accountId, locationId }) =>
                       <div className='w-full flex flex-col gap-y-3'>
                         <button
                           type="button"
-                          className="rounded-md bg-indigo-600 min-w-full px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          className="rounded-md bg-primary-300 min-w-full px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
                           onClick={ submitUpdateServiceForm }
                         >
                           Select Icon
@@ -534,7 +534,7 @@ const SchedulerServices = ({ accountId, locationId }) =>
 
                     </div>
 
-                    <div className='grid grid-cols-3 sm:grid-cols-6 justify-items-center items-center gap-6 py-12 px-3'>
+                    <div className='grid grid-cols-3 sm:grid-cols-6 justify-items-center items-center gap-6 py-12 px-3 overflow-y-auto'>
 
                       {
                         icons.map((i, idx) => (
@@ -1030,7 +1030,7 @@ const SchedulerServices = ({ accountId, locationId }) =>
                 <button
                   type="button"
                   onClick={ () => setOpenDelete(false) }
-                  className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                 >
                   <span className="sr-only">Close</span>
                   <XMarkIcon aria-hidden="true" className="h-6 w-6" />

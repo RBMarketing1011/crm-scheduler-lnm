@@ -10,6 +10,7 @@ const createShop = async (req) =>
     accountId,
     shop: {
       name,
+      isAutoShop,
       weekdayOpenHour,
       weekdayCloseHour,
       openOnWeekends,
@@ -54,6 +55,7 @@ const createShop = async (req) =>
       // create Shop
       const location = await Location.create({
         name,
+        isAutoShop,
         hoursOfOp: {
           weekdays: {
             open: weekdayOpenHour,
@@ -95,9 +97,12 @@ const createShop = async (req) =>
 
 const updateShop = async (req) =>
 {
+  console.log('THIS SHOWS PUT IS HIT')
+
   const {
     id,
     name,
+    isAutoShop,
     weekdayOpenHour,
     weekdayCloseHour,
     openOnWeekends,
@@ -115,8 +120,6 @@ const updateShop = async (req) =>
     zip,
   } = await req.json()
 
-  console.log(openOnWeekends)
-
   try
   {
     const location = await Location.findById(id)
@@ -128,6 +131,7 @@ const updateShop = async (req) =>
 
     await Location.findByIdAndUpdate(id, {
       name,
+      isAutoShop,
       hoursOfOp: {
         weekdays: {
           open: weekdayOpenHour,

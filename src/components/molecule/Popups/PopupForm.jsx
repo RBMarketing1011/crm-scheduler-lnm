@@ -148,7 +148,7 @@ export default function PopupForm ({ title, openPopupState, textFields, httpRequ
                                 value={ field.value }
                                 onChange={ (e) =>
                                 {
-                                  setShowHidden(!showHidden)
+                                  { field.showHiddenItems && setShowHidden(!showHidden) }
                                   field.onChange(e)
                                 } }
                                 required={ field.required }

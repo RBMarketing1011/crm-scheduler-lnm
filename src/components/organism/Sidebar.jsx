@@ -50,6 +50,7 @@ const Sidebar = () =>
   const [ openAddShopPopup, setOpenAddShopPopup ] = useState(false)
   const [ addShopFormData, setAddShopFormData ] = useState({
     name: '',
+    isAutoShop: false,
     weekdayOpenHour: '',
     weekdayCloseHour: '',
     openOnWeekends: false,
@@ -493,6 +494,20 @@ const Sidebar = () =>
                 name: e.target.value
               }))
             }
+          }, {
+            width: 'sm:w-[99.5%]',
+            type: 'checkbox',
+            showHiddenItems: false,
+            label: 'Is this location an auto shop?',
+            value: addShopFormData.isAutoShop,
+            required: false,
+            onChange: (e) =>
+            {
+              setAddShopFormData(prev => ({
+                ...prev,
+                isAutoShop: !addShopFormData.isAutoShop
+              }))
+            }
           },
           {
             width: 'sm:w-[48.5%]',
@@ -625,6 +640,7 @@ const Sidebar = () =>
           {
             width: 'sm:w-[48.5%]',
             type: 'checkbox',
+            showHiddenItems: true,
             label: 'Open On The Weekends?',
             value: addShopFormData.openOnWeekends,
             required: false,

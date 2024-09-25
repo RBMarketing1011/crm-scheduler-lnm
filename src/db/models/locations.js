@@ -6,6 +6,10 @@ const locationSchema = new Schema({
     type: String,
     required: [ true, 'Shop name is required.' ]
   },
+  isAutoShop: {
+    type: Boolean,
+    default: false
+  },
   nickname: {
     type: String,
     default: null

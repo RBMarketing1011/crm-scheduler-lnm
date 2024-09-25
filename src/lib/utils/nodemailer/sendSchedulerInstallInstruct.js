@@ -43,7 +43,7 @@ const sendSchedulerInstallInstruct = async (email, locationname, user, accountId
               To trigger the scheduler pop-up, simply add the following class to any button or link on your website:
             </p>
             <div style="width: 100%; background-color: #f4f4f4; border: 1px solid #ddd; padding: 10px;">
-              .schedule-appt-btn
+              .lnm-schedule-appt-btn
             </div>
           </li>
         </ol>
@@ -52,7 +52,7 @@ const sendSchedulerInstallInstruct = async (email, locationname, user, accountId
 
         <p>
           After adding the script and button, test your website to ensure the scheduler pop-up works when you click any elements with the
-          <strong>.schedule-appt-btn</strong> class.
+          <strong>.lnm-schedule-appt-btn</strong> class.
         </p>
 
         <p>Let us know if you encounter any issues or need further adjustments.</p>
