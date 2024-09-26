@@ -441,7 +441,7 @@ const Sidebar = ({ accounts }) =>
                                 {
                                   accounts.map(account => (
 
-                                    <option className='flex flex-col' value={ account._id }>
+                                    <option className='flex flex-col' key={ account._id } value={ account._id }>
                                       { account.name } - { account.email }
                                     </option>
 
@@ -789,7 +789,7 @@ const Sidebar = ({ accounts }) =>
                           {
                             accounts.map(account => (
 
-                              <option className='flex flex-col' value={ account._id }>
+                              <option className='flex flex-col' key={ account._id } value={ account._id }>
                                 { account.name } - { account.email }
                               </option>
 
