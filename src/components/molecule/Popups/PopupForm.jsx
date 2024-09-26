@@ -3,11 +3,11 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { TextField, SelectField, CheckboxField } from '@components/template/Fields'
-import { notifi } from '@lib/utils/Notifications/Notify'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
+import { toast } from 'react-toastify'
 
-export default function PopupForm ({ title, openPopupState, textFields, httpRequest, notifiSetState })
+export default function PopupForm ({ title, openPopupState, textFields, httpRequest })
 {
   const { data: session, update } = useSession()
   // ==================== Submit as POST request
@@ -25,7 +25,7 @@ export default function PopupForm ({ title, openPopupState, textFields, httpRequ
       }
     })
     // throw error notification if not present
-    isError && notifi.error(`${ errorFields } are all required fields.`, notifiSetState)
+    isError && toast.error(`${ errorFields } are all required fields.`)
 
     if (!isError)
     {
@@ -43,7 +43,7 @@ export default function PopupForm ({ title, openPopupState, textFields, httpRequ
 
         if (res.success)
         {
-          notifi.success(res.success, notifiSetState)
+          toast.success(res.success)
           // close form
           openPopupState.setState(false)
           textFields.map(el =>
@@ -54,13 +54,13 @@ export default function PopupForm ({ title, openPopupState, textFields, httpRequ
 
         } else if (res.error)
         {
-          notifi.error(res.error, notifiSetState)
+          toast.error(res.error)
         }
 
       } catch (error)
       {
         console.log(error)
-        notifi.error(error.message, notifiSetState)
+        toast.error(error.message)
       }
 
       openPopupState.setState(false)

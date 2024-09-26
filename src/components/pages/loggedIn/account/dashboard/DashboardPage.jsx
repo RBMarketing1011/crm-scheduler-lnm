@@ -72,7 +72,7 @@ const DashboardPage = () =>
           method: 'POST',
           body: JSON.stringify({ employee: addEmployee, accountId: session?.user?.accountId })
         } }
-        notifiSetState={ setNotify }
+
         textFields={ [
           {
             width: 'sm:w-[48.5%]',

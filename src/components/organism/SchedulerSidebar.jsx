@@ -49,25 +49,52 @@ const SchedulerSidebar = ({ accountId }) =>
           {
             session?.locations?.map(location => (
 
-              <li key={ location._id }>
-                <Link
-                  href={ `/account/${ session?.user?.accountId }/scheduler/${ location._id }` }
-                  className={ `${ pathname.includes(`/account/${ session?.user?.accountId }/scheduler/${ location._id }`)
-                    ? 'bg-primary-100 text-primary-300'
-                    : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100'
-                    } group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold` }
-                >
-                  <span
-                    className={ `${ pathname === `/account/${ session?.user?.accountId }/locations/${ location._id }`
-                      ? 'text-primary-300 border-primary-300'
-                      : 'text-gray-700 border-gray-200' } group-hover:border-primary-300 group-hover:text-primary-300 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
-                                    `}
+              session?.user?.employeeRole === 'Owner' ||
+                session?.user?.shops === 'all' ?
+
+                <li key={ location._id }>
+                  <Link
+                    href={ `/account/${ session?.user?.accountId }/scheduler/${ location._id }` }
+                    className={ `${ pathname.includes(`/account/${ session?.user?.accountId }/scheduler/${ location._id }`)
+                      ? 'bg-primary-100 text-primary-300'
+                      : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100'
+                      } group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold` }
                   >
-                    { location.nickname.slice(0, 1) }
-                  </span>
-                  <span className="truncate inline-flex">{ location.nickname }</span>
-                </Link>
-              </li>
+                    <span
+                      className={ `${ pathname === `/account/${ session?.user?.accountId }/locations/${ location._id }`
+                        ? 'text-primary-300 border-primary-300'
+                        : 'text-gray-700 border-gray-200' } group-hover:border-primary-300 group-hover:text-primary-300 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
+                                    `}
+                    >
+                      { location.nickname.slice(0, 1) }
+                    </span>
+                    <span className="truncate inline-flex">{ location.nickname }</span>
+                  </Link>
+                </li>
+
+                :
+
+                session?.user?.shops?.includes(location.name) &&
+
+                <li key={ location._id }>
+                  <Link
+                    href={ `/account/${ session?.user?.accountId }/scheduler/${ location._id }` }
+                    className={ `${ pathname.includes(`/account/${ session?.user?.accountId }/scheduler/${ location._id }`)
+                      ? 'bg-primary-100 text-primary-300'
+                      : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100'
+                      } group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold` }
+                  >
+                    <span
+                      className={ `${ pathname === `/account/${ session?.user?.accountId }/locations/${ location._id }`
+                        ? 'text-primary-300 border-primary-300'
+                        : 'text-gray-700 border-gray-200' } group-hover:border-primary-300 group-hover:text-primary-300 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
+                                    `}
+                    >
+                      { location.nickname.slice(0, 1) }
+                    </span>
+                    <span className="truncate inline-flex">{ location.nickname }</span>
+                  </Link>
+                </li>
 
             ))
           }

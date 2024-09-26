@@ -40,7 +40,7 @@ const Sidebar = () =>
     { name: 'Appointments', href: `/account/${ session?.user?.accountId }/appointments`, icon: CalendarDaysIcon, count: '12' },
   ]
   const account = [
-    { name: 'Settings', href: `/account/${ session?.user?.accountId }/settings`, icon: Cog8ToothIcon, },
+    { name: 'Settings', href: `/account/${ session?.user?.accountId }/profile`, icon: Cog8ToothIcon, },
     { name: 'Install Scheduler', href: `/account/${ session?.user?.accountId }/scheduler/instructions`, icon: CodeBracketSquareIcon, },
   ]
 
@@ -143,37 +143,76 @@ const Sidebar = () =>
                           {
                             navigation.map(item => (
 
-                              <li key={ item.name }>
-                                <Link
-                                  href={ item.href }
-                                  className={ `
+                              session?.user?.employeeRole === 'Owner' ||
+                                session?.user?.shops === 'all' ?
+
+                                <li key={ item.name }>
+                                  <Link
+                                    href={ item.href }
+                                    className={ `
                                     ${ path === item.href
-                                      ? 'bg-primary-100 text-primary-300'
-                                      : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
+                                        ? 'bg-primary-100 text-primary-300'
+                                        : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                                     group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
                                   `}
-                                  onClick={ () => setSidebarOpen(false) }
-                                >
-                                  <item.icon
-                                    className={ `
+                                    onClick={ () => setSidebarOpen(false) }
+                                  >
+                                    <item.icon
+                                      className={ `
                                       ${ path === item.href ? 'text-primary-300' : 'text-gray-400 group-hover:text-primary-300' }
                                       h-6 w-6 shrink-0
                                     `}
-                                    aria-hidden="true"
-                                  />
-                                  { item.name }
-                                  {
-                                    item.count &&
-
-                                    <span
-                                      className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white"
                                       aria-hidden="true"
-                                    >
-                                      { item.count }
-                                    </span>
-                                  }
-                                </Link>
-                              </li>
+                                    />
+                                    { item.name }
+                                    {
+                                      item.count &&
+
+                                      <span
+                                        className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white"
+                                        aria-hidden="true"
+                                      >
+                                        { item.count }
+                                      </span>
+                                    }
+                                  </Link>
+                                </li>
+
+                                :
+
+                                item.name === 'Dashboard' &&
+
+                                <li key={ item.name }>
+                                  <Link
+                                    href={ item.href }
+                                    className={ `
+                                    ${ path === item.href
+                                        ? 'bg-primary-100 text-primary-300'
+                                        : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
+                                    group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
+                                  `}
+                                    onClick={ () => setSidebarOpen(false) }
+                                  >
+                                    <item.icon
+                                      className={ `
+                                      ${ path === item.href ? 'text-primary-300' : 'text-gray-400 group-hover:text-primary-300' }
+                                      h-6 w-6 shrink-0
+                                    `}
+                                      aria-hidden="true"
+                                    />
+                                    { item.name }
+                                    {
+                                      item.count &&
+
+                                      <span
+                                        className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white"
+                                        aria-hidden="true"
+                                      >
+                                        { item.count }
+                                      </span>
+                                    }
+                                  </Link>
+                                </li>
 
                             ))
                           }
@@ -199,29 +238,60 @@ const Sidebar = () =>
                             session?.locations &&
                             session?.locations.map(location => (
 
-                              <li key={ location.name }>
-                                <Link
-                                  href={ `/account/${ session?.user?.accountId }/locations/${ location._id }/appointments` }
-                                  className={ `
+                              session?.user?.employeeRole === 'Owner' ||
+                                session?.user?.shops === 'all' ?
+
+                                <li key={ location.name }>
+                                  <Link
+                                    href={ `/account/${ session?.user?.accountId }/locations/${ location._id }/appointments` }
+                                    className={ `
                                     ${ path.includes(`/account/${ session?.user?.accountId }/locations/${ location._id }`)
-                                      ? 'bg-primary-100 text-primary-300'
-                                      : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
+                                        ? 'bg-primary-100 text-primary-300'
+                                        : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                                     group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
                                   `}
-                                  onClick={ () => setSidebarOpen(false) }
-                                >
-                                  <span
-                                    className={ `
-                                      ${ path.includes(`/account/${ session?.user?.accountId }/locations/${ location._id }`)
-                                        ? 'text-primary-300 border-primary-300'
-                                        : 'text-gray-700 border-gray-200' } group-hover:border-primary-300 group-hover:text-primary-300 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
-                                    `}
+                                    onClick={ () => setSidebarOpen(false) }
                                   >
-                                    { location.name.slice(0, 1) }
-                                  </span>
-                                  <span className="truncate inline-flex">{ location.name }</span>
-                                </Link>
-                              </li>
+                                    <span
+                                      className={ `
+                                      ${ path.includes(`/account/${ session?.user?.accountId }/locations/${ location._id }`)
+                                          ? 'text-primary-300 border-primary-300'
+                                          : 'text-gray-700 border-gray-200' } group-hover:border-primary-300 group-hover:text-primary-300 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
+                                    `}
+                                    >
+                                      { location.name.slice(0, 1) }
+                                    </span>
+                                    <span className="truncate inline-flex">{ location.name }</span>
+                                  </Link>
+                                </li>
+
+                                :
+
+                                session?.user?.shops.includes(location.name) &&
+
+                                <li key={ location.name }>
+                                  <Link
+                                    href={ `/account/${ session?.user?.accountId }/locations/${ location._id }/appointments` }
+                                    className={ `
+                                    ${ path.includes(`/account/${ session?.user?.accountId }/locations/${ location._id }`)
+                                        ? 'bg-primary-100 text-primary-300'
+                                        : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
+                                    group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
+                                  `}
+                                    onClick={ () => setSidebarOpen(false) }
+                                  >
+                                    <span
+                                      className={ `
+                                      ${ path.includes(`/account/${ session?.user?.accountId }/locations/${ location._id }`)
+                                          ? 'text-primary-300 border-primary-300'
+                                          : 'text-gray-700 border-gray-200' } group-hover:border-primary-300 group-hover:text-primary-300 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
+                                    `}
+                                    >
+                                      { location.name.slice(0, 1) }
+                                    </span>
+                                    <span className="truncate inline-flex">{ location.name }</span>
+                                  </Link>
+                                </li>
 
                             ))
                           }
@@ -232,37 +302,76 @@ const Sidebar = () =>
                           {
                             account.map(item => (
 
-                              <li key={ item.name }>
-                                <Link
-                                  href={ item.href }
-                                  className={ `
+                              session?.user?.employeeRole === 'Owner' ||
+                                session?.user?.shops === 'all' ?
+
+                                <li key={ item.name }>
+                                  <Link
+                                    href={ item.href }
+                                    className={ `
                                     ${ path === item.href
-                                      ? 'bg-primary-100 text-primary-300'
-                                      : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
+                                        ? 'bg-primary-100 text-primary-300'
+                                        : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                                     group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
                                   `}
-                                  onClick={ () => setSidebarOpen(false) }
-                                >
-                                  <item.icon
-                                    className={ `
+                                    onClick={ () => setSidebarOpen(false) }
+                                  >
+                                    <item.icon
+                                      className={ `
                                       ${ path === item.href ? 'text-primary-300' : 'text-gray-400 group-hover:text-primary-300' }
                                       h-6 w-6 shrink-0
                                     `}
-                                    aria-hidden="true"
-                                  />
-                                  { item.name }
-                                  {
-                                    item.count &&
-
-                                    <span
-                                      className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white"
                                       aria-hidden="true"
-                                    >
-                                      { item.count }
-                                    </span>
-                                  }
-                                </Link>
-                              </li>
+                                    />
+                                    { item.name }
+                                    {
+                                      item.count &&
+
+                                      <span
+                                        className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white"
+                                        aria-hidden="true"
+                                      >
+                                        { item.count }
+                                      </span>
+                                    }
+                                  </Link>
+                                </li>
+
+                                :
+
+                                item.name === 'Install Scheduler' &&
+
+                                <li key={ item.name }>
+                                  <Link
+                                    href={ item.href }
+                                    className={ `
+                                    ${ path === item.href
+                                        ? 'bg-primary-100 text-primary-300'
+                                        : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
+                                    group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
+                                  `}
+                                    onClick={ () => setSidebarOpen(false) }
+                                  >
+                                    <item.icon
+                                      className={ `
+                                      ${ path === item.href ? 'text-primary-300' : 'text-gray-400 group-hover:text-primary-300' }
+                                      h-6 w-6 shrink-0
+                                    `}
+                                      aria-hidden="true"
+                                    />
+                                    { item.name }
+                                    {
+                                      item.count &&
+
+                                      <span
+                                        className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white"
+                                        aria-hidden="true"
+                                      >
+                                        { item.count }
+                                      </span>
+                                    }
+                                  </Link>
+                                </li>
 
                             ))
                           }
@@ -296,42 +405,82 @@ const Sidebar = () =>
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
               <li>
                 <ul role="list" className="-mx-2 space-y-1">
+
                   {
                     navigation.map(item => (
 
-                      <li key={ item.name }>
-                        <Link
-                          href={ item.href }
-                          className={ `
+                      session?.user?.employeeRole === 'Owner' ||
+                        session?.user?.shops === 'all' ?
+
+                        <li key={ item.name }>
+                          <Link
+                            href={ item.href }
+                            className={ `
                             ${ path === item.href
-                              ? 'bg-primary-100 text-primary-300'
-                              : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
+                                ? 'bg-primary-100 text-primary-300'
+                                : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                             group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
                           `}
-                        >
-                          <item.icon
-                            className={ `
+                          >
+                            <item.icon
+                              className={ `
                               ${ path === item.href ? 'text-primary-300' : 'text-gray-400 group-hover:text-primary-300' }
                               h-6 w-6 shrink-0
                             `}
-                            aria-hidden="true"
-                          />
-                          { item.name }
-                          {
-                            item.count &&
-
-                            <span
-                              className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white"
                               aria-hidden="true"
-                            >
-                              { item.count }
-                            </span>
-                          }
-                        </Link>
-                      </li>
+                            />
+                            { item.name }
+                            {
+                              item.count &&
+
+                              <span
+                                className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white"
+                                aria-hidden="true"
+                              >
+                                { item.count }
+                              </span>
+                            }
+                          </Link>
+                        </li>
+
+                        :
+
+                        item.name === 'Dashboard' &&
+
+                        <li key={ item.name }>
+                          <Link
+                            href={ item.href }
+                            className={ `
+                            ${ path === item.href
+                                ? 'bg-primary-100 text-primary-300'
+                                : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
+                            group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
+                          `}
+                          >
+                            <item.icon
+                              className={ `
+                              ${ path === item.href ? 'text-primary-300' : 'text-gray-400 group-hover:text-primary-300' }
+                              h-6 w-6 shrink-0
+                            `}
+                              aria-hidden="true"
+                            />
+                            { item.name }
+                            {
+                              item.count &&
+
+                              <span
+                                className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white"
+                                aria-hidden="true"
+                              >
+                                { item.count }
+                              </span>
+                            }
+                          </Link>
+                        </li>
 
                     ))
                   }
+
                 </ul>
               </li>
               <li>
@@ -346,77 +495,150 @@ const Sidebar = () =>
                   </div>
                 </div>
                 <ul role="list" className="-mx-2 mt-2 space-y-1">
+
                   {
                     session?.locations &&
                     Object.keys(session?.locations).length > 0 &&
                     session?.locations.map((location, locationIdx) => (
 
-                      <li key={ locationIdx }>
-                        <Link
-                          href={ `/account/${ session?.user?.accountId }/locations/${ location._id }/appointments` }
-                          className={ `
+                      session?.user?.employeeRole === 'Owner' ||
+                        session?.user?.shops === 'all' ?
+
+                        <li key={ locationIdx }>
+                          <Link
+                            href={ `/account/${ session?.user?.accountId }/locations/${ location._id }/appointments` }
+                            className={ `
                             ${ path.includes(`/account/${ session?.user?.accountId }/locations/${ location._id }`)
-                              ? 'bg-primary-100 text-primary-300'
-                              : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
+                                ? 'bg-primary-100 text-primary-300'
+                                : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                             group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
                           `}
-                        >
-                          <span
-                            className={ `
+                          >
+                            <span
+                              className={ `
                               ${ path.includes(`/account/${ session?.user?.accountId }/locations/${ location._id }`)
-                                ? 'text-primary-300 border-primary-300'
-                                : 'text-gray-400 border-gray-200 group-hover:border-primary-300 group-hover:text-primary-300' }
+                                  ? 'text-primary-300 border-primary-300'
+                                  : 'text-gray-400 border-gray-200 group-hover:border-primary-300 group-hover:text-primary-300' }
                               flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
                             `}
+                            >
+                              { location.name.slice(0, 1) }
+                            </span>
+                            <span className="truncate">{ location.name }</span>
+                          </Link>
+                        </li>
+
+                        :
+
+                        session?.user?.shops === location.name &&
+
+                        <li key={ locationIdx }>
+                          <Link
+                            href={ `/account/${ session?.user?.accountId }/locations/${ location._id }/appointments` }
+                            className={ `
+                            ${ path.includes(`/account/${ session?.user?.accountId }/locations/${ location._id }`)
+                                ? 'bg-primary-100 text-primary-300'
+                                : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
+                            group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
+                          `}
                           >
-                            { location.name.slice(0, 1) }
-                          </span>
-                          <span className="truncate">{ location.name }</span>
-                        </Link>
-                      </li>
+                            <span
+                              className={ `
+                              ${ path.includes(`/account/${ session?.user?.accountId }/locations/${ location._id }`)
+                                  ? 'text-primary-300 border-primary-300'
+                                  : 'text-gray-400 border-gray-200 group-hover:border-primary-300 group-hover:text-primary-300' }
+                              flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white
+                            `}
+                            >
+                              { location.name.slice(0, 1) }
+                            </span>
+                            <span className="truncate">{ location.name }</span>
+                          </Link>
+                        </li>
 
                     ))
                   }
+
                 </ul>
               </li>
               <li>
                 <ul role="list" className="-mx-2 space-y-1">
+
                   {
                     account.map(item => (
 
-                      <li key={ item.name }>
-                        <Link
-                          href={ item.href }
-                          className={ `
+                      session?.user?.employeeRole === 'Owner' ||
+                        session?.user?.shops === 'all' ?
+
+                        <li key={ item.name }>
+                          <Link
+                            href={ item.href }
+                            className={ `
                             ${ path === item.href
-                              ? 'bg-primary-100 text-primary-300'
-                              : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
+                                ? 'bg-primary-100 text-primary-300'
+                                : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                             group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
                           `}
-                        >
-                          <item.icon
-                            className={ `
+                          >
+                            <item.icon
+                              className={ `
                               ${ path === item.href ? 'text-primary-300' : 'text-gray-400 group-hover:text-primary-300' }
                               h-6 w-6 shrink-0
                             `}
-                            aria-hidden="true"
-                          />
-                          { item.name }
-                          {
-                            item.count &&
-
-                            <span
-                              className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white"
                               aria-hidden="true"
-                            >
-                              { item.count }
-                            </span>
-                          }
-                        </Link>
-                      </li>
+                            />
+                            { item.name }
+                            {
+                              item.count &&
+
+                              <span
+                                className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white"
+                                aria-hidden="true"
+                              >
+                                { item.count }
+                              </span>
+                            }
+                          </Link>
+                        </li>
+
+                        :
+
+                        item.name === 'Install Scheduler' &&
+
+                        <li key={ item.name }>
+                          <Link
+                            href={ item.href }
+                            className={ `
+                            ${ path === item.href
+                                ? 'bg-primary-100 text-primary-300'
+                                : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
+                            group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
+                          `}
+                          >
+                            <item.icon
+                              className={ `
+                              ${ path === item.href ? 'text-primary-300' : 'text-gray-400 group-hover:text-primary-300' }
+                              h-6 w-6 shrink-0
+                            `}
+                              aria-hidden="true"
+                            />
+                            { item.name }
+                            {
+                              item.count &&
+
+                              <span
+                                className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-primary-300 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white"
+                                aria-hidden="true"
+                              >
+                                { item.count }
+                              </span>
+                            }
+                          </Link>
+                        </li>
 
                     ))
                   }
+
                 </ul>
               </li>
               <li className="-mx-6 mt-auto">
@@ -479,7 +701,7 @@ const Sidebar = () =>
           method: 'POST',
           body: JSON.stringify({ shop: addShopFormData, accountId: session?.user?.accountId })
         } }
-        notifiSetState={ setNotify }
+
         textFields={ [
           {
             width: 'sm:w-[99.5%]',

@@ -171,7 +171,7 @@ const LocationIntegrationsPage = ({ locationId }) =>
           method: 'POST',
           body: JSON.stringify({ locationId: location?.id, tmlocationId })
         } }
-        notifiSetState={ setNotify }
+
         textFields={ [
           {
             width: 'sm:w-[100%]',

@@ -1,64 +1,24 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSession } from 'next-auth/react'
-import TitleHeading from '@components/atom/Headings/TitleHeading'
 
-import { IoIosPeople } from "react-icons/io"
+import TitleHeading from '@components/atom/Headings/TitleHeading'
+import Button from '@components/atom/Button'
 import PopupForm from '@components/molecule/Popups/PopupForm'
 import DeleteItemPopup from '@components/molecule/Popups/DeleteItemPopup'
-import Button from '@components/atom/Button'
 
-const LocationTeamPage = ({ locationId }) =>
+import { IoIosPeople } from "react-icons/io"
+
+const AccountMembersPage = () =>
 {
-  // ====================================== Notifi state 
+  const { data: session, update: refresh } = useSession()
+
   const [ notify, setNotify ] = useState({
     type: '',
     text: '',
     show: false
   })
-  // ====================================== Session details
-  const {
-    data: session,
-    update: refresh
-  } = useSession()
-
-  // ====================================== Set location data
-  const [ location, setLocation ] = useState()
-
-  useEffect(() =>
-  {
-    const getShop = () =>
-    {
-      session?.locations.length &&
-        session?.locations.map(location =>
-        {
-          if (location._id.includes(locationId))
-          {
-            setLocation({
-              id: location?._id,
-              name: location?.name,
-              nickname: location?.nickname,
-              email: location?.email,
-              phone: location?.phone,
-              website: location?.website,
-              address1: location?.address.address1,
-              address2: location?.address.address2,
-              city: location?.address.city,
-              state: location?.address.state,
-              zip: location?.address.zip,
-              tekMetricConnected: location?.tekMetricIntegration.connected,
-              tekmetriclocationId: location?.tekMetricIntegration.locationId
-            })
-          }
-        })
-    }
-
-    getShop()
-
-  }, [ session, locationId ])
-
-  // ======================================= End set location data
 
   // ================================= PopupForm
   // For adding employee
@@ -67,7 +27,7 @@ const LocationTeamPage = ({ locationId }) =>
     firstname: '',
     lastname: '',
     email: '',
-    shops: location?.name,
+    shops: '',
     employeeRole: '',
   })
   // For Editing Employee
@@ -77,7 +37,7 @@ const LocationTeamPage = ({ locationId }) =>
     firstname: '',
     lastname: '',
     email: '',
-    shops: location?.name,
+    shops: '',
     employeeRole: '',
   })
   // ================================= PopupForm
@@ -90,11 +50,11 @@ const LocationTeamPage = ({ locationId }) =>
   })
   // ================================= End Delete Employee 
   // ================================= Options for adding shops employee has access to
-  let shopsEmployees = session?.employees?.filter(el =>
-  {
-    return el.shops === location?.name || el.shops === 'All'
-  })
-  // ================================= End Options for adding shops employee has access to 
+  let shopsOptions = []
+  shopsOptions.push('All')
+  session?.locations?.map(el => (shopsOptions.push(el.name)))
+  // ================================= End Options for adding shops employee has 
+
 
   return (
     <main className="px-4 py-5 sm:px-6 lg:flex-auto lg:px-0 lg:py-5">
@@ -122,7 +82,8 @@ const LocationTeamPage = ({ locationId }) =>
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               {
-                shopsEmployees?.length ?
+                session?.employees &&
+                  session?.employees.length ?
 
                   <table className="min-w-full divide-y divide-gray-300">
                     <thead>
@@ -149,7 +110,7 @@ const LocationTeamPage = ({ locationId }) =>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
                       {
-                        shopsEmployees.map((person) => (
+                        session?.employees.map((person) => (
 
                           <tr key={ person.email }>
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
@@ -293,7 +254,7 @@ const LocationTeamPage = ({ locationId }) =>
             width: 'sm:w-[99.5%]',
             type: 'select',
             label: 'Shops',
-            options: [ location?.name ],
+            options: shopsOptions,
             required: true,
             value: formData.shops,
             onChange: (e) =>
@@ -326,6 +287,7 @@ const LocationTeamPage = ({ locationId }) =>
           }
         ] }
       />
+
 
 
       {/* Modal for Edit Employee Form */ }
@@ -385,7 +347,7 @@ const LocationTeamPage = ({ locationId }) =>
             width: 'sm:w-[99.5%]',
             type: 'select',
             label: 'Shops',
-            options: [ location?.name ],
+            options: shopsOptions,
             required: true,
             value: editEmployeeData.shops,
             onChange: (e) =>
@@ -419,6 +381,7 @@ const LocationTeamPage = ({ locationId }) =>
         ] }
       />
 
+
       {/* Delete Employee Popup Confirmation */ }
       <DeleteItemPopup
         state={ showDeleteEmployee }
@@ -432,4 +395,4 @@ const LocationTeamPage = ({ locationId }) =>
   )
 }
 
-export default LocationTeamPage
+export default AccountMembersPage
