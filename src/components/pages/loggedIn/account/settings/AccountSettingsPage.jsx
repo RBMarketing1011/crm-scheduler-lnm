@@ -162,7 +162,7 @@ const AccountSettingsPage = () =>
 
                   <div className="col-span-full">
                     <label htmlFor="address1" className="block text-sm font-medium leading-6 text-grey-900">
-                      Street
+                      Street Address
                     </label>
                     <div className="mt-2">
                       <div className="flex rounded-md bg-white/5 ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-300">
