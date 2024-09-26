@@ -2,12 +2,23 @@
   "name": "leadsnearme-crm",
   "version": "0.1.0",
   "private": true,
+  "authors": [
+    {
+      "name": "LeadsNearMe®",
+      "email": "Anthony@leadsnearme.com",
+      "url": "https://leadsnearme.com"
+    },
+    {
+      "name": "Anthony Reynolds",
+      "email": "rbmarketingandanalytics@gmail.com",
+      "url": "https://github.com/RBMarketing1011"
+    }
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "seed": "node ./src/sampleData/seedDB.js"
+    "lint": "next lint"
   },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
