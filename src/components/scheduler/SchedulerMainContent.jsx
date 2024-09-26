@@ -22,6 +22,7 @@ import ScheduleAppt from './screens/ScheduleAppt'
 
 
 import { now, getLocalTimeZone } from "@internationalized/date"
+import { toast } from 'react-toastify'
 
 
 const SchedulerMainContent = () =>
@@ -73,7 +74,7 @@ const SchedulerMainContent = () =>
         }
       } catch (error)
       {
-        console.log(error)
+        toast.error(error.message)
       }
     }
 

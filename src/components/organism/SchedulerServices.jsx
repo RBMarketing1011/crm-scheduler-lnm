@@ -158,8 +158,6 @@ const SchedulerServices = ({ accountId, locationId }) =>
   {
     e.preventDefault()
 
-    console.log(serviceTitle)
-
     try
     {
       const req = await fetch('/api/locations/service/icon', {

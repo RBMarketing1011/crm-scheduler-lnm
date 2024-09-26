@@ -59,7 +59,6 @@ export default function PopupForm ({ title, openPopupState, textFields, httpRequ
 
       } catch (error)
       {
-        console.log(error)
         toast.error(error.message)
       }
 
@@ -129,7 +128,6 @@ export default function PopupForm ({ title, openPopupState, textFields, httpRequ
                               options={ field.options }
                               onChange={ (e) =>
                               {
-                                console.log(field.hidden)
                                 field.onChange(e)
                               } }
                               required={ field.required }

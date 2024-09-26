@@ -87,8 +87,7 @@ const LocationDetailsPage = ({ locationId }) =>
 
     } catch (error)
     {
-      notifi.error(error.message, setNotify)
-      console.log(error)
+      toast.error(error.message)
     }
   }
 

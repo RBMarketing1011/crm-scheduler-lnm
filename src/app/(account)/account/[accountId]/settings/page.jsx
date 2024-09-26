@@ -1,10 +1,9 @@
+import AccountSettingsPage from '@components/pages/loggedIn/account/settings/AccountSettingsPage'
 
 const AccountSettings = () =>
 {
   return (
-    <main>
-      Account Settings
-    </main>
+    <AccountSettingsPage />
   )
 }
 

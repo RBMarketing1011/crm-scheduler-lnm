@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { toast } from 'react-toastify'
 
-const AccountProfilePage = () =>
+const UserProfilePage = () =>
 {
   const { data: session, update: refresh } = useSession()
 
@@ -322,4 +322,4 @@ const AccountProfilePage = () =>
   )
 }
 
-export default AccountProfilePage
+export default UserProfilePage

@@ -1,10 +1,10 @@
-import AccountSecurityPage from '@components/pages/loggedIn/account/settings/AccountSecurityPage'
+import UserSecurityPage from '@components/pages/loggedIn/account/users/settings/UserSecurityPage'
 
-const AccountSecurity = () =>
+const UserSecurity = () =>
 {
   return (
-    <AccountSecurityPage />
+    <UserSecurityPage />
   )
 }
 
-export default AccountSecurity
+export default UserSecurity

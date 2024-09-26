@@ -7,7 +7,6 @@ import
   BellIcon,
   UserCircleIcon,
   UsersIcon,
-  FingerPrintIcon
 } from '@heroicons/react/24/outline'
 import Container from '@components/atom/Container'
 
@@ -20,9 +19,8 @@ const Layout = ({ children, params }) =>
 
   const { accountId } = params
 
-  console.log(accountId)
-
   const navigation = [
+    { name: 'Account Profile', href: `/account/${ accountId }/settings`, icon: UserCircleIcon },
     { name: 'Team Members', href: `/account/${ accountId }/settings/members`, icon: UsersIcon },
     { name: 'Notifications', href: `/account/${ accountId }/settings/notifications`, icon: BellIcon },
   ]

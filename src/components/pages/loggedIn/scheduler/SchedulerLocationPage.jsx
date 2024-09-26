@@ -100,6 +100,7 @@ const SchedulerLocationPage = ({ accountId, locationId }) =>
                     { location.nickname }
                   </h3>
                   <div className="mt-3 flex flex-col gap-3 sm:flex-row md:absolute md:right-0 md:top-3 md:mt-0">
+
                     <button
                       type="button"
                       className="ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300 ring-1 ring-inset ring-gray-300"
@@ -115,21 +116,31 @@ const SchedulerLocationPage = ({ accountId, locationId }) =>
                       <CodeBracketIcon className="h-5 w-5 mr-2" />
                       Get Location Script
                     </button>
-                    <button
-                      type="button"
-                      className="ml-3 inline-flex items-center rounded-md bg-primary-300 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
-                      onClick={ () =>
-                      {
-                        setCode(prev => ({
-                          ...prev,
-                          isGlobal: true
-                        }))
-                        setOpen(true)
-                      } }
-                    >
-                      <GlobeAmericasIcon className="h-5 w-5 mr-2" />
-                      Get Global Script
-                    </button>
+
+                    {
+                      (
+                        session?.user?.employeeRole === 'Owner'
+                        ||
+                        session?.user?.shops === 'All'
+                      ) &&
+
+                      <button
+                        type="button"
+                        className="ml-3 inline-flex items-center rounded-md bg-primary-300 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+                        onClick={ () =>
+                        {
+                          setCode(prev => ({
+                            ...prev,
+                            isGlobal: true
+                          }))
+                          setOpen(true)
+                        } }
+                      >
+                        <GlobeAmericasIcon className="h-5 w-5 mr-2" />
+                        Get Global Script
+                      </button>
+                    }
+
                   </div>
                 </div>
                 <div className="mt-4">

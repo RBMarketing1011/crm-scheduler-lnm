@@ -98,8 +98,6 @@ const SchedulerHours = ({ accountId, locationId }) =>
 
       const res = await req.json()
 
-      console.log(res)
-
       if (res.error)
       {
         toast.error(res.error)

@@ -20,8 +20,6 @@ const Layout = ({ children, params }) =>
 
   const { accountId, userId } = params
 
-  console.log(accountId)
-
   const navigation = [
     { name: 'Profile', href: `/account/${ accountId }/users/${ userId }/settings`, icon: UserCircleIcon },
     { name: 'Security', href: `/account/${ accountId }/users/${ userId }/settings/security`, icon: FingerPrintIcon },

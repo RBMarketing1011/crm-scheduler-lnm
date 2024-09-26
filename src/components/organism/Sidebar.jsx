@@ -144,7 +144,7 @@ const Sidebar = () =>
                             navigation.map(item => (
 
                               session?.user?.employeeRole === 'Owner' ||
-                                session?.user?.shops === 'all' ?
+                                session?.user?.shops === 'All' ?
 
                                 <li key={ item.name }>
                                   <Link
@@ -239,7 +239,7 @@ const Sidebar = () =>
                             session?.locations.map(location => (
 
                               session?.user?.employeeRole === 'Owner' ||
-                                session?.user?.shops === 'all' ?
+                                session?.user?.shops === 'All' ?
 
                                 <li key={ location.name }>
                                   <Link
@@ -303,7 +303,7 @@ const Sidebar = () =>
                             account.map(item => (
 
                               session?.user?.employeeRole === 'Owner' ||
-                                session?.user?.shops === 'all' ?
+                                session?.user?.shops === 'All' ?
 
                                 <li key={ item.name }>
                                   <Link
@@ -409,8 +409,11 @@ const Sidebar = () =>
                   {
                     navigation.map(item => (
 
-                      session?.user?.employeeRole === 'Owner' ||
-                        session?.user?.shops === 'all' ?
+                      (
+                        session?.user?.employeeRole === 'Owner'
+                        ||
+                        session?.user?.shops === 'All'
+                      ) ?
 
                         <li key={ item.name }>
                           <Link
@@ -501,8 +504,11 @@ const Sidebar = () =>
                     Object.keys(session?.locations).length > 0 &&
                     session?.locations.map((location, locationIdx) => (
 
-                      session?.user?.employeeRole === 'Owner' ||
-                        session?.user?.shops === 'all' ?
+                      (
+                        session?.user?.employeeRole === 'Owner'
+                        ||
+                        session?.user?.shops === 'All'
+                      ) ?
 
                         <li key={ locationIdx }>
                           <Link
@@ -567,8 +573,11 @@ const Sidebar = () =>
                   {
                     account.map(item => (
 
-                      session?.user?.employeeRole === 'Owner' ||
-                        session?.user?.shops === 'all' ?
+                      (
+                        session?.user?.employeeRole === 'Owner'
+                        ||
+                        session?.user?.shops === 'All'
+                      ) ?
 
                         <li key={ item.name }>
                           <Link

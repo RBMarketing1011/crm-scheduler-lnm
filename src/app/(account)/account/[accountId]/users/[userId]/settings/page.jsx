@@ -1,10 +1,10 @@
-import AccountProfilePage from '@components/pages/loggedIn/account/settings/AccountProfilePage'
+import UserProfilePage from '@components/pages/loggedIn/account/users/settings/UserProfilePage'
 
-const AccountProfile = () =>
+const UserProfile = () =>
 {
   return (
-    <AccountProfilePage />
+    <UserProfilePage />
   )
 }
 
-export default AccountProfile
+export default UserProfile

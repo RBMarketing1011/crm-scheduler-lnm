@@ -15,6 +15,7 @@ import { Notifi, notifi } from '@lib/utils/Notifications/Notify'
 
 //images
 import Logo from '@images/logos/lnm-logo-black.png'
+import { toast } from 'react-toastify'
 
 export default function LoginPage ()
 {
@@ -49,17 +50,15 @@ export default function LoginPage ()
       {
         await update()
         router.push(`/account/${ session?.user.accountId }/dashboard`)
-        notifi.success('Sign in successful', setNotifiState)
-        console.log('object')
+        toast.success('Welcome back!')
       } else if (res?.error)
       {
-        notifi.error(res.error, setNotifiState)
+        toast.error(res.error)
       }
 
     } catch (error)
     {
-      console.log(error)
-      notifi.error(error.message, setNotifiState)
+      toast.error(error.message)
     }
   }
 

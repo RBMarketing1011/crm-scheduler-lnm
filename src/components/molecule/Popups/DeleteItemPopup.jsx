@@ -15,7 +15,6 @@ export default function DeleteItemPopup ({ state, setState, item, data })
   // Delete Item 
   const deleteItem = async () =>
   {
-    console.log(data.accountId)
     try
     {
       const result = await fetch(`${ data.url }`, {

@@ -9,7 +9,7 @@ import TitleHeading from '@components/atom/Headings/TitleHeading'
 import Button from '@components/atom/Button'
 import { toast } from 'react-toastify'
 
-const AccountSecurityPage = () =>
+const UserSecurityPage = () =>
 {
   const { data: session, update: refresh } = useSession()
 
@@ -243,4 +243,4 @@ const AccountSecurityPage = () =>
   )
 }
 
-export default AccountSecurityPage
+export default UserSecurityPage
