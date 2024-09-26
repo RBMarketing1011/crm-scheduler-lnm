@@ -49,8 +49,13 @@ const SchedulerSidebar = ({ accountId }) =>
           {
             session?.locations?.map(location => (
 
-              session?.user?.employeeRole === 'Owner' ||
-                session?.user?.shops === 'All' ?
+              (
+                session?.isLNM
+                ||
+                session?.user?.employeeRole === 'Owner'
+                ||
+                session?.user?.shops === 'All'
+              ) ?
 
                 <li key={ location._id }>
                   <Link

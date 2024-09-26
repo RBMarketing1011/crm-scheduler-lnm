@@ -1,7 +1,7 @@
 'use client'
 
 import { Fragment, useState } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 import
@@ -12,7 +12,8 @@ import
   Cog8ToothIcon,
   CalendarDaysIcon,
   PlusIcon,
-  CodeBracketSquareIcon
+  CodeBracketSquareIcon,
+  UserGroupIcon
 } from '@heroicons/react/24/outline'
 
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
@@ -26,11 +27,14 @@ import LinkPopover from '@components/molecule/Popups/LinkPopover'
 import PopupForm from '@components/molecule/Popups/PopupForm'
 import { Notifi } from '@lib/utils/Notifications/Notify'
 import InitialsIcon from '@components/molecule/Employees/InitialsIcon'
+import { toast } from 'react-toastify'
 
-const Sidebar = () =>
+const Sidebar = ({ accounts }) =>
 {
   const [ sidebarOpen, setSidebarOpen ] = useState(false)
+
   const path = usePathname()
+  const router = useRouter()
 
   // ================== Session Data
   const { data: session, update } = useSession()
@@ -143,8 +147,13 @@ const Sidebar = () =>
                           {
                             navigation.map(item => (
 
-                              session?.user?.employeeRole === 'Owner' ||
-                                session?.user?.shops === 'All' ?
+                              (
+                                session?.isLNM
+                                ||
+                                session?.user?.employeeRole === 'Owner'
+                                ||
+                                session?.user?.shops === 'All'
+                              ) ?
 
                                 <li key={ item.name }>
                                   <Link
@@ -238,8 +247,13 @@ const Sidebar = () =>
                             session?.locations &&
                             session?.locations.map(location => (
 
-                              session?.user?.employeeRole === 'Owner' ||
-                                session?.user?.shops === 'All' ?
+                              (
+                                session?.isLNM
+                                ||
+                                session?.user?.employeeRole === 'Owner'
+                                ||
+                                session?.user?.shops === 'All'
+                              ) ?
 
                                 <li key={ location.name }>
                                   <Link
@@ -377,6 +391,69 @@ const Sidebar = () =>
                           }
                         </ul>
                       </li>
+
+                      {
+                        session?.isLNM &&
+
+                        <li>
+                          <label htmlFor="account" className="block text-sm font-medium leading-6 text-grey-900">
+                            Choose Account
+                          </label>
+                          <div className="mt-2">
+                            <div className="flex rounded-md bg-white/5 ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-300">
+                              <select
+                                name="account"
+                                id="account"
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-300 sm:text-sm sm:leading-6"
+                                defaultValue={ session?.acctView && session?.acctView }
+                                onChange={ async (e) =>
+                                {
+                                  try
+                                  {
+                                    const req = await fetch(`/api/admin/update-acct-view`, {
+                                      method: 'PUT',
+                                      headers: {
+                                        'Content-Type': 'application/json'
+                                      },
+                                      body: JSON.stringify({ userId: session?.activeUser?._id, accountId: e.target.value })
+                                    })
+
+                                    const res = await req.json()
+
+                                    if (res.success)
+                                    {
+                                      toast.success(res.success)
+                                      router.push(`/account/${ e.target.value }/dashboard`)
+                                    } else if (res.error)
+                                    {
+                                      toast.error(res.error)
+                                    }
+                                  } catch (error)
+                                  {
+                                    toast.error(error.message)
+                                  }
+
+                                  update()
+                                } }
+                              >
+                                <option value="" disabled>Select an account</option>
+
+                                {
+                                  accounts.map(account => (
+
+                                    <option className='flex flex-col' value={ account._id }>
+                                      { account.name } - { account.email }
+                                    </option>
+
+                                  ))
+                                }
+
+                              </select>
+                            </div>
+                          </div>
+                        </li>
+                      }
+
                     </ul>
                   </nav>
                 </div>
@@ -410,6 +487,8 @@ const Sidebar = () =>
                     navigation.map(item => (
 
                       (
+                        session?.isLNM
+                        ||
                         session?.user?.employeeRole === 'Owner'
                         ||
                         session?.user?.shops === 'All'
@@ -505,6 +584,8 @@ const Sidebar = () =>
                     session?.locations.map((location, locationIdx) => (
 
                       (
+                        session?.isLNM
+                        ||
                         session?.user?.employeeRole === 'Owner'
                         ||
                         session?.user?.shops === 'All'
@@ -574,6 +655,8 @@ const Sidebar = () =>
                     account.map(item => (
 
                       (
+                        session?.isLNM
+                        ||
                         session?.user?.employeeRole === 'Owner'
                         ||
                         session?.user?.shops === 'All'
@@ -650,6 +733,105 @@ const Sidebar = () =>
 
                 </ul>
               </li>
+
+              {
+                session?.isLNM &&
+
+                <div>
+                  <li>
+                    <div className="mb-3 text-xs font-semibold leading-6 text-primary-300">
+                      Locations
+                    </div>
+                  </li>
+                  <li>
+                    <label htmlFor="account" className="block text-xs font-medium leading-6 text-grey-900">
+                      Choose Account
+                    </label>
+                    <div className="mt-2">
+                      <div className="flex rounded-md bg-white/5 ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-300">
+                        <select
+                          name="account"
+                          id="account"
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-300 sm:text-sm sm:leading-6"
+                          defaultValue={ session?.acctView && session?.acctView }
+                          onChange={ async (e) =>
+                          {
+                            try
+                            {
+                              const req = await fetch(`/api/admin/update-acct-view`, {
+                                method: 'PUT',
+                                headers: {
+                                  'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ userId: session?.activeUser?._id, accountId: e.target.value })
+                              })
+
+                              const res = await req.json()
+
+                              if (res.success)
+                              {
+                                toast.success(res.success)
+                                router.push(`/account/${ e.target.value }/dashboard`)
+                              } else if (res.error)
+                              {
+                                toast.error(res.error)
+                              }
+                            } catch (error)
+                            {
+                              toast.error(error.message)
+                            }
+
+                            update()
+                          } }
+                        >
+                          <option value="" disabled>Select an account</option>
+
+                          {
+                            accounts.map(account => (
+
+                              <option className='flex flex-col' value={ account._id }>
+                                { account.name } - { account.email }
+                              </option>
+
+                            ))
+                          }
+
+                        </select>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li>
+
+                    <ul role="list" className="-mx-2 mt-5 space-y-1">
+
+                      <li>
+                        <Link
+                          href={ `/account/admin/users` }
+                          className={ `
+                            ${ path === `/account/admin/users`
+                              ? 'bg-primary-100 text-primary-300'
+                              : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
+                            group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
+                          `}
+                        >
+                          <UserGroupIcon
+                            className={ `
+                              ${ path === `/account/admin/users`
+                                ? 'text-primary-300' : 'text-gray-400 group-hover:text-primary-300' }
+                              h-6 w-6 shrink-0
+                            `}
+                            aria-hidden="true"
+                          />
+                          Admin Users
+                        </Link>
+                      </li>
+
+                    </ul>
+                  </li>
+                </div>
+              }
+
               <li className="-mx-6 mt-auto">
                 <LinkPopover
                   button={

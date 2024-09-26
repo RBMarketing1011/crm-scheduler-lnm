@@ -12,6 +12,7 @@ import Button from '@components/atom/Button'
 import { TextField } from '@components/template/Fields'
 import { SlimLayout } from '@components/template/SlimLayout'
 import { Notifi, notifi } from '@lib/utils/Notifications/Notify'
+import RedirectAfterSignIn from '@lib/helpers/RedirectAfterSignIn'
 
 //icons
 import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6'
@@ -21,7 +22,7 @@ import Logo from '@images/logos/lnm-logo-black.png'
 
 export default function RegisterPage ()
 {
-  const { data: session } = useSession()
+  const { data: session, update } = useSession()
   const [ user, setUser ] = useState({
     firstname: '',
     lastname: '',
@@ -71,14 +72,14 @@ export default function RegisterPage ()
             redirect: false
           })
 
-          router.push(`/account/${ session?.user?.accountId }/dashboard`)
-
           setUser({
             firstname: '',
             lastname: '',
             email: '',
             password: ''
           })
+
+          update()
 
         } else if (data.error)
         {
@@ -98,6 +99,7 @@ export default function RegisterPage ()
     <SlimLayout>
 
       <Notifi data={ { state: notify, setState: setNotify } } />
+      <RedirectAfterSignIn />
 
       <div className='w-full flex flex-col sm:flex-row justify-start items-center gap-10 sm:gap-20'>
         <div className='w-full md:w-[350px]'>

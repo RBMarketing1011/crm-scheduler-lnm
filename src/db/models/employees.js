@@ -70,8 +70,13 @@ const employeeSchema = new Schema({
   },
   employeeRole: {
     type: String,
-    required: true,
-    default: 'employee'
+    enum: [ 'Employee', 'Lead', 'Manager', 'Admin', 'Owner', 'LNM' ],
+    default: 'Employee'
+  },
+  acctView: {
+    type: Schema.Types.ObjectId,
+    ref: 'Account',
+    default: null
   },
   notifications: [
     { type: String }

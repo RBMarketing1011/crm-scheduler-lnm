@@ -12,6 +12,7 @@ import Button from '@components/atom/Button'
 import { TextField } from '@components/template/Fields'
 import { SlimLayout } from '@components/template/SlimLayout'
 import { Notifi, notifi } from '@lib/utils/Notifications/Notify'
+import RedirectAfterSignIn from '@lib/helpers/RedirectAfterSignIn'
 
 //images
 import Logo from '@images/logos/lnm-logo-black.png'
@@ -49,8 +50,8 @@ export default function LoginPage ()
       if (res?.ok)
       {
         await update()
-        router.push(`/account/${ session?.user.accountId }/dashboard`)
         toast.success('Welcome back!')
+        update()
       } else if (res?.error)
       {
         toast.error(res.error)
@@ -65,6 +66,7 @@ export default function LoginPage ()
   return (
     <SlimLayout>
       <Notifi data={ { state: notifiState, setState: setNotifiState } } />
+      <RedirectAfterSignIn />
 
       <div className='w-full flex flex-col sm:flex-row justify-start items-center gap-10 sm:gap-20'>
         <div className='w-full md:w-[350px]'>

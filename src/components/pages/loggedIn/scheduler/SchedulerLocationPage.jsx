@@ -119,6 +119,8 @@ const SchedulerLocationPage = ({ accountId, locationId }) =>
 
                     {
                       (
+                        session?.isLNM
+                        ||
                         session?.user?.employeeRole === 'Owner'
                         ||
                         session?.user?.shops === 'All'

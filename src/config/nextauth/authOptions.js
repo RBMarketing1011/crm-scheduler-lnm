@@ -78,11 +78,6 @@ const authOptions = {
     //Invoked on successful signin 
     async signIn ({ account, profile, user })
     {
-
-      // console.log('ACCOUNT:   ' + account)
-      // console.log('PROFILE:   ' + profile)
-      // console.log('USER:   ' + user)
-
       // if no user found return false
       if (user?.error)
       {
@@ -97,6 +92,8 @@ const authOptions = {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account)
       {
+        console.log(account)
+
         token.accessToken = account.access_token
         token.id = token.sub
       }
@@ -112,41 +109,215 @@ const authOptions = {
       // find user to add to session 
       const findUser = await Employee.findById(token.id).select('-password').select('-createdAt').select('-updatedAt')
 
-      let account = await Account.findById(findUser.accountId)
-
-      if (account.locations.length <= 0 && account.employees.length <= 0)
+      if (findUser.employeeRole === 'LNM')
       {
-        const newAcct = await Account.findById(findUser.accountId)
-        session.account = newAcct
+        session.isLNM = true
+        session.activeUser = findUser
 
-      } else if (account.locations.length > 0 && account.employees.length > 0)
-      {
-        const newAcct = await Account.findById(findUser.accountId).populate('locations').populate('employees')
+        const allAdminUsers = await Employee.find({ employeeRole: 'LNM' }).select('-password').select('-createdAt').select('-updatedAt')
 
-        session.account = newAcct
-        session.locations = newAcct.locations
-        session.employees = newAcct.employees
+        session.adminUsers = allAdminUsers
 
-      } else if (account.locations.length > 0 || account.employees.length > 0)
-      {
-        if (account.locations.length > 0)
+        if (findUser.acctView === null)
         {
-          const newAcct = await Account.findById(findUser.accountId).populate('locations')
+          console.log('LNM - NO ACCTVIEW')
+          // let account = await Account.findOne({}).populate('owner')
+
+          // if (account.locations.length <= 0 && account.employees.length <= 0)
+          // {
+          //   const newAcct = await Account.findById(account._id)
+          //   session.account = newAcct
+
+          // } else if (account.locations.length > 0 && account.employees.length > 0)
+          // {
+          //   const newAcct = await Account.findById(account._id).populate('locations').populate('employees')
+
+          //   session.account = newAcct
+          //   session.locations = newAcct.locations
+          //   session.employees = newAcct.employees
+
+          // } else if (account.locations.length > 0 || account.employees.length > 0)
+          // {
+          //   if (account.locations.length > 0)
+          //   {
+          //     const newAcct = await Account.findById(account._id).populate('locations')
+          //     session.account = newAcct
+          //     session.locations = newAcct.locations
+          //   }
+
+          //   if (account.employees.length > 0)
+          //   {
+          //     const newAcct = await Account.findById(account._id).populate('employees')
+          //     session.account = newAcct
+          //     session.employees = newAcct.employees
+          //   }
+          // }
+
+          // const sendUser = Employee.findById(account.owner._id).select('-password').select('-createdAt').select('-updatedAt')
+
+          // //assign User to session 
+          // session.user = sendUser
+
+
+          let account = await Account.findOne({}).populate('owner').lean()
+
+          if (account.locations.length <= 0 && account.employees.length <= 0)
+          {
+            const newAcct = await Account.findById(account._id).lean()
+            session.account = newAcct
+          } else if (account.locations.length > 0 && account.employees.length > 0)
+          {
+            const newAcct = await Account.findById(account._id).populate('locations').populate('employees').lean()
+            session.account = newAcct
+            session.locations = newAcct.locations
+            session.employees = newAcct.employees
+          } else if (account.locations.length > 0 || account.employees.length > 0)
+          {
+            if (account.locations.length > 0)
+            {
+              const newAcct = await Account.findById(account._id).populate('locations').lean()
+              session.account = newAcct
+              session.locations = newAcct.locations
+            }
+
+            if (account.employees.length > 0)
+            {
+              const newAcct = await Account.findById(account._id).populate('employees').lean()
+              session.account = newAcct
+              session.employees = newAcct.employees
+            }
+          }
+
+          // Fetch the employee without password and timestamps, and convert it to a plain object
+          const sendUser = await Employee.findById(account.owner._id)
+            .select('-password -createdAt -updatedAt')
+            .lean()
+
+          // Assign user to session
+          session.user = sendUser
+
+
+        } else
+        {
+          console.log('LNM - YES ACCTVIEW')
+          // let account = await Account.findById(findUser.acctView).populate('owner')
+
+          // if (account.locations.length <= 0 && account.employees.length <= 0)
+          // {
+          //   const newAcct = await Account.findById(findUser.acctView)
+          //   session.account = newAcct
+
+          // } else if (account.locations.length > 0 && account.employees.length > 0)
+          // {
+          //   const newAcct = await Account.findById(findUser.acctView).populate('locations').populate('employees')
+
+          //   session.account = newAcct
+          //   session.locations = newAcct.locations
+          //   session.employees = newAcct.employees
+
+          // } else if (account.locations.length > 0 || account.employees.length > 0)
+          // {
+          //   if (account.locations.length > 0)
+          //   {
+          //     const newAcct = await Account.findById(findUser.acctView).populate('locations')
+          //     session.account = newAcct
+          //     session.locations = newAcct.locations
+          //   }
+
+          //   if (account.employees.length > 0)
+          //   {
+          //     const newAcct = await Account.findById(findUser.acctView).populate('employees')
+          //     session.account = newAcct
+          //     session.employees = newAcct.employees
+          //   }
+          // }
+
+          // const sendUser = Employee.findById(account.owner._id).select('-password').select('-createdAt').select('-updatedAt')
+
+          // //assign User to session 
+          // session.user = sendUser
+
+          let account = await Account.findById(findUser.acctView).populate('owner').lean() // convert to plain JS object
+
+          if (account.locations.length <= 0 && account.employees.length <= 0)
+          {
+            const newAcct = await Account.findById(findUser.acctView).lean()
+            session.account = newAcct
+          } else if (account.locations.length > 0 && account.employees.length > 0)
+          {
+            const newAcct = await Account.findById(findUser.acctView)
+              .populate('locations')
+              .populate('employees')
+              .lean()
+
+            session.account = newAcct
+            session.locations = newAcct.locations
+            session.employees = newAcct.employees
+          } else if (account.locations.length > 0 || account.employees.length > 0)
+          {
+            if (account.locations.length > 0)
+            {
+              const newAcct = await Account.findById(findUser.acctView).populate('locations').lean()
+              session.account = newAcct
+              session.locations = newAcct.locations
+            }
+
+            if (account.employees.length > 0)
+            {
+              const newAcct = await Account.findById(findUser.acctView).populate('employees').lean()
+              session.account = newAcct
+              session.employees = newAcct.employees
+            }
+          }
+
+          // Fetch user data and convert to plain object
+          const sendUser = await Employee.findById(account.owner._id)
+            .select('-password -createdAt -updatedAt')
+            .lean()
+
+          // Assign the user to session in a serializable format
+          session.user = sendUser
+
+
+        }
+
+      } else
+      {
+        let account = await Account.findById(findUser.accountId)
+
+        if (account.locations.length <= 0 && account.employees.length <= 0)
+        {
+          const newAcct = await Account.findById(findUser.accountId)
+          session.account = newAcct
+
+        } else if (account.locations.length > 0 && account.employees.length > 0)
+        {
+          const newAcct = await Account.findById(findUser.accountId).populate('locations').populate('employees')
+
           session.account = newAcct
           session.locations = newAcct.locations
-        }
-
-        if (account.employees.length > 0)
-        {
-          const newAcct = await Account.findById(findUser.accountId).populate('employees')
-          session.account = newAcct
           session.employees = newAcct.employees
-        }
-      }
 
-      //assign User to session 
-      session.user = findUser
-      session.accessToken = token.accessToken
+        } else if (account.locations.length > 0 || account.employees.length > 0)
+        {
+          if (account.locations.length > 0)
+          {
+            const newAcct = await Account.findById(findUser.accountId).populate('locations')
+            session.account = newAcct
+            session.locations = newAcct.locations
+          }
+
+          if (account.employees.length > 0)
+          {
+            const newAcct = await Account.findById(findUser.accountId).populate('employees')
+            session.account = newAcct
+            session.employees = newAcct.employees
+          }
+        }
+
+        //assign User to session 
+        session.user = findUser
+      }
 
       //return session 
       return session
