@@ -40,8 +40,8 @@ const Sidebar = () =>
     { name: 'Appointments', href: `/account/${ session?.user?.accountId }/appointments`, icon: CalendarDaysIcon, count: '12' },
   ]
   const account = [
-    { name: 'Settings', href: `/account/${ session?.user?.accountId }/profile`, icon: Cog8ToothIcon, },
-    { name: 'Install Scheduler', href: `/account/${ session?.user?.accountId }/scheduler/instructions`, icon: CodeBracketSquareIcon, },
+    { name: 'Settings', href: `/account/${ session?.user?.accountId }/settings`, icon: Cog8ToothIcon, },
+    { name: 'Install Scheduler', href: `/account/${ session?.user?.accountId }/scheduler`, icon: CodeBracketSquareIcon, },
   ]
 
   // ================= End Session Data
@@ -309,7 +309,7 @@ const Sidebar = () =>
                                   <Link
                                     href={ item.href }
                                     className={ `
-                                    ${ path === item.href
+                                    ${ path.includes(item.href)
                                         ? 'bg-primary-100 text-primary-300'
                                         : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                                     group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
@@ -318,7 +318,7 @@ const Sidebar = () =>
                                   >
                                     <item.icon
                                       className={ `
-                                      ${ path === item.href ? 'text-primary-300' : 'text-gray-400 group-hover:text-primary-300' }
+                                      ${ path.includes(item.href) ? 'text-primary-300' : 'text-gray-400 group-hover:text-primary-300' }
                                       h-6 w-6 shrink-0
                                     `}
                                       aria-hidden="true"
@@ -574,7 +574,7 @@ const Sidebar = () =>
                           <Link
                             href={ item.href }
                             className={ `
-                            ${ path === item.href
+                            ${ path.includes(item.href)
                                 ? 'bg-primary-100 text-primary-300'
                                 : 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }
                             group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold
@@ -582,7 +582,7 @@ const Sidebar = () =>
                           >
                             <item.icon
                               className={ `
-                              ${ path === item.href ? 'text-primary-300' : 'text-gray-400 group-hover:text-primary-300' }
+                              ${ path.includes(item.href) ? 'text-primary-300' : 'text-gray-400 group-hover:text-primary-300' }
                               h-6 w-6 shrink-0
                             `}
                               aria-hidden="true"

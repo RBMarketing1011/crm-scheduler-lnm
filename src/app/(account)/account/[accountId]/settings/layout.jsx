@@ -9,7 +9,7 @@ import
   UsersIcon,
   FingerPrintIcon
 } from '@heroicons/react/24/outline'
-import { Container } from '@components/template/Container'
+import Container from '@components/atom/Container'
 
 import TitleHeading from '@components/atom/Headings/TitleHeading'
 
@@ -23,10 +23,8 @@ const Layout = ({ children, params }) =>
   console.log(accountId)
 
   const navigation = [
-    { name: 'Profile', href: `/account/${ accountId }/profile`, icon: UserCircleIcon },
-    { name: 'Security', href: `/account/${ accountId }/security`, icon: FingerPrintIcon },
-    { name: 'Team Members', href: `/account/${ accountId }/members`, icon: UsersIcon },
-    { name: 'Notifications', href: `/account/${ accountId }/notifications`, icon: BellIcon },
+    { name: 'Team Members', href: `/account/${ accountId }/settings/members`, icon: UsersIcon },
+    { name: 'Notifications', href: `/account/${ accountId }/settings/notifications`, icon: BellIcon },
   ]
 
   return (

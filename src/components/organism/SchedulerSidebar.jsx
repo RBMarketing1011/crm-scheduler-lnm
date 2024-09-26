@@ -25,8 +25,8 @@ const SchedulerSidebar = ({ accountId }) =>
 
           <li className='lg:mb-10'>
             <a
-              href={ `/account/${ accountId }/scheduler/instructions` }
-              className={ `${ pathname === `/account/${ accountId }/scheduler/instructions` ?
+              href={ `/account/${ accountId }/scheduler` }
+              className={ `${ pathname === `/account/${ accountId }/scheduler` ?
                 'bg-primary-100 text-primary-300'
                 :
                 'text-gray-700 hover:text-primary-300 hover:bg-primary-100' }

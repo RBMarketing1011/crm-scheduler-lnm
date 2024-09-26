@@ -11,12 +11,6 @@ import Button from '@components/atom/Button'
 
 const LocationTeamPage = ({ locationId }) =>
 {
-  // ====================================== Notifi state 
-  const [ notify, setNotify ] = useState({
-    type: '',
-    text: '',
-    show: false
-  })
   // ====================================== Session details
   const {
     data: session,
@@ -105,7 +99,7 @@ const LocationTeamPage = ({ locationId }) =>
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <p className="mt-2 text-sm text-gray-700">
-              A list of all the employees in your account including their name, role, email and active status.
+              A list of all the employees who have access this shop only. To add an employee to all shops, please go to your account settings.
             </p>
           </div>
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">

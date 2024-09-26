@@ -50,14 +50,14 @@ const LinkPopover = ({ button, x, y }) =>
         <div className={ `absolute ${ x } ${ y } z-10 mt-2 w-56 rounded-md bg-white shadow-lg` } ref={ container }>
           <div className="py-1">
             <Link
-              href={ `/account/${ session?.user?.accountId }/user/${ session?.user._id }/profile` }
+              href={ `/account/${ session?.user?.accountId }/users/${ session?.user._id }/settings` }
               className='text-gray-700 hover:bg-primary-100 hover:text-primary-300 block w-full px-4 py-2 text-left text-sm'
               onClick={ () => setOpenMenu(false) }
             >
               User settings
             </Link>
             <Link
-              href={ `/account/${ session?.user?.accountId }/profile` }
+              href={ `/account/${ session?.user?.accountId }/settings` }
               className='text-gray-700 hover:bg-primary-100 hover:text-primary-300 block w-full px-4 py-2 text-left text-sm'
               onClick={ () => setOpenMenu(false) }
             >
